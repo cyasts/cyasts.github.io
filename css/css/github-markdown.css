@@ -364,9 +364,9 @@
 .markdown-body h4,
 .markdown-body h5,
 .markdown-body h6 {
-  margin-top: 24px;
-  margin-bottom: 16px;
-  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
   line-height: 1.25;
 }
 .markdown-body h1 .octicon-link,
