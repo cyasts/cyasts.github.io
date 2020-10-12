@@ -1,2 +1,0 @@
-# cyasts.github.io
-blog
