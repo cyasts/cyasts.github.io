@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: https://cyasts.github.io/sitemap.xml
