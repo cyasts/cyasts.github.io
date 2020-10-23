@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Algorithms on ctbp</title><link>https://cyasts.github.io/categories/algorithms/</link><description>Recent content in Algorithms on ctbp</description><generator>Hugo -- gohugo.io</generator><language>en</language><copyright>[Home](/) &amp;#183; Theme [Simpleness](https://github.com/RainerChiang/simpleness) Powered by [Hugo](https://gohugo.io/)</copyright><lastBuildDate>Wed, 16 Sep 2020 15:20:00 +0800</lastBuildDate><atom:link href="https://cyasts.github.io/categories/algorithms/index.xml" rel="self" type="application/rss+xml"/><item><title>稳定匹配问题</title><link>https://cyasts.github.io/posts/stablematches/</link><pubDate>Wed, 16 Sep 2020 15:20:00 +0800</pubDate><guid>https://cyasts.github.io/posts/stablematches/</guid><description>1.问题描述 给定 N 个男性 $ m_{1} $ ,⋯,$m_{n}$ 和 N 个女性$w_{1}$,⋯,$w_{n}$
-$$ a = w_{b} $$
 每个男性对女性由最喜欢到最不喜欢进行排序 每个女性对男性由最喜欢到最不喜欢进行排序 目标：找到一个稳定的匹配使得不满意度最低。
 2.输入 第一行输入 N，表示需要处理的匹配的对数。男性按照 1，2, 3&amp;hellip;N 的编号表示，女性同样如此。
 接下来 N 行，每行 N 个数字，表示该行男性对所有女性的好感度排名。
