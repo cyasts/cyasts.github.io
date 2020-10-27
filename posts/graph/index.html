@@ -221,6 +221,7 @@ vertex <span style=color:#000;font-weight:700>*</span> <span style=color:#900;fo
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">122
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">123
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">124
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">125
 </span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&lt;stdio.h&gt;</span><span style=color:#999;font-weight:700;font-style:italic>
 </span><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&lt;stdlib.h&gt;</span><span style=color:#999;font-weight:700;font-style:italic>
 </span><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&lt;string.h&gt;</span><span style=color:#999;font-weight:700;font-style:italic>
@@ -328,6 +329,7 @@ vertex <span style=color:#000;font-weight:700>*</span> <span style=color:#900;fo
 	}
 	<span style=color:#000;font-weight:700>return</span> g<span style=color:#000;font-weight:700>-&gt;</span>vertices[mini];
 }
+
 <span style=color:#998;font-style:italic>//------------------------private function below here------------------------------
 </span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>isexist</span>(<span style=color:#458;font-weight:700>char</span> line[<span style=color:#099>300</span>][<span style=color:#099>20</span>], <span style=color:#000;font-weight:700>const</span> <span style=color:#458;font-weight:700>char</span> <span style=color:#000;font-weight:700>*</span> name, <span style=color:#458;font-weight:700>int</span> k)
 {
@@ -579,41 +581,7 @@ fclose(stdout);
 }
 </code></pre></td></tr></table></div></div><p>整体可于 <a href=https://github.com/cyasts/Algorithms/tree/master/2.BFS>https://github.com/cyasts/Algorithms/tree/master/2.BFS</a> 获取。</p><h2 id=6测试数据>6.测试数据</h2><p>1.输入
 见：https://github.com/cyasts/Algorithms/blob/master/2.BFS/input.txt<br>in BFS:
-石油大学
-钟楼
-马超西路
-团结新区
-锦水河
-三河场
-金华寺东路
-植物园
-军区总医院
-熊猫大道
-动物园
-昭觉寺南路
-驷马桥
-府青路
-八里庄
-二仙桥
-理工大学
-in Dijkstra:
-石油大学 0
-钟楼 3
-马超西路 12
-团结新区 19
-锦水河 20
-三河场 23
-金华寺东路 28
-植物园 37
-军区总医院 44
-熊猫大道 50
-动物园 51
-昭觉寺南路 61
-驷马桥 62
-府青路 65
-八里庄 66
-二仙桥 68
-理工大学 75</p><footer><hr><div class=post-tags></div></footer><div class=comments></div></article></body><script type=text/x-mathjax-config>
+石油大学<br>钟楼<br>马超西路<br>团结新区<br>锦水河<br>三河场<br>金华寺东路<br>植物园<br>军区总医院<br>熊猫大道<br>动物园<br>昭觉寺南路<br>驷马桥<br>府青路<br>八里庄<br>二仙桥<br>理工大学<br>in Dijkstra:<br>石油大学 0<br>钟楼 3<br>马超西路 12<br>团结新区 19<br>锦水河 20<br>三河场 23<br>金华寺东路 28<br>植物园 37<br>军区总医院 44<br>熊猫大道 50<br>动物园 51<br>昭觉寺南路 61<br>驷马桥 62<br>府青路 65<br>八里庄 66<br>二仙桥 68<br>理工大学 75</p><footer><hr><div class=post-tags></div></footer><div class=comments></div></article></body><script type=text/x-mathjax-config>
   MathJax.Hub.Config({
     extensions: ["tex2jax.js"],
     jax: ["input/TeX", "output/HTML-CSS"],
