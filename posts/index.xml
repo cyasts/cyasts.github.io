@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on ctbp</title><link>https://cyasts.github.io/posts/</link><description>Recent content in Posts on ctbp</description><generator>Hugo -- gohugo.io</generator><language>en</language><copyright>[Home](/) &amp;#183; Theme [Simpleness](https://github.com/RainerChiang/simpleness) Powered by [Hugo](https://gohugo.io/)</copyright><lastBuildDate>Mon, 26 Oct 2020 22:38:36 +0800</lastBuildDate><atom:link href="https://cyasts.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>图的广度优先遍历和Dijkstra算法</title><link>https://cyasts.github.io/posts/graph/</link><pubDate>Mon, 26 Oct 2020 22:38:36 +0800</pubDate><guid>https://cyasts.github.io/posts/graph/</guid><description>1.问题描述 构建成都地铁图，实现广度优先算法和 Dijkstra 算法
-2.输入 1.地铁图的输入 以线路号数开头，后面是该号线以此的站点数。每行一个数据。 由于地铁中存在着环线，所以图的构建可能会成一个环。因此在输入的时候需要特别处理，把线路数乘以 10 再加上一个是否为环线，这样得到数字后取最后一位就知道是否为环线，再除以 10 就知道是几号线。例如 1 号线不是环线就变成 10，7 号线为环线就变成 71。 最后以-1 为单独的一行，表示输入结束。 输入举例： 10 韦家碾 火车北站 人民北路 &amp;hellip; 广州路 兴隆湖 科学城 20 犀浦 天河路 百草路 &amp;hellip; 71 火车北站 &amp;hellip; -1
-2.测试站点的输入 输入两行，每行一个站点。 如： 石油大学 理工大学
+2.输入 1.地铁图的输入 以线路号数开头，后面是该号线以此的站点数。每行一个数据。
+由于地铁中存在着环线，所以图的构建可能会成一个环。因此在输入的时候需要特别处理，把线路数乘以 10 再加上一个是否为环线，这样得到数字后取最后一位就知道是否为环线，再除以 10 就知道是几号线。例如 1 号线不是环线就变成 10，7 号线为环线就变成 71。
+最后以-1 为单独的一行，表示输入结束。 输入举例：
+10
+韦家碾
+火车北站
+人民北路
+&amp;hellip;
+广州路
+兴隆湖
+科学城
+20
+犀浦
+天河路
+百草路
+&amp;hellip;
+71
+火车北站
+&amp;hellip;
+-1
+2.测试站点的输入
+输入两行，每行一个站点。
+如：
+石油大学
+理工大学
 3.输出 1.按照广度优先算法输出两个站的最短节点数路径。
 2.模拟两个站点之间的线路距离权重，输出两个站点之间的最短路径。
 4.数据结构 由于地铁图属于稀疏图，所以采用邻接链表来存储图。 graph.h 头文件：

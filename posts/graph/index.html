@@ -2,33 +2,10 @@
 <a href=/about/>About</a></nav><nav class=fontawesome><a href=https://github.com/cyasts target=_blank><i title=GitHub class="fab fa-github"></i></a></nav><div class="hidden description">Cyan's Blog</div></header><article id=article><header><h1 style=text-align:center>图的广度优先遍历和Dijkstra算法</h1><div class=post-meta><time datetime=2020-10-26T22:38:36+08:00>October 26, 2020</time> &nbsp;
 ctbpai &nbsp;
 <i class="far fa-clock"></i>8 min
-46 s
+29 s
 &nbsp;</div></header><h2 id=1问题描述>1.问题描述</h2><p>构建成都地铁图，实现广度优先算法和 Dijkstra 算法</p><h2 id=2输入>2.输入</h2><p>1.地铁图的输入
-以线路号数开头，后面是该号线以此的站点数。每行一个数据。
-由于地铁中存在着环线，所以图的构建可能会成一个环。因此在输入的时候需要特别处理，把线路数乘以 10 再加上一个是否为环线，这样得到数字后取最后一位就知道是否为环线，再除以 10 就知道是几号线。例如 1 号线不是环线就变成 10，7 号线为环线就变成 71。
-最后以-1 为单独的一行，表示输入结束。
-输入举例：
-10
-韦家碾
-火车北站
-人民北路
-&mldr;
-广州路
-兴隆湖
-科学城
-20
-犀浦
-天河路
-百草路
-&mldr;
-71
-火车北站
-&mldr;
--1</p><p>2.测试站点的输入
-输入两行，每行一个站点。
-如：
-石油大学
-理工大学</p><h2 id=3输出>3.输出</h2><p>1.按照广度优先算法输出两个站的最短节点数路径。<br>2.模拟两个站点之间的线路距离权重，输出两个站点之间的最短路径。</p><h2 id=4数据结构>4.数据结构</h2><p>由于地铁图属于稀疏图，所以采用邻接链表来存储图。
+以线路号数开头，后面是该号线以此的站点数。每行一个数据。<br>由于地铁中存在着环线，所以图的构建可能会成一个环。因此在输入的时候需要特别处理，把线路数乘以 10 再加上一个是否为环线，这样得到数字后取最后一位就知道是否为环线，再除以 10 就知道是几号线。例如 1 号线不是环线就变成 10，7 号线为环线就变成 71。<br>最后以-1 为单独的一行，表示输入结束。
+输入举例：<br>10<br>韦家碾<br>火车北站<br>人民北路<br>&mldr;<br>广州路<br>兴隆湖<br>科学城<br>20<br>犀浦<br>天河路<br>百草路<br>&mldr;<br>71<br>火车北站<br>&mldr;<br>-1</p><p>2.测试站点的输入<br>输入两行，每行一个站点。<br>如：<br>石油大学<br>理工大学</p><h2 id=3输出>3.输出</h2><p>1.按照广度优先算法输出两个站的最短节点数路径。<br>2.模拟两个站点之间的线路距离权重，输出两个站点之间的最短路径。</p><h2 id=4数据结构>4.数据结构</h2><p>由于地铁图属于稀疏图，所以采用邻接链表来存储图。
 graph.h 头文件：</p><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
@@ -580,7 +557,7 @@ fclose(stdout);
 	}
 }
 </code></pre></td></tr></table></div></div><p>整体可于 <a href=https://github.com/cyasts/Algorithms/tree/master/2.BFS>https://github.com/cyasts/Algorithms/tree/master/2.BFS</a> 获取。</p><h2 id=6测试数据>6.测试数据</h2><p>1.输入
-见：https://github.com/cyasts/Algorithms/blob/master/2.BFS/input.txt<br>in BFS:
+见：<br><a href=https://github.com/cyasts/Algorithms/blob/master/2.BFS/input.txt>https://github.com/cyasts/Algorithms/blob/master/2.BFS/input.txt</a><br>in BFS:
 石油大学<br>钟楼<br>马超西路<br>团结新区<br>锦水河<br>三河场<br>金华寺东路<br>植物园<br>军区总医院<br>熊猫大道<br>动物园<br>昭觉寺南路<br>驷马桥<br>府青路<br>八里庄<br>二仙桥<br>理工大学<br>in Dijkstra:<br>石油大学 0<br>钟楼 3<br>马超西路 12<br>团结新区 19<br>锦水河 20<br>三河场 23<br>金华寺东路 28<br>植物园 37<br>军区总医院 44<br>熊猫大道 50<br>动物园 51<br>昭觉寺南路 61<br>驷马桥 62<br>府青路 65<br>八里庄 66<br>二仙桥 68<br>理工大学 75</p><footer><hr><div class=post-tags></div></footer><div class=comments></div></article></body><script type=text/x-mathjax-config>
   MathJax.Hub.Config({
     extensions: ["tex2jax.js"],
