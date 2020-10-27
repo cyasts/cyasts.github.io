@@ -3,8 +3,8 @@
 ctbpai &nbsp;
 <i class="far fa-clock"></i>8 min
 29 s
-&nbsp;</div></header><h2 id=1问题描述>1.问题描述</h2><p>构建成都地铁图，实现广度优先算法和 Dijkstra 算法</p><h2 id=2输入>2.输入</h2><p>1.地铁图的输入<br>以线路号数开头，后面是该号线以此的站点数。每行一个数据。<br>由于地铁中存在着环线，所以图的构建可能会成一个环。因此在输入的时候需要特别处理，把线路数乘以 10 再加上一个是否为环线，这样得到数字后取最后一位就知道是否为环线，再除以 10 就知道是几号线。例如 1 号线不是环线就变成 10，7 号线为环线就变成 71。<br>最后以-1 为单独的一行，表示输入结束。
-输入举例：<br>10<br>韦家碾<br>火车北站<br>人民北路<br>&mldr;<br>广州路<br>兴隆湖<br>科学城<br>20<br>犀浦<br>天河路<br>百草路<br>&mldr;<br>71<br>火车北站<br>&mldr;<br>-1</p><p>2.测试站点的输入<br>输入两行，每行一个站点。<br>如：<br>石油大学<br>理工大学</p><h2 id=3输出>3.输出</h2><p>1.按照广度优先算法输出两个站的最短节点数路径。<br>2.模拟两个站点之间的线路距离权重，输出两个站点之间的最短路径。</p><h2 id=4数据结构>4.数据结构</h2><p>由于地铁图属于稀疏图，所以采用邻接链表来存储图。
+&nbsp;</div></header><h2 id=1问题描述>1.问题描述</h2><p>构建成都地铁图，实现广度优先算法和 Dijkstra 算法</p><h2 id=2输入>2.输入</h2><h3 id=1地铁图的输入>1.地铁图的输入</h3><p>以线路号数开头，后面是该号线以此的站点数。每行一个数据。<br>由于地铁中存在着环线，所以图的构建可能会成一个环。因此在输入的时候需要特别处理，把线路数乘以 10 再加上一个是否为环线，这样得到数字后取最后一位就知道是否为环线，再除以 10 就知道是几号线。例如 1 号线不是环线就变成 10，7 号线为环线就变成 71。<br>最后以-1 为单独的一行，表示输入结束。
+输入举例：<br>10<br>韦家碾<br>火车北站<br>人民北路<br>&mldr;<br>广州路<br>兴隆湖<br>科学城<br>20<br>犀浦<br>天河路<br>百草路<br>&mldr;<br>71<br>火车北站<br>&mldr;<br>-1</p><h3 id=2测试站点的输入>2.测试站点的输入</h3><p>输入两行，每行一个站点。<br>如：<br>石油大学<br>理工大学</p><h2 id=3输出>3.输出</h2><p>1.按照广度优先算法输出两个站的最短节点数路径。<br>2.模拟两个站点之间的线路距离权重，输出两个站点之间的最短路径。</p><h2 id=4数据结构>4.数据结构</h2><p>由于地铁图属于稀疏图，所以采用邻接链表来存储图。
 graph.h 头文件：</p><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
