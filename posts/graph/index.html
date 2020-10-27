@@ -1,0 +1,638 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=generator content="Hugo 0.76.5"><title>图的广度优先遍历和Dijkstra算法 | ctbp</title><meta name=description content="Cyan's Blog"><link rel=stylesheet href=https://cyasts.github.io/css/index.css><link rel=stylesheet href=https://cyasts.github.io/css/classes.css><link rel=canonical href=https://cyasts.github.io/posts/graph/><link rel=alternate type=application/rss+xml href title=ctbp><link href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css rel=stylesheet></head><body><header class=menus><nav><a href=/>Home</a>
+<a href=/about/>About</a></nav><nav class=fontawesome><a href=https://github.com/cyasts target=_blank><i title=GitHub class="fab fa-github"></i></a></nav><div class="hidden description">Cyan's Blog</div></header><article id=article><header><h1 style=text-align:center>图的广度优先遍历和Dijkstra算法</h1><div class=post-meta><time datetime=2020-10-26T22:38:36+08:00>October 26, 2020</time> &nbsp;
+ctbpai &nbsp;
+<i class="far fa-clock"></i>8 min
+46 s
+&nbsp;</div></header><h2 id=1问题描述>1.问题描述</h2><p>构建成都地铁图，实现广度优先算法和 Dijkstra 算法</p><h2 id=2输入>2.输入</h2><p>1.地铁图的输入
+以线路号数开头，后面是该号线以此的站点数。每行一个数据。
+由于地铁中存在着环线，所以图的构建可能会成一个环。因此在输入的时候需要特别处理，把线路数乘以 10 再加上一个是否为环线，这样得到数字后取最后一位就知道是否为环线，再除以 10 就知道是几号线。例如 1 号线不是环线就变成 10，7 号线为环线就变成 71。
+最后以-1 为单独的一行，表示输入结束。
+输入举例：
+10
+韦家碾
+火车北站
+人民北路
+&mldr;
+广州路
+兴隆湖
+科学城
+20
+犀浦
+天河路
+百草路
+&mldr;
+71
+火车北站
+&mldr;
+-1</p><p>2.测试站点的输入
+输入两行，每行一个站点。
+如：
+石油大学
+理工大学</p><h2 id=3输出>3.输出</h2><p>1.按照广度优先算法输出两个站的最短节点数路径。<br>2.模拟两个站点之间的线路距离权重，输出两个站点之间的最短路径。</p><h2 id=4数据结构>4.数据结构</h2><p>由于地铁图属于稀疏图，所以采用邻接链表来存储图。
+graph.h 头文件：</p><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#999;font-weight:700;font-style:italic>#ifndef GRAPH_H_INCLUDE
+</span><span style=color:#999;font-weight:700;font-style:italic>#define GRAPH_H_INCLUDE
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&lt;stdio.h&gt;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&lt;stdlib.h&gt;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&lt;string.h&gt;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#000;font-weight:700>typedef</span> <span style=color:#000;font-weight:700>struct</span> edge{
+	<span style=color:#458;font-weight:700>int</span> weight;
+	<span style=color:#458;font-weight:700>int</span> info; <span style=color:#998;font-style:italic>//线路名称
+</span><span style=color:#998;font-style:italic></span>	<span style=color:#000;font-weight:700>struct</span> edge <span style=color:#000;font-weight:700>*</span> nextedge;
+	<span style=color:#000;font-weight:700>struct</span> vertex <span style=color:#000;font-weight:700>*</span> adjtex;
+} edge;
+
+<span style=color:#000;font-weight:700>typedef</span> <span style=color:#000;font-weight:700>struct</span> vertex {
+	<span style=color:#458;font-weight:700>char</span> site[<span style=color:#099>20</span>];
+	<span style=color:#000;font-weight:700>struct</span> edge <span style=color:#000;font-weight:700>*</span> firstedge;
+	<span style=color:#000;font-weight:700>struct</span> vertex <span style=color:#000;font-weight:700>*</span> prev; <span style=color:#998;font-style:italic>//用来存储结果路径上的上一个节点
+</span><span style=color:#998;font-style:italic></span>	<span style=color:#458;font-weight:700>int</span> info; <span style=color:#998;font-style:italic>//用来存储多余的数据
+</span><span style=color:#998;font-style:italic></span>	<span style=color:#458;font-weight:700>int</span> isdiscovered;
+} vertex;
+
+<span style=color:#000;font-weight:700>typedef</span> <span style=color:#000;font-weight:700>struct</span> {
+	vertex <span style=color:#000;font-weight:700>**</span> vertices;
+	<span style=color:#458;font-weight:700>int</span> vexnum, edgnum;
+}graph;
+
+<span style=color:#998;font-style:italic>//function declare
+</span><span style=color:#998;font-style:italic></span>graph <span style=color:#000;font-weight:700>*</span> <span style=color:#900;font-weight:700>buildgraph</span>();
+vertex <span style=color:#000;font-weight:700>*</span> <span style=color:#900;font-weight:700>findvertexbyname</span>(graph <span style=color:#000;font-weight:700>*</span> g, <span style=color:#000;font-weight:700>const</span> <span style=color:#458;font-weight:700>char</span> <span style=color:#000;font-weight:700>*</span> name);
+<span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>cleartags</span>(graph <span style=color:#000;font-weight:700>*</span> g);
+vertex <span style=color:#000;font-weight:700>*</span> <span style=color:#900;font-weight:700>findmininfo</span>(graph <span style=color:#000;font-weight:700>*</span> g);
+
+<span style=color:#999;font-weight:700;font-style:italic>#endif
+</span></code></pre></td></tr></table></div></div><p>graph.c 源文件：</p><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 33
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 34
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 35
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 36
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 37
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 38
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 39
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 40
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 41
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 42
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 43
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 44
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 45
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 46
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 47
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 48
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 49
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 50
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 51
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 52
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 53
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 54
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 55
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 56
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 57
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 58
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 59
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 60
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 61
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 62
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 63
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 64
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 65
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 66
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 67
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 68
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 69
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 70
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 71
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 72
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 73
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 74
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 75
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 76
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 77
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 78
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 79
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 80
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 81
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 82
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 83
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 84
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 85
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 86
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 87
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 88
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 89
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 90
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 91
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 92
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 93
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 94
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 95
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 96
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 97
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 98
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 99
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">100
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">101
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">102
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">103
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">104
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">105
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">106
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">107
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">108
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">109
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">110
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">111
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">112
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">113
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">114
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">115
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">116
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">117
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">118
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">119
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">120
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">121
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">122
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">123
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">124
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&lt;stdio.h&gt;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&lt;stdlib.h&gt;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&lt;string.h&gt;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&#34;graph.h&#34;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>buildedge</span>(vertex <span style=color:#000;font-weight:700>*</span> from, vertex <span style=color:#000;font-weight:700>*</span> to, <span style=color:#458;font-weight:700>int</span> lineno, <span style=color:#458;font-weight:700>int</span> weight);
+<span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>isexist</span>(<span style=color:#458;font-weight:700>char</span> line[<span style=color:#099>300</span>][<span style=color:#099>20</span>], <span style=color:#000;font-weight:700>const</span> <span style=color:#458;font-weight:700>char</span> <span style=color:#000;font-weight:700>*</span> name, <span style=color:#458;font-weight:700>int</span> k);
+
+<span style=color:#998;font-style:italic>//---------------------------------public function implements below -----------------------
+</span><span style=color:#998;font-style:italic></span>graph <span style=color:#000;font-weight:700>*</span> <span style=color:#900;font-weight:700>buildgraph</span>()
+{
+	<span style=color:#458;font-weight:700>char</span>  staname[<span style=color:#099>20</span>], line[<span style=color:#099>300</span>][<span style=color:#099>20</span>];
+	<span style=color:#458;font-weight:700>int</span> i, k, l, weight;
+	<span style=color:#458;font-weight:700>int</span> lineno, iscycle;
+
+	vertex <span style=color:#000;font-weight:700>*</span> station[<span style=color:#099>300</span>], <span style=color:#000;font-weight:700>*</span>v;
+	vertex <span style=color:#000;font-weight:700>*</span> pretex, <span style=color:#000;font-weight:700>*</span> headtex;
+	graph <span style=color:#000;font-weight:700>*</span> metro;
+
+	k <span style=color:#000;font-weight:700>=</span> l  <span style=color:#000;font-weight:700>=</span> lineno <span style=color:#000;font-weight:700>=</span> iscycle <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>;
+
+	metro <span style=color:#000;font-weight:700>=</span> (graph <span style=color:#000;font-weight:700>*</span>)malloc(<span style=color:#000;font-weight:700>sizeof</span>(graph));
+	metro<span style=color:#000;font-weight:700>-&gt;</span>vertices <span style=color:#000;font-weight:700>=</span> <span style=color:#0086b3>NULL</span>;
+	metro<span style=color:#000;font-weight:700>-&gt;</span>vexnum <span style=color:#000;font-weight:700>=</span> metro<span style=color:#000;font-weight:700>-&gt;</span>edgnum <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>;
+
+	<span style=color:#000;font-weight:700>while</span>(gets(staname) <span style=color:#000;font-weight:700>!=</span> <span style=color:#0086b3>NULL</span>)
+	{
+		<span style=color:#000;font-weight:700>if</span>(atoi(staname))<span style=color:#998;font-style:italic>//得到一条新的线路名称
+</span><span style=color:#998;font-style:italic></span>		{
+			<span style=color:#000;font-weight:700>if</span> (iscycle) {<span style=color:#998;font-style:italic>//先处理上一条环线
+</span><span style=color:#998;font-style:italic></span>				weight <span style=color:#000;font-weight:700>=</span> rand()<span style=color:#000;font-weight:700>%</span><span style=color:#099>10</span> <span style=color:#000;font-weight:700>+</span> <span style=color:#099>1</span>;
+				buildedge(pretex, headtex, lineno, weight);
+				buildedge(headtex, pretex, lineno, weight);
+				l <span style=color:#000;font-weight:700>+=</span> <span style=color:#099>2</span>;
+			}
+
+			lineno <span style=color:#000;font-weight:700>=</span> atoi(staname);
+			<span style=color:#000;font-weight:700>if</span>(lineno <span style=color:#000;font-weight:700>==</span> <span style=color:#000;font-weight:700>-</span><span style=color:#099>1</span>) <span style=color:#000;font-weight:700>break</span>;
+
+			pretex <span style=color:#000;font-weight:700>=</span> headtex <span style=color:#000;font-weight:700>=</span> <span style=color:#0086b3>NULL</span>;
+			iscycle <span style=color:#000;font-weight:700>=</span> lineno<span style=color:#000;font-weight:700>%</span><span style=color:#099>10</span>;
+			lineno <span style=color:#000;font-weight:700>/=</span> <span style=color:#099>10</span>;
+		}
+		<span style=color:#000;font-weight:700>else</span> {
+			<span style=color:#998;font-style:italic>//查找是否站已经存在
+</span><span style=color:#998;font-style:italic></span>			i <span style=color:#000;font-weight:700>=</span> isexist(line, staname, k);
+
+			<span style=color:#000;font-weight:700>if</span> (i <span style=color:#000;font-weight:700>&gt;</span> <span style=color:#000;font-weight:700>-</span><span style=color:#099>1</span>) v <span style=color:#000;font-weight:700>=</span> station[i];
+			<span style=color:#000;font-weight:700>else</span> {
+				v <span style=color:#000;font-weight:700>=</span> (vertex <span style=color:#000;font-weight:700>*</span>)malloc(<span style=color:#000;font-weight:700>sizeof</span>(vertex));
+				v<span style=color:#000;font-weight:700>-&gt;</span>firstedge <span style=color:#000;font-weight:700>=</span> <span style=color:#0086b3>NULL</span>;
+				v<span style=color:#000;font-weight:700>-&gt;</span>isdiscovered <span style=color:#000;font-weight:700>=</span> v<span style=color:#000;font-weight:700>-&gt;</span>info <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>;
+				v<span style=color:#000;font-weight:700>-&gt;</span>prev <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>;
+				station[k] <span style=color:#000;font-weight:700>=</span> v;
+				strcpy(line[k<span style=color:#000;font-weight:700>++</span>], staname);
+				strcpy(v<span style=color:#000;font-weight:700>-&gt;</span>site, staname);
+			}
+
+			<span style=color:#000;font-weight:700>if</span> (pretex) {
+				weight <span style=color:#000;font-weight:700>=</span> rand()<span style=color:#000;font-weight:700>%</span><span style=color:#099>10</span> <span style=color:#000;font-weight:700>+</span> <span style=color:#099>1</span>;
+				buildedge(pretex, v, lineno, weight);
+				buildedge(v, pretex, lineno, weight);
+				l <span style=color:#000;font-weight:700>+=</span> <span style=color:#099>2</span>;
+			}
+
+			<span style=color:#000;font-weight:700>if</span> (<span style=color:#000;font-weight:700>!</span>pretex <span style=color:#000;font-weight:700>&amp;&amp;</span> iscycle) headtex <span style=color:#000;font-weight:700>=</span> v;
+			pretex <span style=color:#000;font-weight:700>=</span> v;
+		}
+	}
+	metro<span style=color:#000;font-weight:700>-&gt;</span>vexnum <span style=color:#000;font-weight:700>=</span> k;
+	metro<span style=color:#000;font-weight:700>-&gt;</span>edgnum <span style=color:#000;font-weight:700>=</span> l;
+	metro<span style=color:#000;font-weight:700>-&gt;</span>vertices <span style=color:#000;font-weight:700>=</span> (vertex <span style=color:#000;font-weight:700>**</span>)malloc(<span style=color:#000;font-weight:700>sizeof</span>(vertex <span style=color:#000;font-weight:700>*</span>) <span style=color:#000;font-weight:700>*</span> k);
+	<span style=color:#000;font-weight:700>for</span>(i<span style=color:#000;font-weight:700>=</span><span style=color:#099>0</span>; i<span style=color:#000;font-weight:700>&lt;</span>k; <span style=color:#000;font-weight:700>++</span>i) metro<span style=color:#000;font-weight:700>-&gt;</span>vertices[i] <span style=color:#000;font-weight:700>=</span> station[i];
+	<span style=color:#000;font-weight:700>return</span> metro;
+}
+
+vertex <span style=color:#000;font-weight:700>*</span> <span style=color:#900;font-weight:700>findvertexbyname</span>(graph <span style=color:#000;font-weight:700>*</span> g, <span style=color:#000;font-weight:700>const</span> <span style=color:#458;font-weight:700>char</span> <span style=color:#000;font-weight:700>*</span> name)
+{
+	<span style=color:#458;font-weight:700>int</span> i;
+	<span style=color:#000;font-weight:700>for</span>(i<span style=color:#000;font-weight:700>=</span><span style=color:#099>0</span>; i<span style=color:#000;font-weight:700>&lt;</span>g<span style=color:#000;font-weight:700>-&gt;</span>vexnum; <span style=color:#000;font-weight:700>++</span>i) {
+		<span style=color:#000;font-weight:700>if</span> (strcmp(name, g<span style=color:#000;font-weight:700>-&gt;</span>vertices[i]<span style=color:#000;font-weight:700>-&gt;</span>site) <span style=color:#000;font-weight:700>==</span><span style=color:#099>0</span> ) <span style=color:#000;font-weight:700>return</span> g<span style=color:#000;font-weight:700>-&gt;</span>vertices[i];
+	}
+}
+
+<span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>cleartags</span>(graph <span style=color:#000;font-weight:700>*</span> g)
+{
+	<span style=color:#458;font-weight:700>int</span> i;
+	<span style=color:#000;font-weight:700>for</span>(i<span style=color:#000;font-weight:700>=</span><span style=color:#099>0</span>; i<span style=color:#000;font-weight:700>&lt;</span>g<span style=color:#000;font-weight:700>-&gt;</span>vexnum; <span style=color:#000;font-weight:700>++</span>i) {
+		g<span style=color:#000;font-weight:700>-&gt;</span>vertices[i]<span style=color:#000;font-weight:700>-&gt;</span>isdiscovered <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>;
+		g<span style=color:#000;font-weight:700>-&gt;</span>vertices[i]<span style=color:#000;font-weight:700>-&gt;</span>prev <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>;
+		g<span style=color:#000;font-weight:700>-&gt;</span>vertices[i]<span style=color:#000;font-weight:700>-&gt;</span>info <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>;
+	}
+}
+
+vertex <span style=color:#000;font-weight:700>*</span> <span style=color:#900;font-weight:700>findmininfo</span>(graph <span style=color:#000;font-weight:700>*</span> g)
+{
+	<span style=color:#458;font-weight:700>int</span> i, mini, min <span style=color:#000;font-weight:700>=</span> <span style=color:#099>999999</span>;
+	<span style=color:#000;font-weight:700>for</span> (i<span style=color:#000;font-weight:700>=</span><span style=color:#099>0</span>; i<span style=color:#000;font-weight:700>&lt;</span>g<span style=color:#000;font-weight:700>-&gt;</span>vexnum; <span style=color:#000;font-weight:700>++</span>i) {
+		<span style=color:#000;font-weight:700>if</span> (g<span style=color:#000;font-weight:700>-&gt;</span>vertices[i]<span style=color:#000;font-weight:700>-&gt;</span>isdiscovered <span style=color:#000;font-weight:700>==</span> <span style=color:#099>0</span>) {
+		<span style=color:#000;font-weight:700>if</span> (g<span style=color:#000;font-weight:700>-&gt;</span>vertices[i]<span style=color:#000;font-weight:700>-&gt;</span>info <span style=color:#000;font-weight:700>&lt;</span> min) {
+				mini <span style=color:#000;font-weight:700>=</span> i;
+				min <span style=color:#000;font-weight:700>=</span> g<span style=color:#000;font-weight:700>-&gt;</span>vertices[i]<span style=color:#000;font-weight:700>-&gt;</span>info;
+			}
+		}
+	}
+	<span style=color:#000;font-weight:700>return</span> g<span style=color:#000;font-weight:700>-&gt;</span>vertices[mini];
+}
+<span style=color:#998;font-style:italic>//------------------------private function below here------------------------------
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>isexist</span>(<span style=color:#458;font-weight:700>char</span> line[<span style=color:#099>300</span>][<span style=color:#099>20</span>], <span style=color:#000;font-weight:700>const</span> <span style=color:#458;font-weight:700>char</span> <span style=color:#000;font-weight:700>*</span> name, <span style=color:#458;font-weight:700>int</span> k)
+{
+	<span style=color:#458;font-weight:700>int</span> i;
+	<span style=color:#000;font-weight:700>for</span>(i<span style=color:#000;font-weight:700>=</span><span style=color:#099>0</span>; i<span style=color:#000;font-weight:700>&lt;</span>k; <span style=color:#000;font-weight:700>++</span>i) <span style=color:#000;font-weight:700>if</span>(strcmp(name, line[i]) <span style=color:#000;font-weight:700>==</span> <span style=color:#099>0</span>)  <span style=color:#000;font-weight:700>return</span> i;
+	<span style=color:#000;font-weight:700>return</span> <span style=color:#000;font-weight:700>-</span><span style=color:#099>1</span>;
+}
+
+<span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>buildedge</span>(vertex <span style=color:#000;font-weight:700>*</span> from, vertex <span style=color:#000;font-weight:700>*</span> to, <span style=color:#458;font-weight:700>int</span> lineno, <span style=color:#458;font-weight:700>int</span> weight)
+{
+	edge <span style=color:#000;font-weight:700>*</span> arc <span style=color:#000;font-weight:700>=</span> (edge <span style=color:#000;font-weight:700>*</span>)malloc(<span style=color:#000;font-weight:700>sizeof</span>(edge));
+	arc<span style=color:#000;font-weight:700>-&gt;</span>nextedge <span style=color:#000;font-weight:700>=</span> from<span style=color:#000;font-weight:700>-&gt;</span>firstedge;
+	from<span style=color:#000;font-weight:700>-&gt;</span>firstedge <span style=color:#000;font-weight:700>=</span> arc;
+	arc<span style=color:#000;font-weight:700>-&gt;</span>adjtex <span style=color:#000;font-weight:700>=</span> to;
+	arc<span style=color:#000;font-weight:700>-&gt;</span>info <span style=color:#000;font-weight:700>=</span> lineno;
+	arc<span style=color:#000;font-weight:700>-&gt;</span>weight <span style=color:#000;font-weight:700>=</span> weight;
+}
+</code></pre></td></tr></table></div></div><h2 id=4bfs-函数>4.BFS 函数</h2><p>要输出从源站点到目标站点的路径，可利用节点中的 prev 指针存储父节点。这样到目标站点的时候沿着 prev 指针一直往上知道空结点，就得到了一个反向的路径，再利用栈，把路径上的结点全部入一次栈，最后依次出栈就得到了从源站点到目标站点的路径。具体代码如下：</p><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>BFS</span>(graph <span style=color:#000;font-weight:700>*</span> metro, vertex <span style=color:#000;font-weight:700>*</span> src, vertex <span style=color:#000;font-weight:700>*</span> des)
+{
+	vertex <span style=color:#000;font-weight:700>*</span> que[<span style=color:#099>300</span>];
+	<span style=color:#458;font-weight:700>int</span> head, tail;
+	head <span style=color:#000;font-weight:700>=</span> tail <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>;
+	vertex <span style=color:#000;font-weight:700>*</span> u;
+	edge <span style=color:#000;font-weight:700>*</span> arc;
+	que[tail<span style=color:#000;font-weight:700>++</span>] <span style=color:#000;font-weight:700>=</span> src;
+	src<span style=color:#000;font-weight:700>-&gt;</span>isdiscovered <span style=color:#000;font-weight:700>=</span> <span style=color:#099>1</span>;
+	<span style=color:#000;font-weight:700>while</span>(tail <span style=color:#000;font-weight:700>!=</span> head) {
+		u <span style=color:#000;font-weight:700>=</span> que[head];
+		head <span style=color:#000;font-weight:700>=</span> (head<span style=color:#000;font-weight:700>+</span><span style=color:#099>1</span>) <span style=color:#000;font-weight:700>%</span> <span style=color:#099>300</span>;
+		<span style=color:#000;font-weight:700>if</span>(u <span style=color:#000;font-weight:700>==</span> des) <span style=color:#000;font-weight:700>break</span>;
+		arc <span style=color:#000;font-weight:700>=</span> u<span style=color:#000;font-weight:700>-&gt;</span>firstedge;
+		<span style=color:#000;font-weight:700>while</span> (arc) {
+			<span style=color:#000;font-weight:700>if</span> (arc<span style=color:#000;font-weight:700>-&gt;</span>adjtex<span style=color:#000;font-weight:700>-&gt;</span>isdiscovered <span style=color:#000;font-weight:700>==</span> <span style=color:#099>0</span>) {
+				arc<span style=color:#000;font-weight:700>-&gt;</span>adjtex<span style=color:#000;font-weight:700>-&gt;</span>prev <span style=color:#000;font-weight:700>=</span> u; <span style=color:#998;font-style:italic>//构建一条下一层子节点到当前节点的边
+</span><span style=color:#998;font-style:italic></span>				que[tail] <span style=color:#000;font-weight:700>=</span> arc<span style=color:#000;font-weight:700>-&gt;</span>adjtex;
+				tail <span style=color:#000;font-weight:700>=</span> (tail<span style=color:#000;font-weight:700>+</span><span style=color:#099>1</span>) <span style=color:#000;font-weight:700>%</span> <span style=color:#099>300</span>;
+				arc<span style=color:#000;font-weight:700>-&gt;</span>adjtex<span style=color:#000;font-weight:700>-&gt;</span>isdiscovered <span style=color:#000;font-weight:700>=</span> <span style=color:#099>1</span>;
+			}
+			arc <span style=color:#000;font-weight:700>=</span> arc<span style=color:#000;font-weight:700>-&gt;</span>nextedge;
+		}
+	}
+}
+</code></pre></td></tr></table></div></div><h2 id=5dijkstra-函数>5.dijkstra 函数</h2><p>同样的可利用站点的 prev 存储上一个站点，利用站点的 info 才存储该站点到源站点的最短距离。</p><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>dijkstra</span>(graph <span style=color:#000;font-weight:700>*</span> g, vertex <span style=color:#000;font-weight:700>*</span> src)
+{
+	<span style=color:#458;font-weight:700>int</span> i, k, alt;
+	vertex <span style=color:#000;font-weight:700>*</span> u, <span style=color:#000;font-weight:700>*</span>v;
+	edge <span style=color:#000;font-weight:700>*</span> arc;
+	<span style=color:#000;font-weight:700>for</span>(i<span style=color:#000;font-weight:700>=</span><span style=color:#099>0</span>; i<span style=color:#000;font-weight:700>&lt;</span>g<span style=color:#000;font-weight:700>-&gt;</span>vexnum; <span style=color:#000;font-weight:700>++</span>i) {
+		g<span style=color:#000;font-weight:700>-&gt;</span>vertices[i]<span style=color:#000;font-weight:700>-&gt;</span>info <span style=color:#000;font-weight:700>=</span> <span style=color:#099>99999</span>;
+		g<span style=color:#000;font-weight:700>-&gt;</span>vertices[i]<span style=color:#000;font-weight:700>-&gt;</span>prev <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>;
+	}
+	src<span style=color:#000;font-weight:700>-&gt;</span>info <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>;
+	k <span style=color:#000;font-weight:700>=</span> g<span style=color:#000;font-weight:700>-&gt;</span>vexnum;
+	<span style=color:#000;font-weight:700>while</span>(k <span style=color:#000;font-weight:700>&gt;</span> <span style=color:#099>0</span>) {
+		u <span style=color:#000;font-weight:700>=</span> findmininfo(g);
+		u<span style=color:#000;font-weight:700>-&gt;</span>isdiscovered <span style=color:#000;font-weight:700>=</span> <span style=color:#099>1</span>;
+		k<span style=color:#000;font-weight:700>--</span>;
+		arc <span style=color:#000;font-weight:700>=</span> u<span style=color:#000;font-weight:700>-&gt;</span>firstedge;
+		<span style=color:#000;font-weight:700>while</span> (arc) {
+			v <span style=color:#000;font-weight:700>=</span> arc<span style=color:#000;font-weight:700>-&gt;</span>adjtex;
+			alt <span style=color:#000;font-weight:700>=</span> u<span style=color:#000;font-weight:700>-&gt;</span>info <span style=color:#000;font-weight:700>+</span> arc<span style=color:#000;font-weight:700>-&gt;</span>weight;
+			<span style=color:#000;font-weight:700>if</span> (alt <span style=color:#000;font-weight:700>&lt;</span> v<span style=color:#000;font-weight:700>-&gt;</span>info) {
+				v<span style=color:#000;font-weight:700>-&gt;</span>info <span style=color:#000;font-weight:700>=</span> alt;
+				v<span style=color:#000;font-weight:700>-&gt;</span>prev <span style=color:#000;font-weight:700>=</span> u;
+			}
+			arc <span style=color:#000;font-weight:700>=</span> arc<span style=color:#000;font-weight:700>-&gt;</span>nextedge;
+		}
+	}
+}
+</code></pre></td></tr></table></div></div><h2 id=5主函数>5.主函数</h2><p>printpath 的时候，由于 BFS 和 Dijkstra 都要调用这个函数，在最后设置一个 order 来区分是那个函数调用。</p><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">46
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">47
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">48
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">49
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">50
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">51
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">52
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">53
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">54
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">55
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">56
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">57
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">58
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">59
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">60
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">61
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">62
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">63
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">64
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&lt;stdio.h&gt;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&lt;stdlib.h&gt;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&lt;string.h&gt;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&#34;graph.h&#34;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+
+<span style=color:#998;font-style:italic>//function declare
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>dijkstra</span>(graph <span style=color:#000;font-weight:700>*</span> g, vertex <span style=color:#000;font-weight:700>*</span> src);
+<span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>BFS</span>(graph <span style=color:#000;font-weight:700>*</span> metro, vertex <span style=color:#000;font-weight:700>*</span> src, vertex <span style=color:#000;font-weight:700>*</span> des);
+<span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>printpath</span>(graph <span style=color:#000;font-weight:700>*</span> metro, vertex <span style=color:#000;font-weight:700>*</span> desc, <span style=color:#458;font-weight:700>int</span> order);
+
+<span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>main</span>(<span style=color:#458;font-weight:700>int</span> argc, <span style=color:#458;font-weight:700>char</span> <span style=color:#000;font-weight:700>*</span>argv[])
+{
+
+freopen(<span style=color:#d14>&#34;input.txt&#34;</span>, <span style=color:#d14>&#34;r&#34;</span>, stdin);
+freopen(<span style=color:#d14>&#34;output.txt&#34;</span>, <span style=color:#d14>&#34;w&#34;</span>, stdout);
+
+	graph <span style=color:#000;font-weight:700>*</span> metro;
+
+	vertex <span style=color:#000;font-weight:700>*</span> src;
+	vertex <span style=color:#000;font-weight:700>*</span> des;
+
+	metro <span style=color:#000;font-weight:700>=</span> buildgraph();
+
+	<span style=color:#458;font-weight:700>char</span> s1[<span style=color:#099>20</span>];
+	<span style=color:#458;font-weight:700>char</span> s2[<span style=color:#099>20</span>];
+	scanf(<span style=color:#d14>&#34;%s&#34;</span>, <span style=color:#000;font-weight:700>&amp;</span>s1);
+	scanf(<span style=color:#d14>&#34;%s&#34;</span>, <span style=color:#000;font-weight:700>&amp;</span>s2);
+
+	src <span style=color:#000;font-weight:700>=</span> findvertexbyname(metro, s1);
+	des <span style=color:#000;font-weight:700>=</span> findvertexbyname(metro, s2);
+
+	printf(<span style=color:#d14>&#34;in BFS:</span><span style=color:#d14>\n</span><span style=color:#d14>&#34;</span>);
+	BFS(metro, src, des);
+	printpath(metro, des, <span style=color:#099>0</span>);
+
+	cleartags(metro);
+
+	printf(<span style=color:#d14>&#34;indjstl:</span><span style=color:#d14>\n</span><span style=color:#d14>&#34;</span>);
+	dijkstra(metro, src);
+	printpath(metro, des, <span style=color:#099>1</span>);
+
+fclose(stdin);
+fclose(stdout);
+
+	<span style=color:#000;font-weight:700>return</span> <span style=color:#099>0</span>;
+}
+
+<span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>printpath</span>(graph <span style=color:#000;font-weight:700>*</span> metro, vertex <span style=color:#000;font-weight:700>*</span> desc, <span style=color:#458;font-weight:700>int</span> order)
+{
+	<span style=color:#458;font-weight:700>int</span> i<span style=color:#000;font-weight:700>=</span><span style=color:#099>0</span>;
+	vertex <span style=color:#000;font-weight:700>*</span> sta[<span style=color:#099>300</span>];
+	vertex <span style=color:#000;font-weight:700>*</span> v <span style=color:#000;font-weight:700>=</span> desc;
+	<span style=color:#000;font-weight:700>while</span>(v) {
+		sta[i<span style=color:#000;font-weight:700>++</span>] <span style=color:#000;font-weight:700>=</span> v;
+		v <span style=color:#000;font-weight:700>=</span> v<span style=color:#000;font-weight:700>-&gt;</span>prev;
+	}
+
+	<span style=color:#000;font-weight:700>for</span>(i<span style=color:#000;font-weight:700>--</span>; i<span style=color:#000;font-weight:700>&gt;=</span><span style=color:#099>0</span>; <span style=color:#000;font-weight:700>--</span>i){
+		<span style=color:#000;font-weight:700>if</span>(order) printf(<span style=color:#d14>&#34;%s %d</span><span style=color:#d14>\n</span><span style=color:#d14>&#34;</span>, sta[i]<span style=color:#000;font-weight:700>-&gt;</span>site, sta[i]<span style=color:#000;font-weight:700>-&gt;</span>info);
+		<span style=color:#000;font-weight:700>else</span>  printf(<span style=color:#d14>&#34;%s </span><span style=color:#d14>\n</span><span style=color:#d14>&#34;</span>, sta[i]<span style=color:#000;font-weight:700>-&gt;</span>site);
+	}
+}
+</code></pre></td></tr></table></div></div><p>整体可于 <a href=https://github.com/cyasts/Algorithms/tree/master/2.BFS>https://github.com/cyasts/Algorithms/tree/master/2.BFS</a> 获取。</p><h2 id=6测试数据>6.测试数据</h2><p>1.输入
+见：https://github.com/cyasts/Algorithms/blob/master/2.BFS/input.txt<br>in BFS:
+石油大学
+钟楼
+马超西路
+团结新区
+锦水河
+三河场
+金华寺东路
+植物园
+军区总医院
+熊猫大道
+动物园
+昭觉寺南路
+驷马桥
+府青路
+八里庄
+二仙桥
+理工大学
+in Dijkstra:
+石油大学 0
+钟楼 3
+马超西路 12
+团结新区 19
+锦水河 20
+三河场 23
+金华寺东路 28
+植物园 37
+军区总医院 44
+熊猫大道 50
+动物园 51
+昭觉寺南路 61
+驷马桥 62
+府青路 65
+八里庄 66
+二仙桥 68
+理工大学 75</p><footer><hr><div class=post-tags></div></footer><div class=comments></div></article></body><script type=text/x-mathjax-config>
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+
+  var es = document.getElementsByTagName("pre");
+  for (e of es) {
+    e.style["backgroundColor"] = "#FBFBFB"
+    e.style["lineHeight"] = "1rem"
+    e.style["paddingTop"] = "0.7rem"
+    e.style["paddingBottom"] = "0.5rem"
+  }
+</script><script type=text/javascript async src=https://cdn.mathjax.org/mathjax/latest/MathJax.js></script><div class=foot>&copy; 2019 - 2020 &#183;
+<a href=/>Home</a> · Theme <a href=https://github.com/RainerChiang/simpleness>Simpleness</a> Powered by <a href=https://gohugo.io/>Hugo</a> &#183;
+<a href=#><i class="fas fa-chevron-up"></i></a></div><script src=/js/lazyload.min.js></script><script>var lazyImage=new LazyLoad({container:document.getElementById('article')});</script></html>
