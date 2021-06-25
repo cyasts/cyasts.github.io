@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='基于Hadoop的电影流量分析 一、环境安装 主机规划 四台主机，系统CentOS7、内存：1G、硬盘：20G
+四台服务器分配的IP地址：10.0.0.10/21/22/23
+规划：20用作主节点用作hadoop-master，其它三台为数据节点21、22、23用作hadoop-salve1~3
+JDK使用1.8版本
+hadoop使用2.8.5版本、hive使用2.3.6版本
+先安装master节点，然后采用克隆的方式复制出3台slave节点。这样可以减少配置的工作量。
+安装配置master节点 CentOS7安装过程不叙述。
+1、配置网卡 vi /etc/sysconfig/network-scripts/ifcfg-ens33 TYPE=Ethernet PROXY_METHOD=none BROWSER_ONLY=no BOOTPROTO=static DEFROUTE=yes NAME=ens33 UUID=28c7be74-55f0-4164-9e03-37da81b8f5c3 DEVICE=ens33 ONBOOT=yes IPADDR=10.0.0.10 NETMASK=255.255.255.0 GATEWAY=10.0.0.2 DNS1=8.8.8.8 2、修改主机名 vi /etc/hostname HOSTNAME=hadoop-master 3、安装软件 yum install -y lrzsz vim 4、配置hosts vim /etc/hosts 然后按照规划的主机和ip地址配置
+10.0.0.10 hadoop-master 10.0.0.21 hadoop-slave1 10.0.0.22 hadoop-slave2 10.0.0.23 hadoop-slave3 5、关闭防火墙和SELINUX 关闭防火墙 systemctl stop firewalld systemctl disable firewalld 关闭SELINUX vim /etc/selinux/config 修改其中的selinux为
+SELINUX=disabled 7、安装jdk 执行
+rz -y 上传文件，然后解压
+tar -zxvf jdk-8u291-linux-x64.tar.gz -C /usrl/local/ mv /usr/local/jdk-8u291-linux-x64 jdk 设置环境变量'><title>hadoop环境搭建</title>
+
+<link rel='canonical' href='https://cyasts.github.io/p/hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='hadoop环境搭建'>
+<meta property='og:description' content='基于Hadoop的电影流量分析 一、环境安装 主机规划 四台主机，系统CentOS7、内存：1G、硬盘：20G
+四台服务器分配的IP地址：10.0.0.10/21/22/23
+规划：20用作主节点用作hadoop-master，其它三台为数据节点21、22、23用作hadoop-salve1~3
+JDK使用1.8版本
+hadoop使用2.8.5版本、hive使用2.3.6版本
+先安装master节点，然后采用克隆的方式复制出3台slave节点。这样可以减少配置的工作量。
+安装配置master节点 CentOS7安装过程不叙述。
+1、配置网卡 vi /etc/sysconfig/network-scripts/ifcfg-ens33 TYPE=Ethernet PROXY_METHOD=none BROWSER_ONLY=no BOOTPROTO=static DEFROUTE=yes NAME=ens33 UUID=28c7be74-55f0-4164-9e03-37da81b8f5c3 DEVICE=ens33 ONBOOT=yes IPADDR=10.0.0.10 NETMASK=255.255.255.0 GATEWAY=10.0.0.2 DNS1=8.8.8.8 2、修改主机名 vi /etc/hostname HOSTNAME=hadoop-master 3、安装软件 yum install -y lrzsz vim 4、配置hosts vim /etc/hosts 然后按照规划的主机和ip地址配置
+10.0.0.10 hadoop-master 10.0.0.21 hadoop-slave1 10.0.0.22 hadoop-slave2 10.0.0.23 hadoop-slave3 5、关闭防火墙和SELINUX 关闭防火墙 systemctl stop firewalld systemctl disable firewalld 关闭SELINUX vim /etc/selinux/config 修改其中的selinux为
+SELINUX=disabled 7、安装jdk 执行
+rz -y 上传文件，然后解压
+tar -zxvf jdk-8u291-linux-x64.tar.gz -C /usrl/local/ mv /usr/local/jdk-8u291-linux-x64 jdk 设置环境变量'>
+<meta property='og:url' content='https://cyasts.github.io/p/hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/'>
+<meta property='og:site_name' content='Cyan&#39;s Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2021-06-25T19:41:36&#43;08:00'/><meta property='article:modified_time' content='2021-06-25T19:41:36&#43;08:00'/>
+<meta name="twitter:title" content="hadoop环境搭建">
+<meta name="twitter:description" content="基于Hadoop的电影流量分析 一、环境安装 主机规划 四台主机，系统CentOS7、内存：1G、硬盘：20G
+四台服务器分配的IP地址：10.0.0.10/21/22/23
+规划：20用作主节点用作hadoop-master，其它三台为数据节点21、22、23用作hadoop-salve1~3
+JDK使用1.8版本
+hadoop使用2.8.5版本、hive使用2.3.6版本
+先安装master节点，然后采用克隆的方式复制出3台slave节点。这样可以减少配置的工作量。
+安装配置master节点 CentOS7安装过程不叙述。
+1、配置网卡 vi /etc/sysconfig/network-scripts/ifcfg-ens33 TYPE=Ethernet PROXY_METHOD=none BROWSER_ONLY=no BOOTPROTO=static DEFROUTE=yes NAME=ens33 UUID=28c7be74-55f0-4164-9e03-37da81b8f5c3 DEVICE=ens33 ONBOOT=yes IPADDR=10.0.0.10 NETMASK=255.255.255.0 GATEWAY=10.0.0.2 DNS1=8.8.8.8 2、修改主机名 vi /etc/hostname HOSTNAME=hadoop-master 3、安装软件 yum install -y lrzsz vim 4、配置hosts vim /etc/hosts 然后按照规划的主机和ip地址配置
+10.0.0.10 hadoop-master 10.0.0.21 hadoop-slave1 10.0.0.22 hadoop-slave2 10.0.0.23 hadoop-slave3 5、关闭防火墙和SELINUX 关闭防火墙 systemctl stop firewalld systemctl disable firewalld 关闭SELINUX vim /etc/selinux/config 修改其中的selinux为
+SELINUX=disabled 7、安装jdk 执行
+rz -y 上传文件，然后解压
+tar -zxvf jdk-8u291-linux-x64.tar.gz -C /usrl/local/ mv /usr/local/jdk-8u291-linux-x64 jdk 设置环境变量">
+    </head>
+    <body class="
+    article-page has-toc
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        extended
+    
+">
+    
+        <div id="article-toolbar">
+            <a href="https://cyasts.github.io" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>返回</span>
+            </a>
+        </div>
+    
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/hadoop/" >
+                hadoop
+            </a>
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="/p/hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">hadoop环境搭建</a>
+    </h2>
+
+    <footer class="article-time">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <time class="article-time--published">2021-06-25</time>
+    </footer></div>
+</header>
+
+    <section class="article-content">
+    <h1 id="基于hadoop的电影流量分析">基于Hadoop的电影流量分析</h1>
+<h2 id="一环境安装">一、环境安装</h2>
+<h3 id="主机规划">主机规划</h3>
+<p>四台主机，系统CentOS7、内存：1G、硬盘：20G</p>
+<p>四台服务器分配的IP地址：10.0.0.10/21/22/23</p>
+<p>规划：20用作主节点用作hadoop-master，其它三台为数据节点21、22、23用作hadoop-salve1~3</p>
+<p>JDK使用1.8版本</p>
+<p>hadoop使用2.8.5版本、hive使用2.3.6版本</p>
+<p>先安装master节点，然后采用克隆的方式复制出3台slave节点。这样可以减少配置的工作量。</p>
+<h3 id="安装配置master节点">安装配置master节点</h3>
+<p>CentOS7安装过程不叙述。</p>
+<h4 id="1配置网卡">1、配置网卡</h4>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">vi /etc/sysconfig/network-scripts/ifcfg-ens33
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nv">TYPE</span><span class="o">=</span>Ethernet
+<span class="nv">PROXY_METHOD</span><span class="o">=</span>none
+<span class="nv">BROWSER_ONLY</span><span class="o">=</span>no
+<span class="nv">BOOTPROTO</span><span class="o">=</span>static
+<span class="nv">DEFROUTE</span><span class="o">=</span>yes
+<span class="nv">NAME</span><span class="o">=</span>ens33
+<span class="nv">UUID</span><span class="o">=</span>28c7be74-55f0-4164-9e03-37da81b8f5c3
+<span class="nv">DEVICE</span><span class="o">=</span>ens33
+<span class="nv">ONBOOT</span><span class="o">=</span>yes
+<span class="nv">IPADDR</span><span class="o">=</span>10.0.0.10
+<span class="nv">NETMASK</span><span class="o">=</span>255.255.255.0
+<span class="nv">GATEWAY</span><span class="o">=</span>10.0.0.2
+<span class="nv">DNS1</span><span class="o">=</span>8.8.8.8
+</code></pre></div><h4 id="2修改主机名">2、修改主机名</h4>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">vi /etc/hostname
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nv">HOSTNAME</span><span class="o">=</span>hadoop-master
+</code></pre></div><h4 id="3安装软件">3、安装软件</h4>
+<pre><code>yum install -y lrzsz vim
+</code></pre><h4 id="4配置hosts">4、配置hosts</h4>
+<pre><code>vim /etc/hosts
+</code></pre><p>然后按照规划的主机和ip地址配置</p>
+<pre><code>10.0.0.10 hadoop-master 
+10.0.0.21 hadoop-slave1 
+10.0.0.22 hadoop-slave2
+10.0.0.23 hadoop-slave3
+</code></pre><h4 id="5关闭防火墙和selinux">5、关闭防火墙和SELINUX</h4>
+<h5 id="关闭防火墙">关闭防火墙</h5>
+<pre><code>systemctl stop firewalld
+systemctl disable firewalld
+</code></pre><h5 id="关闭selinux">关闭SELINUX</h5>
+<pre><code>vim /etc/selinux/config
+</code></pre><p>修改其中的selinux为</p>
+<pre><code>SELINUX=disabled
+</code></pre><h4 id="7安装jdk">7、安装jdk</h4>
+<p>执行</p>
+<pre><code>rz -y
+</code></pre><p>上传文件，然后解压</p>
+<pre><code>tar -zxvf jdk-8u291-linux-x64.tar.gz -C /usrl/local/
+mv /usr/local/jdk-8u291-linux-x64 jdk
+</code></pre><p>设置环境变量</p>
+<pre><code>export JAVA_HOME=/usr/local/jdk
+export PATH=$JAVA_HOME/bin:$PATH
+export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+</code></pre><h4 id="8安装hadoop">8、安装hadoop</h4>
+<p>执行</p>
+<pre><code>rz -y
+</code></pre><p>上传文件，然后解压</p>
+<pre><code>tar –zxvf hadoop-2.8.5.tar.gz –C /usr/local/
+mv /usr/local/hadoop-2.8.5 /usr/local/hadoop
+</code></pre><p>设置环境变量</p>
+<pre><code>export HADOOP_HOME=/usr/local/hadoop
+export PATH=$PATH:$HADOOP_HOME/bin
+</code></pre><h4 id="9配置hadoop">9、配置hadoop</h4>
+<h5 id="1配置core-sitexml">1)配置core-site.xml</h5>
+<pre><code>&lt;configuration&gt;
+    &lt;property&gt;
+        &lt;name&gt;hadoop.tmp.dir&lt;/name&gt;
+        &lt;value&gt;file:/usr/local/hadoop/tmp&lt;/value&gt;
+        &lt;description&gt;Abase for other temporary directories.&lt;/description&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;fs.defaultFS&lt;/name&gt;
+        &lt;value&gt;hdfs://hadoop-master:9000&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+            &lt;name&gt;hadoop.proxyuser.root.hosts&lt;/name&gt;
+            &lt;value&gt;*&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+            &lt;name&gt;hadoop.proxyuser.root.groups&lt;/name&gt;
+            &lt;value&gt;*&lt;/value&gt;
+    &lt;/property&gt;
+&lt;/configuration&gt;
+~                    
+</code></pre><h5 id="2配置hdfs-sitexml">2)配置hdfs-site.xml</h5>
+<pre><code>&lt;configuration&gt;
+    &lt;property&gt;
+        &lt;name&gt;dfs.replication&lt;/name&gt;
+        &lt;value&gt;3&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;dfs.name.dir&lt;/name&gt;
+        &lt;value&gt;/usr/local/hadoop/hdfs/name&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;dfs.data.dir&lt;/name&gt;
+        &lt;value&gt;/usr/local/hadoop/hdfs/data&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;dfs.namenode.secondary.http-address&lt;/name&gt;
+        &lt;value&gt;hadoop-slave1:50090&lt;/value&gt;
+    &lt;/property&gt;
+&lt;/configuration&gt;
+</code></pre><h5 id="3配置mapred-sitexml">3)配置mapred-site.xml</h5>
+<pre><code>&lt;configuration&gt;
+    &lt;property&gt;
+      &lt;name&gt;mapreduce.framework.name&lt;/name&gt;
+      &lt;value&gt;yarn&lt;/value&gt;
+  &lt;/property&gt;
+   &lt;property&gt;
+      &lt;name&gt;mapred.job.tracker&lt;/name&gt;
+      &lt;value&gt;http://hadoop-master:9001&lt;/value&gt;
+  &lt;/property&gt;
+&lt;/configuration&gt;
+</code></pre><h5 id="4配置yarn-sitexml">4)配置yarn-site.xml</h5>
+<pre><code>&lt;configuration&gt;
+
+&lt;!-- Site specific YARN configuration properties --&gt;
+    &lt;property&gt;
+        &lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;
+        &lt;value&gt;mapreduce_shuffle&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;yarn.resourcemanager.hostname&lt;/name&gt;
+        &lt;value&gt;hadoop-master&lt;/value&gt;
+    &lt;/property&gt;
+
+&lt;/configuration&gt;
+</code></pre><h5 id="5配置masters文件">5)配置masters文件</h5>
+<p>修改/usr/local/hadoop/etc/hadoop/masters文件，该文件指定namenode节点所在的服务器机器。删除localhost，添加namenode节点的主机名hadoop-master；不建议使用IP地址，因为IP地址可能会变化，但是主机名一般不会变化。</p>
+<pre><code>hadoop-master
+</code></pre><h5 id="6配置slaves文件master主机特有">6)配置slaves文件（Master主机特有）</h5>
+<p>修改/usr/local/hadoop/etc/hadoop/slaves文件，该文件指定哪些服务器节点是datanode节点。删除locahost，添加所有datanode节点的主机名.</p>
+<pre><code>hadoop-slave1
+hadoop-slave2
+hadoop-slave3
+</code></pre><h3 id="克隆slave主机">克隆slave主机</h3>
+<p>在vmware虚拟机中对master主机进行克隆，要注意的是
+<img src="https://cdn.jsdelivr.net/gh/cyasts/image@main/20210622232302.png" alt="20210622232302"  /></p>
+<p>这里一定要选完整克隆。克隆出三台并依次命名为</p>
+<pre><code>hadoop-slave1
+hadoop-slave2
+</code></pre><p>最终主机如下：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/cyasts/image@main/20210622232425.png" alt="20210622232425"  /></p>
+<p>由于slave1~3主机为datanode，所以hadoop的配置文件中不能有slave文件。
+依次对三台主机执行命令：</p>
+<pre><code>rm -f /usr/local/hadoop/etc/hadoop/slaves
+</code></pre><p>删除掉slaves文件</p>
+<p>然后修改hadoop-slave1~3的hostname和网卡ip地址和主机规划中的一样即可。</p>
+<h3 id="集群配置">集群配置</h3>
+<h4 id="1免密登录">1、免密登录</h4>
+<h5 id="1生成密钥">1）.生成密钥</h5>
+<p>在每台主机上执行</p>
+<pre><code>ssh-keygen -t rsa
+</code></pre><h5 id="2分发密钥">2）.分发密钥</h5>
+<p>master主机要和三台slave主机通信，所以要把master主机的密钥分发给<strong>全部</strong>的slave主机。</p>
+<p>在master主机上执行</p>
+<pre><code>ssh-copy-id -i .ssh/id_rsa.pub  root@10.0.0.21
+ssh-copy-id -i .ssh/id_rsa.pub  root@10.0.0.22
+ssh-copy-id -i .ssh/id_rsa.pub  root@10.0.0.23
+</code></pre><p>而slave1~3主机只需要和master主机通信，所以三台slave主机只需要分发密钥给master主机
+在三台slave主机上分别执行</p>
+<pre><code>ssh-copy-id -i .ssh/id_rsa.pub  root@10.0.0.10
+</code></pre><h5 id="3测试连接">3）.测试连接</h5>
+<p>在master主机上执行</p>
+<pre><code>ssh hadoop-slave
+</code></pre><p>出现</p>
+<p><img src="https://cdn.jsdelivr.net/gh/cyasts/image@main/20210622233809.png" alt="20210622233809"  /></p>
+<p>则说明免密登录成功。</p>
+<p>然后分别测试master和其他主机的连接。</p>
+<h4 id="2格式化hdfs和启动">2、格式化hdfs和启动</h4>
+<p>执行</p>
+<pre><code>cd /usr/local/hadoop/bin
+hdfs namenode -format
+</code></pre><p>出现</p>
+<p><img src="https://cdn.jsdelivr.net/gh/cyasts/image@main/20210622234440.png" alt="20210622234440"  /></p>
+<p>格式化成功。</p>
+<p>然后运行</p>
+<pre><code>cd /usr/local/hadoop/sbin
+./start-all.sh
+</code></pre><p>出现</p>
+<p><img src="https://cdn.jsdelivr.net/gh/cyasts/image@main/20210622234723.png" alt="20210622234723"  /></p>
+<p>启动成功。</p>
+<p>进入网页查看：
+http://10.0.0.10:50070</p>
+<p><img src="https://cdn.jsdelivr.net/gh/cyasts/image@main/20210623003941.png" alt="20210623003941"  /></p>
+<p>http://10.0.0.10:8088</p>
+<p><img src="https://cdn.jsdelivr.net/gh/cyasts/image@main/20210623004013.png" alt="20210623004013"  /></p>
+<h4 id="3在master主机上安装mariadb">3、在master主机上安装mariadb</h4>
+<h5 id="1安装mariadb">1）.安装mariadb</h5>
+<p>执行</p>
+<pre><code>yum -y install mariadb-server mariadb
+</code></pre><p>然后执行</p>
+<pre><code>mysql_secure_installation
+</code></pre><p>设置root密码。</p>
+<h5 id="2配置">2）.配置</h5>
+<p>然后修改mariadb的端口和字符集</p>
+<pre><code>vim /etc/my.cnf
+</code></pre><pre><code>[mysqld]
+datadir=/var/lib/mysql
+socket=/var/lib/mysql/mysql.sock
+port=3306
+# Disabling symbolic-links is recommended to prevent assorted security risks
+symbolic-links=0
+init_connect='SET collation_connection = utf8_unicode_ci'
+init_connect='SET NAMES utf8'
+character-set-server=utf8
+collation-server=utf8_unicode_ci
+skip-character-set-client-handshake
+# Settings user and group are ignored when systemd is used.
+# If you need to run mysqld under a different user or group,
+# customize your systemd unit file for mariadb according to the
+# instructions in http://fedoraproject.org/wiki/Systemd
+
+[mysqld_safe]
+log-error=/var/log/mariadb/mariadb.log
+pid-file=/var/run/mariadb/mariadb.pid
+
+#
+# include all files from the config directory
+#
+!includedir /etc/my.cnf.d
+</code></pre><h4 id="4在master主机上安装hive">4、在master主机上安装hive</h4>
+<h5 id="1安装hive">1）.安装hive</h5>
+<p>执行</p>
+<pre><code>rz -y
+</code></pre><p>上传文件</p>
+<p>然后解压文件</p>
+<pre><code>tar –xzvf apache-hive-2.3.6-bin.tar.gz –C /usr/local/
+mv /usr/local/apache-hive-2.3.6 /usr/local/hive
+</code></pre><p>配置环境变量</p>
+<pre><code>vim /etc/profile
+</code></pre><pre><code>export HIVE_HOME=/usr/local/hive
+export HIVE_CONF_DIR=$HIVE_HOME/conf
+export PATH=$HIVE_HOME/bin:$PATH
+</code></pre><h5 id="2配置hive">2）.配置hive</h5>
+<p>配置文件位于<code>/usr/local/hive/conf</code></p>
+<pre><code>cd /usr/local/hive/conf
+</code></pre><p>先复制<code>hive-default.xml.template</code>为<code>hive-site.xml</code></p>
+<pre><code>cp hive-default.xml.template hive-site.xml
+</code></pre><p>然后编辑hive-site.xml,修改要连接的数据库和用户及密码。</p>
+<pre><code>&lt;configuration&gt;
+    &lt;property&gt;
+        &lt;name&gt;javax.jdo.option.ConnectionURL&lt;/name&gt;
+        &lt;value&gt;jdbc:mysql://10.0.0.10:3306/metastore?createDatabaseIfNotExist=true&amp;amp;characterEncoding=utf-8&amp;amp;useSSL=false&lt;/value&gt;
+        &lt;description&gt;the URL of the MySQL database&lt;/description&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;javax.jdo.option.ConnectionDriverName&lt;/name&gt;
+        &lt;value&gt;com.mysql.cj.jdbc.Driver&lt;/value&gt;
+        &lt;description&gt;Driver class name for a JDBC metastore&lt;/description&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;javax.jdo.option.ConnectionUserName&lt;/name&gt;
+        &lt;value&gt;root&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;javax.jdo.option.ConnectionPassword&lt;/name&gt;
+        &lt;value&gt;123456&lt;/value&gt;
+        &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;hive.metastore.warehouse.dir&lt;/name&gt;
+        &lt;value&gt;/hive/warehouse&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;hive.exec.scratchdir&lt;/name&gt;
+        &lt;value&gt;/hive/tmp&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;hive.querylog.location&lt;/name&gt;
+        &lt;value&gt;/hive/log&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;hive.metastore.schema.verification&lt;/name&gt;
+        &lt;value&gt;false&lt;/value&gt;
+    &lt;/property&gt;
+&lt;/configuration&gt;
+~                
+</code></pre><p>编辑 <code>hive-env.sh</code>，配置hadoop和jdk的路径</p>
+<pre><code># Set HADOOP_HOME to point to a specific hadoop install directory
+export HADOOP_HOME=/usr/local/hadoop
+
+# Hive Configuration Directory can be controlled by:
+export HIVE_CONF_DIR=/usr/local/hive/conf
+
+# Folder containing extra libraries required for hive compilation/execution can be controlled by:
+# export HIVE_AUX_JARS_PATH=
+export JAVA_HOME=/usr/local/jdk
+</code></pre><h4 id="3将mysql的jdbc连接驱动上传至hive的lib目录">3.将mysql的jdbc连接驱动上传至hive的lib目录</h4>
+<pre><code>rz -y
+</code></pre><pre><code>cp mysql-connector-java.jar /usr/local/hive/lib
+</code></pre><h4 id="4在hdfs中创建hive-sitexml中配置的目录">4.在hdfs中创建<code>hive-site.xml</code>中配置的目录</h4>
+<pre><code>hdfs dfs -mkdir /hive/
+hdfs dfs -mkdir /hive/warehouse
+hdfs dfs -mkdir /hive/log
+hdfs dfs -mkdir /hive/tmp
+hdfs dfs -chmod -R 777 /hive
+</code></pre><p>建立好的目录为:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/cyasts/image@main/20210623010944.png" alt="20210623010944"  /></p>
+<h4 id="5初始化hive元数据库">5.初始化hive元数据库</h4>
+<pre><code>/usr/local/hive-2.1.1/bin/schematool  -initSchema -dbType mysql
+</code></pre><h4 id="6启动服务">6.启动服务</h4>
+<pre><code>nohup hive --service metastore &amp;
+nohup hive --service hiveserver2 &amp;
+</code></pre><h2 id="二创建数据库">二、创建数据库</h2>
+<h3 id="数据">数据</h3>
+<p>数据来源于网络</p>
+<ol>
+<li>
+<p>users.dat</p>
+<p>数据格式为： 2::M::56::16::70072</p>
+<p>共有6040条数据</p>
+<p>对应字段为：UserID BigInt, Gender String, Age Int, Occupation String, Zipcode String</p>
+</li>
+<li>
+<p>movies.dat</p>
+<p>数据格式为： 2::Jumanji (1995)::Adventure|Children&rsquo;s|Fantasy</p>
+<p>共有3883条数据</p>
+<p>对应字段为：MovieID BigInt, Title String, Genres String</p>
+</li>
+<li>
+<p>ratings.dat</p>
+<p>数据格式为： 1::1193::5::978300760</p>
+<p>共有1000209条数据</p>
+<p>对应字段为：UserID BigInt, MovieID BigInt, Rating Double, Timestamped String</p>
+</li>
+</ol>
+<p>先将数据上传至<code>/root/</code>目录下</p>
+<pre><code>cd /root/
+rz -y
+</code></pre><h2 id="预处理">预处理</h2>
+<p>原始数据是以::进行切分的，hive不支持解析多字节的分隔符，也就是说hive只能解析':', 不支持解析'::'，所以用普通方式建表来使用是行不通的，要对数据做一次简单清洗。此处使用能解析多字节分隔符的Serde即可。使用RegexSerde需要两个参数：</p>
+<pre><code>input.regex = &quot;(.*)::(.*)::(.*)&quot;
+output.format.string = &quot;%1$s %2$s %3$s&quot;
+</code></pre><h2 id="创建数据库和表">创建数据库和表</h2>
+<h3 id="1规划">1.规划</h3>
+<p>创建一个数据库movie，在movie数据库中创建3张表，t_user，t_movie，t_rating</p>
+<pre><code>t_user:userid bigint,sex string,age int,occupation string,zipcode string
+t_movie:movieid bigint,moviename string,movietype string
+t_rating:userid bigint,movieid bigint,rate double,times string
+</code></pre><h3 id="2创建数据库">2.创建数据库</h3>
+<pre><code>create database if not exists movie;
+use movie;
+</code></pre><p><img src="https://cdn.jsdelivr.net/gh/cyasts/image@main/20210623012536.png" alt="20210623012536"  /></p>
+<h3 id="3创建t_user表并导入数据">3.创建t_user表并导入数据</h3>
+<pre><code>create table t_user(
+userid bigint,
+sex string,
+age int,
+occupation string,
+zipcode string) 
+row format serde 'org.apache.hadoop.hive.serde2.RegexSerDe' 
+with serdeproperties('input.regex'='(.*)::(.*)::(.*)::(.*)::(.*)','output.format.string'='%1$s %2$s %3$s %4$s %5$s')
+stored as textfile;
+</code></pre><p>load data local inpath &ldquo;/root/users.dat&rdquo; into table t_user;</p>
+<p><img src="https://cdn.jsdelivr.net/gh/cyasts/image@main/20210623012627.png" alt="20210623012627"  /></p>
+<h3 id="4创建t_movie表">4.创建t_movie表</h3>
+<pre><code>create table t_movie(
+movieid bigint,
+moviename string,
+movietype string) 
+row format serde 'org.apache.hadoop.hive.serde2.RegexSerDe' 
+with serdeproperties('input.regex'='(.*)::(.*)::(.*)','output.format.string'='%1$s %2$s %3$s')
+stored as textfile;
+
+load data local inpath &quot;/root/movies.dat&quot; into table t_movie;
+</code></pre><p><img src="https://cdn.jsdelivr.net/gh/cyasts/image@main/20210623012701.png" alt="20210623012701"  /></p>
+<h3 id="5创建t_rating表">5.创建t_rating表</h3>
+<pre><code>create table t_rating(
+userid bigint,
+movieid bigint,
+rate double,
+times string) 
+row format serde 'org.apache.hadoop.hive.serde2.RegexSerDe' 
+with serdeproperties('input.regex'='(.*)::(.*)::(.*)::(.*)','output.format.string'='%1$s %2$s %3$s %4$s')
+stored as textfile;
+
+load data local inpath &quot;/root/ratings.dat&quot; into table t_rating;
+</code></pre><p><img src="https://cdn.jsdelivr.net/gh/cyasts/image@main/20210623012732.png" alt="20210623012732"  /></p>
+<h3 id="6总表">6.总表</h3>
+<p>创建好的表：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/cyasts/image@main/20210623012827.png" alt="20210623012827"  /></p>
+<h2 id="三统计分析">三、统计分析</h2>
+<h3 id="需求">需求</h3>
+<ol>
+<li>根据用户观看的日期的时间分析在一周中哪一天观看电影的用户最多，也就是电影浏览量峰值。</li>
+<li>统计被评分次数最多的10部电影，并给出评分次数（电影名，评分次数）</li>
+<li>统计男性，女性当中评分最高的10部电影（性别，电影名，影评分）</li>
+<li>统计评分&gt;=4.0最多的那个年份的最好看的10部电影</li>
+<li>各种类型电影中评价最高的5部电影（类型，电影名，平均影评分）</li>
+<li>统计地区最高评分的电影名，把结果存入HDFS（地区，电影名，影评分）</li>
+</ol>
+<h3 id="分析解决">分析解决</h3>
+<h4 id="1-根据用户观看的日期的时间分析在一周中哪一天观看电影的用户最多也就是电影浏览量峰值">1. 根据用户观看的日期的时间分析在一周中哪一天观看电影的用户最多，也就是电影浏览量峰值。</h4>
+<h5 id="1思路分析">1）思路分析</h5>
+<p>由于rating.dat数据中的时间为unix时间戳，所以需要对时间进行转换</p>
+<p>编写python脚本进行数据清洗：对数据的日期进行转换</p>
+<pre><code>import sys
+import datetime
+
+for line in sys.stdin:
+  line = line.strip()
+  userid, movieid, rate, unixtime = line.split('\t')
+  weekday = datetime.datetime.fromtimestamp(float(unixtime)).isoweekday()
+  print '\t'.join([userid, movieid, rate, str(weekday)])
+</code></pre><p>使用python脚本对原来的表中的数据进行清洗，然后再创建一个新的表，</p>
+<pre><code>CREATE TABLE t_rating_new (
+userid INT,
+movieid INT,
+rate INT,
+weekday INT)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY '\t';
+
+add FILE /root/weekday_mapper.py;
+
+INSERT OVERWRITE TABLE t_rating_new
+SELECT
+TRANSFORM (userid, movieid, rate, times)
+USING 'python weekday_mapper.py'
+AS (userid, movieid, rate, weekday)
+FROM t_rating;
+</code></pre><p>执行过程：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/cyasts/image@main/20210623013038.png" alt="20210623013038"  /></p>
+<p>mapreduce会自动计算任务工作量，然后分配节点数来完成任务。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/cyasts/image@main/20210623013006.png" alt="20210623013006"  /></p>
+<h5 id="2sql">2）SQL</h5>
+<p>按照电影名进行分组统计，求出每部电影的评分次数并按照评分次数降序排序</p>
+<pre><code>SELECT weekday, COUNT(1) cnt FROM t_rating_new GROUP BY weekday order by cnt desc;
+</code></pre><h5 id="3结果">3)结果</h5>
+<p><img src="https://cdn.jsdelivr.net/gh/cyasts/image@main/20210623015707.png" alt="20210623015707"  /></p>
+<p><img src="https://cdn.jsdelivr.net/gh/cyasts/image@main/20210623020112.png" alt="20210623020112"  /></p>
+<h4 id="2-统计被评分次数最多的10部电影并给出评分次数电影名评分次数">2. 统计被评分次数最多的10部电影，并给出评分次数（电影名，评分次数）</h4>
+<h5 id="1思路分析-1">1）思路分析</h5>
+<p>按照电影名进行分组统计，求出每部电影的评分次数并按照评分次数降序排序</p>
+<h5 id="2sql-1">2）SQL</h5>
+<pre><code>select a.moviename as moviename,count(a.moviename) as total 
+from t_movie a join t_rating b on a.movieid=b.movieid 
+group by a.moviename 
+order by total desc 
+limit 10;
+</code></pre><h5 id="3结果-1">3)结果</h5>
+<p><img src="https://cdn.jsdelivr.net/gh/cyasts/image@main/20210623020423.png" alt="20210623020423"  /></p>
+<p><img src="https://cdn.jsdelivr.net/gh/cyasts/image@main/20210623125239.png" alt="20210623125239"  /></p>
+<h4 id="3-分别求男性女性当中评分最高的10部电影性别电影名影评分">3. 分别求男性，女性当中评分最高的10部电影（性别，电影名，影评分）</h4>
+<h5 id="1思路分析-2">1）思路分析</h5>
+<p>t_user,t_movie,t_rating三表联合查询，按照性别过滤条件，电影名作为分组条件，影评分作为排序条件进行查询</p>
+<h5 id="2sql-2">2）SQL</h5>
+<ol>
+<li>女性当中评分最高的10部电影（性别，电影名，影评分）评论次数大于等于50次
+<pre><code>select &quot;F&quot; as sex, c.moviename as name, avg(a.rate) as avgrate, 
+count(c.moviename) as total  from t_rating a 
+join t_user b on a.userid=b.userid 
+join t_movie c on a.movieid=c.movieid 
+where b.sex=&quot;F&quot; 
+group by c.moviename 
+having total &gt;= 50
+order by avgrate desc 
+limit 10;
+</code></pre></li>
+<li>男性当中评分最高的10部电影（性别，电影名，影评分）评论次数大于等于50次
+<pre><code>select &quot;M&quot; as sex, c.moviename as name, avg(a.rate) as avgrate, count(c.moviename) as total  
+from t_rating a 
+join t_user b on a.userid=b.userid 
+join t_movie c on a.movieid=c.movieid 
+where b.sex=&quot;M&quot; 
+group by c.moviename 
+having total &gt;= 50
+order by avgrate desc 
+limit 10;
+</code></pre></li>
+</ol>
+<h5 id="3结果-2">3)结果</h5>
+<p><img src="https://cdn.jsdelivr.net/gh/cyasts/image@main/20210623131553.png" alt="20210623131553"  /></p>
+<p><img src="https://cdn.jsdelivr.net/gh/cyasts/image@main/20210623133146.png" alt="20210623133146"  /></p>
+<p><img src="https://cdn.jsdelivr.net/gh/cyasts/image@main/20210623133722.png" alt="20210623133722"  /></p>
+<p><img src="https://cdn.jsdelivr.net/gh/cyasts/image@main/20210623133705.png" alt="20210623133705"  /></p>
+<h4 id="4-统计评分40最多的那个年份的最好看的10部电影">4. 统计评分&gt;=4.0最多的那个年份的最好看的10部电影</h4>
+<h5 id="1思路分析-3">1）思路分析</h5>
+<ol>
+<li>由于电影名字后面有上映年份，所以可以将t_rating和t_movie表进行联合查询，将电影名当中的上映年份截取出来。</li>
+<li>照年份进行分组条件，按照评分&gt;=4.0作为where过滤条件，按照count(years)作为排序条件进行查询</li>
+<li>按照第二步中查出的年份作为where过滤条件，按照评分作为排序条件进行查询</li>
+</ol>
+<h5 id="2sql-3">2）SQL</h5>
+<ol>
+<li>
+<p>将t_rating和t_movie表进行联合查询，将电影名当中的上映年份截取出来</p>
+<pre><code>create table rating_years as
+select  a.movieid as movieid, a.moviename as moviename, substr(a.moviename,-5,4) as years, avg(b.rate) as avgrate
+from t_movie a join t_rating b on a.movieid=b.movieid 
+group by a.movieid, a.moviename;
+</code></pre></li>
+<li>
+<p>从rating_years按照年份进行分组条件，按照评分&gt;=4.0作为where过滤条件，按照count(years)作为排序条件进行查询</p>
+<pre><code>select years, count(years) as total 
+ from rating_years a 
+ where avgrate &gt;= 4.0 
+ group by years 
+ order by total desc 
+ limit 1;
+</code></pre><p>从结果中得到年份</p>
+<p><img src="https://cdn.jsdelivr.net/gh/cyasts/image@main/20210623134107.png" alt="20210623134107"  /></p>
+</li>
+<li>
+<p>where过滤条件，按照评分作为排序条件进行查找</p>
+<pre><code>select a.moviename as name, a.avgrate as rate 
+ from rating_years a 
+ where a.years=1998 
+ order by rate desc 
+ limit 10;
+</code></pre></li>
+</ol>
+<h5 id="3结果-3">3）结果</h5>
+<p><img src="https://cdn.jsdelivr.net/gh/cyasts/image@main/20210623134212.png" alt="20210623134212"  /></p>
+<p><img src="https://cdn.jsdelivr.net/gh/cyasts/image@main/20210623140334.png" alt="20210623140334"  /></p>
+<h4 id="5-各种类型电影中评价最高的5部电影类型电影名平均影评分">5. 各种类型电影中评价最高的5部电影（类型，电影名，平均影评分）</h4>
+<h5 id="1思路分析-4">1）思路分析</h5>
+<ol>
+<li>需要电影类型，所以需要将moive中的type字段进行裂变，将结果保存</li>
+<li>求TopN，按照type分组，需要添加一列来记录每组的顺序</li>
+<li>从结果中出num列序号&lt;=5的</li>
+</ol>
+<h5 id="2sql-4">2）SQL：</h5>
+<ol>
+<li>需要电影类型，所以要把t_movie表和rating_years连接，然后对type字段进行裂变
+<pre><code>create table t_movie_sort as 
+ select c.id as id, c.name as name, c.years as years, c.rate as rate, tv.type as type 
+ from (
+     select b.movieid as id, b.moviename as name, b.years as years, b.avgrate as rate, a.movietype as type 
+     from t_movie a join rating_years b on a.movieid=b.movieid
+     ) c
+ lateral view explode(split(c.type,&quot;\\|&quot;)) tv as type;
+</code></pre></li>
+<li>按照电影类型和上映年份进行分组，按照影评分进行排序, 需要添加一列来记录每组的顺序。然后取出num列序号&lt;=5
+<pre><code>select * from (
+        select id,name,years,rate,type,row_number() over(distribute by type sort by rate desc) 
+        as num from t_movie_sort 
+    ) a 
+where a.num &lt;= 5;
+</code></pre></li>
+</ol>
+<h5 id="3结果-4">3）结果</h5>
+<p>由于数据太多(电影总共有19中类型)，就只截部分图。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/cyasts/image@main/20210623140810.png" alt="20210623140810"  /></p>
+<h4 id="6-统计地区最高评分的电影名把结果存入hdfs地区电影名影评分">6. 统计地区最高评分的电影名，把结果存入HDFS（地区，电影名，影评分）</h4>
+<h5 id="1思路分析-5">1）思路分析</h5>
+<ol>
+<li>需要把t_movie，t_rating，t_user三张表进行联合查询，取出电影id、电影名称、影评分、地区，将结果保存到</li>
+<li>求TopN，按照地区分组，按照平均排序，添加一列num用来记录地区排名</li>
+<li>按照num=1作为where过滤条件取出结果数据</li>
+</ol>
+<h5 id="2sql-5">2）SQL</h5>
+<ol>
+<li>
+<p>需要把三张表进行联合查询，取出电影id、电影名称、影评分、地区</p>
+<pre><code>create table rating_area as
+    select c.movieid, c.moviename, avg(b.rate) as avgrate, a.zipcode
+    from t_user a 
+    join t_rating b on a.userid=b.userid 
+    join t_movie c on b.movieid=c.movieid 
+    group by a.zipcode,c.movieid, c.moviename;
+</code></pre></li>
+<li>
+<p>按照地区分组，按照平均评分排序，添加一列num用来记录地区排名，求TopN，然后按照num=1作为过滤条件取出结果数据</p>
+<pre><code>select t.* from
+(
+    select movieid,moviename,avgrate,zipcode, row_number() 
+    over (distribute by zipcode sort by avgrate) as num  
+    from rating_area 
+) t 
+where t.num=1;
+</code></pre></li>
+</ol>
+<h5 id="3结果-5">3）结果</h5>
+<p>同样由于数据太多(地区码太多)，就只截部分图。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/cyasts/image@main/20210623141204.png" alt="20210623141204"  /></p>
+<h2 id="四出现的问题">四、出现的问题</h2>
+<h3 id="1-问题">1. 问题</h3>
+<p>启动hadoop集群后，发现所有的datanode都没有成功启动</p>
+<p><img src="https://cdn.jsdelivr.net/gh/cyasts/image@main/20210623130613.png" alt="20210623130613"  /></p>
+<p>在网页中查看存活的节点数也为0：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/cyasts/image@main/20210623130440.png" alt="20210623130440"  /></p>
+<h3 id="2-解决方法">2. 解决方法</h3>
+<p>网上查到：</p>
+<blockquote>
+<p>当我们使用hadoop namenode -format格式化namenode时，会在namenode数据文件夹（这个文件夹为自己配置文件中dfs.
+name.dir的路径）中保存一个current/VERSION文件，记录clusterID，datanode中保存的current/VERSION文件中的clustreID的值是上一次格式化保存的clusterID，这样，datanode和namenode之间的ID不一致。</p>
+</blockquote>
+<p>想到自己的hadoop环境经过了两次格式化，原因就是如此。要解决这个问题，只需要在dfs/name目录下找到一个current/VERSION文件，记录clusterID并复制。然后dfs/data目录下找到一个current/VERSION文件，将其中clustreID的值替换成刚刚复制的clusterID的值即可。</p>
+<p>问题成功解决。
+<img src="https://cdn.jsdelivr.net/gh/cyasts/image@main/20210623130543.png" alt="20210623130543"  /></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    </footer>
+
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+</aside>
+
+     
+     
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2021 Cyan&#39;s Blog
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="2.4.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title">目录</h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#一环境安装">一、环境安装</a>
+      <ol>
+        <li><a href="#主机规划">主机规划</a></li>
+        <li><a href="#安装配置master节点">安装配置master节点</a>
+          <ol>
+            <li><a href="#1配置网卡">1、配置网卡</a></li>
+            <li><a href="#2修改主机名">2、修改主机名</a></li>
+            <li><a href="#3安装软件">3、安装软件</a></li>
+            <li><a href="#4配置hosts">4、配置hosts</a></li>
+            <li><a href="#5关闭防火墙和selinux">5、关闭防火墙和SELINUX</a></li>
+            <li><a href="#7安装jdk">7、安装jdk</a></li>
+            <li><a href="#8安装hadoop">8、安装hadoop</a></li>
+            <li><a href="#9配置hadoop">9、配置hadoop</a></li>
+          </ol>
+        </li>
+        <li><a href="#克隆slave主机">克隆slave主机</a></li>
+        <li><a href="#集群配置">集群配置</a>
+          <ol>
+            <li><a href="#1免密登录">1、免密登录</a></li>
+            <li><a href="#2格式化hdfs和启动">2、格式化hdfs和启动</a></li>
+            <li><a href="#3在master主机上安装mariadb">3、在master主机上安装mariadb</a></li>
+            <li><a href="#4在master主机上安装hive">4、在master主机上安装hive</a></li>
+            <li><a href="#3将mysql的jdbc连接驱动上传至hive的lib目录">3.将mysql的jdbc连接驱动上传至hive的lib目录</a></li>
+            <li><a href="#4在hdfs中创建hive-sitexml中配置的目录">4.在hdfs中创建<code>hive-site.xml</code>中配置的目录</a></li>
+            <li><a href="#5初始化hive元数据库">5.初始化hive元数据库</a></li>
+            <li><a href="#6启动服务">6.启动服务</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#二创建数据库">二、创建数据库</a>
+      <ol>
+        <li><a href="#数据">数据</a></li>
+      </ol>
+    </li>
+    <li><a href="#预处理">预处理</a></li>
+    <li><a href="#创建数据库和表">创建数据库和表</a>
+      <ol>
+        <li><a href="#1规划">1.规划</a></li>
+        <li><a href="#2创建数据库">2.创建数据库</a></li>
+        <li><a href="#3创建t_user表并导入数据">3.创建t_user表并导入数据</a></li>
+        <li><a href="#4创建t_movie表">4.创建t_movie表</a></li>
+        <li><a href="#5创建t_rating表">5.创建t_rating表</a></li>
+        <li><a href="#6总表">6.总表</a></li>
+      </ol>
+    </li>
+    <li><a href="#三统计分析">三、统计分析</a>
+      <ol>
+        <li><a href="#需求">需求</a></li>
+        <li><a href="#分析解决">分析解决</a>
+          <ol>
+            <li><a href="#1-根据用户观看的日期的时间分析在一周中哪一天观看电影的用户最多也就是电影浏览量峰值">1. 根据用户观看的日期的时间分析在一周中哪一天观看电影的用户最多，也就是电影浏览量峰值。</a></li>
+            <li><a href="#2-统计被评分次数最多的10部电影并给出评分次数电影名评分次数">2. 统计被评分次数最多的10部电影，并给出评分次数（电影名，评分次数）</a></li>
+            <li><a href="#3-分别求男性女性当中评分最高的10部电影性别电影名影评分">3. 分别求男性，女性当中评分最高的10部电影（性别，电影名，影评分）</a></li>
+            <li><a href="#4-统计评分40最多的那个年份的最好看的10部电影">4. 统计评分&gt;=4.0最多的那个年份的最好看的10部电影</a></li>
+            <li><a href="#5-各种类型电影中评价最高的5部电影类型电影名平均影评分">5. 各种类型电影中评价最高的5部电影（类型，电影名，平均影评分）</a></li>
+            <li><a href="#6-统计地区最高评分的电影名把结果存入hdfs地区电影名影评分">6. 统计地区最高评分的电影名，把结果存入HDFS（地区，电影名，影评分）</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#四出现的问题">四、出现的问题</a>
+      <ol>
+        <li><a href="#1-问题">1. 问题</a></li>
+        <li><a href="#2-解决方法">2. 解决方法</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
