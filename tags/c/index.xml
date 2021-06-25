@@ -9,10 +9,10 @@
     <lastBuildDate>Wed, 16 Sep 2020 15:20:00 +0800</lastBuildDate><atom:link href="https://cyasts.github.io/tags/c/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>稳定匹配问题</title>
-      <link>https://cyasts.github.io/p/%E7%A8%B3%E5%AE%9A%E5%8C%B9%E9%85%8D%E9%97%AE%E9%A2%98/</link>
+      <link>https://cyasts.github.io/p/stablematche/</link>
       <pubDate>Wed, 16 Sep 2020 15:20:00 +0800</pubDate>
       
-      <guid>https://cyasts.github.io/p/%E7%A8%B3%E5%AE%9A%E5%8C%B9%E9%85%8D%E9%97%AE%E9%A2%98/</guid>
+      <guid>https://cyasts.github.io/p/stablematche/</guid>
       <description>1.问题描述 给定 N 个男性 $ m_{1} $ ,⋯,$m_{n}$ 和 N 个女性$w_{1}$,⋯,$w_{n}$
  每个男性对女性由最喜欢到最不喜欢进行排序 每个女性对男性由最喜欢到最不喜欢进行排序  目标：找到一个稳定的匹配使得不满意度最低。
 2.输入 第一行输入 N，表示需要处理的匹配的对数。男性按照 1，2, 3&amp;hellip;N 的编号表示，女性同样如此。

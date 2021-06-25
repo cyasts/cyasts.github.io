@@ -8,13 +8,13 @@ JDK使用1.8版本
 hadoop使用2.8.5版本、hive使用2.3.6版本
 先安装master节点，然后采用克隆的方式复制出3台slave节点。这样可以减少配置的工作量。
 安装配置master节点 CentOS7安装过程不叙述。
-1、配置网卡 vi /etc/sysconfig/network-scripts/ifcfg-ens33 TYPE=Ethernet PROXY_METHOD=none BROWSER_ONLY=no BOOTPROTO=static DEFROUTE=yes NAME=ens33 UUID=28c7be74-55f0-4164-9e03-37da81b8f5c3 DEVICE=ens33 ONBOOT=yes IPADDR=10.0.0.10 NETMASK=255.255.255.0 GATEWAY=10.0.0.2 DNS1=8.8.8.8 2、修改主机名 vi /etc/hostname HOSTNAME=hadoop-master 3、安装软件 yum install -y lrzsz vim4、配置hosts vim /etc/hosts然后按照规划的主机和ip地址配置
-10.0.0.10 hadoop-master 10.0.0.21 hadoop-slave1 10.0.0.22 hadoop-slave210.0.0.23 hadoop-slave35、关闭防火墙和SELINUX 关闭防火墙 systemctl stop firewalldsystemctl disable firewalld关闭SELINUX vim /etc/selinux/config修改其中的selinux为
-SELINUX=disabled7、安装jdk 执行
-rz -y上传文件，然后解压
-tar -zxvf jdk-8u291-linux-x64.tar.gz -C /usrl/local/mv /usr/local/jdk-8u291-linux-x64 jdk设置环境变量'><title>hadoop环境搭建</title>
+1、配置网卡 vi /etc/sysconfig/network-scripts/ifcfg-ens33 TYPE=Ethernet PROXY_METHOD=none BROWSER_ONLY=no BOOTPROTO=static DEFROUTE=yes NAME=ens33 UUID=28c7be74-55f0-4164-9e03-37da81b8f5c3 DEVICE=ens33 ONBOOT=yes IPADDR=10.0.0.10 NETMASK=255.255.255.0 GATEWAY=10.0.0.2 DNS1=8.8.8.8 2、修改主机名 vi /etc/hostname HOSTNAME=hadoop-master 3、安装软件 yum install -y lrzsz vim 4、配置hosts vim /etc/hosts 然后按照规划的主机和ip地址配置
+10.0.0.10 hadoop-master 10.0.0.21 hadoop-slave1 10.0.0.22 hadoop-slave2 10.0.0.23 hadoop-slave3 5、关闭防火墙和SELINUX 关闭防火墙 systemctl stop firewalld systemctl disable firewalld 关闭SELINUX vim /etc/selinux/config 修改其中的selinux为
+SELINUX=disabled 7、安装jdk 执行
+rz -y 上传文件，然后解压
+tar -zxvf jdk-8u291-linux-x64.tar.gz -C /usrl/local/ mv /usr/local/jdk-8u291-linux-x64 jdk 设置环境变量'><title>hadoop环境搭建</title>
 
-<link rel='canonical' href='https://cyasts.github.io/p/hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/'>
+<link rel='canonical' href='https://cyasts.github.io/p/hadoop/'>
 
 <link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='hadoop环境搭建'>
 <meta property='og:description' content='基于Hadoop的电影流量分析 一、环境安装 主机规划 四台主机，系统CentOS7、内存：1G、硬盘：20G
@@ -24,14 +24,14 @@ JDK使用1.8版本
 hadoop使用2.8.5版本、hive使用2.3.6版本
 先安装master节点，然后采用克隆的方式复制出3台slave节点。这样可以减少配置的工作量。
 安装配置master节点 CentOS7安装过程不叙述。
-1、配置网卡 vi /etc/sysconfig/network-scripts/ifcfg-ens33 TYPE=Ethernet PROXY_METHOD=none BROWSER_ONLY=no BOOTPROTO=static DEFROUTE=yes NAME=ens33 UUID=28c7be74-55f0-4164-9e03-37da81b8f5c3 DEVICE=ens33 ONBOOT=yes IPADDR=10.0.0.10 NETMASK=255.255.255.0 GATEWAY=10.0.0.2 DNS1=8.8.8.8 2、修改主机名 vi /etc/hostname HOSTNAME=hadoop-master 3、安装软件 yum install -y lrzsz vim4、配置hosts vim /etc/hosts然后按照规划的主机和ip地址配置
-10.0.0.10 hadoop-master 10.0.0.21 hadoop-slave1 10.0.0.22 hadoop-slave210.0.0.23 hadoop-slave35、关闭防火墙和SELINUX 关闭防火墙 systemctl stop firewalldsystemctl disable firewalld关闭SELINUX vim /etc/selinux/config修改其中的selinux为
-SELINUX=disabled7、安装jdk 执行
-rz -y上传文件，然后解压
-tar -zxvf jdk-8u291-linux-x64.tar.gz -C /usrl/local/mv /usr/local/jdk-8u291-linux-x64 jdk设置环境变量'>
-<meta property='og:url' content='https://cyasts.github.io/p/hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/'>
+1、配置网卡 vi /etc/sysconfig/network-scripts/ifcfg-ens33 TYPE=Ethernet PROXY_METHOD=none BROWSER_ONLY=no BOOTPROTO=static DEFROUTE=yes NAME=ens33 UUID=28c7be74-55f0-4164-9e03-37da81b8f5c3 DEVICE=ens33 ONBOOT=yes IPADDR=10.0.0.10 NETMASK=255.255.255.0 GATEWAY=10.0.0.2 DNS1=8.8.8.8 2、修改主机名 vi /etc/hostname HOSTNAME=hadoop-master 3、安装软件 yum install -y lrzsz vim 4、配置hosts vim /etc/hosts 然后按照规划的主机和ip地址配置
+10.0.0.10 hadoop-master 10.0.0.21 hadoop-slave1 10.0.0.22 hadoop-slave2 10.0.0.23 hadoop-slave3 5、关闭防火墙和SELINUX 关闭防火墙 systemctl stop firewalld systemctl disable firewalld 关闭SELINUX vim /etc/selinux/config 修改其中的selinux为
+SELINUX=disabled 7、安装jdk 执行
+rz -y 上传文件，然后解压
+tar -zxvf jdk-8u291-linux-x64.tar.gz -C /usrl/local/ mv /usr/local/jdk-8u291-linux-x64 jdk 设置环境变量'>
+<meta property='og:url' content='https://cyasts.github.io/p/hadoop/'>
 <meta property='og:site_name' content='Cyan&#39;s Blog'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2021-06-25T19:41:36&#43;08:00'/><meta property='article:modified_time' content='2021-06-25T19:41:36&#43;08:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='hadoop' /><meta property='article:published_time' content='2021-06-25T19:41:36&#43;08:00'/><meta property='article:modified_time' content='2021-06-25T19:41:36&#43;08:00'/>
 <meta name="twitter:title" content="hadoop环境搭建">
 <meta name="twitter:description" content="基于Hadoop的电影流量分析 一、环境安装 主机规划 四台主机，系统CentOS7、内存：1G、硬盘：20G
 四台服务器分配的IP地址：10.0.0.10/21/22/23
@@ -40,11 +40,11 @@ JDK使用1.8版本
 hadoop使用2.8.5版本、hive使用2.3.6版本
 先安装master节点，然后采用克隆的方式复制出3台slave节点。这样可以减少配置的工作量。
 安装配置master节点 CentOS7安装过程不叙述。
-1、配置网卡 vi /etc/sysconfig/network-scripts/ifcfg-ens33 TYPE=Ethernet PROXY_METHOD=none BROWSER_ONLY=no BOOTPROTO=static DEFROUTE=yes NAME=ens33 UUID=28c7be74-55f0-4164-9e03-37da81b8f5c3 DEVICE=ens33 ONBOOT=yes IPADDR=10.0.0.10 NETMASK=255.255.255.0 GATEWAY=10.0.0.2 DNS1=8.8.8.8 2、修改主机名 vi /etc/hostname HOSTNAME=hadoop-master 3、安装软件 yum install -y lrzsz vim4、配置hosts vim /etc/hosts然后按照规划的主机和ip地址配置
-10.0.0.10 hadoop-master 10.0.0.21 hadoop-slave1 10.0.0.22 hadoop-slave210.0.0.23 hadoop-slave35、关闭防火墙和SELINUX 关闭防火墙 systemctl stop firewalldsystemctl disable firewalld关闭SELINUX vim /etc/selinux/config修改其中的selinux为
-SELINUX=disabled7、安装jdk 执行
-rz -y上传文件，然后解压
-tar -zxvf jdk-8u291-linux-x64.tar.gz -C /usrl/local/mv /usr/local/jdk-8u291-linux-x64 jdk设置环境变量">
+1、配置网卡 vi /etc/sysconfig/network-scripts/ifcfg-ens33 TYPE=Ethernet PROXY_METHOD=none BROWSER_ONLY=no BOOTPROTO=static DEFROUTE=yes NAME=ens33 UUID=28c7be74-55f0-4164-9e03-37da81b8f5c3 DEVICE=ens33 ONBOOT=yes IPADDR=10.0.0.10 NETMASK=255.255.255.0 GATEWAY=10.0.0.2 DNS1=8.8.8.8 2、修改主机名 vi /etc/hostname HOSTNAME=hadoop-master 3、安装软件 yum install -y lrzsz vim 4、配置hosts vim /etc/hosts 然后按照规划的主机和ip地址配置
+10.0.0.10 hadoop-master 10.0.0.21 hadoop-slave1 10.0.0.22 hadoop-slave2 10.0.0.23 hadoop-slave3 5、关闭防火墙和SELINUX 关闭防火墙 systemctl stop firewalld systemctl disable firewalld 关闭SELINUX vim /etc/selinux/config 修改其中的selinux为
+SELINUX=disabled 7、安装jdk 执行
+rz -y 上传文件，然后解压
+tar -zxvf jdk-8u291-linux-x64.tar.gz -C /usrl/local/ mv /usr/local/jdk-8u291-linux-x64 jdk 设置环境变量">
     </head>
     <body class="
     article-page has-toc
@@ -106,7 +106,7 @@ tar -zxvf jdk-8u291-linux-x64.tar.gz -C /usrl/local/mv /usr/local/jdk-8u291-lin
     
 
     <h2 class="article-title">
-        <a href="/p/hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">hadoop环境搭建</a>
+        <a href="/p/hadoop/">hadoop环境搭建</a>
     </h2>
 
     <footer class="article-time">
@@ -724,6 +724,12 @@ name.dir的路径）中保存一个current/VERSION文件，记录clusterID，dat
 
     <footer class="article-footer">
     
+    <section class="article-tags">
+        
+            <a href="/tags/hadoop/">hadoop</a>
+        
+    </section>
+
 
     </footer>
 
