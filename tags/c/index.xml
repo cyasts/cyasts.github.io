@@ -1,9 +1,28 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>C on Cyan's Blog</title><link>https://cyasts.github.io/tags/c/</link><description>Recent content in C on Cyan's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Wed, 16 Sep 2020 15:20:00 +0800</lastBuildDate><atom:link href="https://cyasts.github.io/tags/c/index.xml" rel="self" type="application/rss+xml"/><item><title>稳定匹配问题</title><link>https://cyasts.github.io/p/%E7%A8%B3%E5%AE%9A%E5%8C%B9%E9%85%8D%E9%97%AE%E9%A2%98/</link><pubDate>Wed, 16 Sep 2020 15:20:00 +0800</pubDate><guid>https://cyasts.github.io/p/%E7%A8%B3%E5%AE%9A%E5%8C%B9%E9%85%8D%E9%97%AE%E9%A2%98/</guid><description>1.问题描述 给定 N 个男性 $ m_{1} $ ,⋯,$m_{n}$ 和 N 个女性$w_{1}$,⋯,$w_{n}$
-每个男性对女性由最喜欢到最不喜欢进行排序 每个女性对男性由最喜欢到最不喜欢进行排序 目标：找到一个稳定的匹配使得不满意度最低。
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>C on Cyan&#39;s Blog</title>
+    <link>https://cyasts.github.io/tags/c/</link>
+    <description>Recent content in C on Cyan&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 16 Sep 2020 15:20:00 +0800</lastBuildDate><atom:link href="https://cyasts.github.io/tags/c/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>稳定匹配问题</title>
+      <link>https://cyasts.github.io/p/%E7%A8%B3%E5%AE%9A%E5%8C%B9%E9%85%8D%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Wed, 16 Sep 2020 15:20:00 +0800</pubDate>
+      
+      <guid>https://cyasts.github.io/p/%E7%A8%B3%E5%AE%9A%E5%8C%B9%E9%85%8D%E9%97%AE%E9%A2%98/</guid>
+      <description>1.问题描述 给定 N 个男性 $ m_{1} $ ,⋯,$m_{n}$ 和 N 个女性$w_{1}$,⋯,$w_{n}$
+ 每个男性对女性由最喜欢到最不喜欢进行排序 每个女性对男性由最喜欢到最不喜欢进行排序  目标：找到一个稳定的匹配使得不满意度最低。
 2.输入 第一行输入 N，表示需要处理的匹配的对数。男性按照 1，2, 3&amp;hellip;N 的编号表示，女性同样如此。
 接下来 N 行，每行 N 个数字，表示该行男性对所有女性的好感度排名。
 再接下来 N 行，每行 N 个数字，表示该行女性对所有男性的好感度排名。
 例如：
-3 1 2 3 2 1 3 1 2 3 2 1 3 1 2 3 1 2 3 3.输出 输入 N 行，每行输出一个匹配的结果，格式为：
-m：编号 w：编号 例如：
-This is a block. This is more of a block.</description></item></channel></rss>
+3 1 2 3 2 1 3 1 2 3 2 1 3 1 2 3 1 2 3  3.输出 输入 N 行，每行输出一个匹配的结果，格式为：
+m：编号 w：编号  例如：
+This is a block. This is more of a block.</description>
+    </item>
+    
+  </channel>
+</rss>

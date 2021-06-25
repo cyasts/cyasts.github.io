@@ -1,4 +1,19 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Cyan's Blog</title><link>https://cyasts.github.io/post/</link><description>Recent content in Posts on Cyan's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Fri, 25 Jun 2021 19:41:36 +0800</lastBuildDate><atom:link href="https://cyasts.github.io/post/index.xml" rel="self" type="application/rss+xml"/><item><title>hadoop环境搭建</title><link>https://cyasts.github.io/p/hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</link><pubDate>Fri, 25 Jun 2021 19:41:36 +0800</pubDate><guid>https://cyasts.github.io/p/hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</guid><description>基于Hadoop的电影流量分析 一、环境安装 主机规划 四台主机，系统CentOS7、内存：1G、硬盘：20G
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Cyan&#39;s Blog</title>
+    <link>https://cyasts.github.io/post/</link>
+    <description>Recent content in Posts on Cyan&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 25 Jun 2021 19:41:36 +0800</lastBuildDate><atom:link href="https://cyasts.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>hadoop环境搭建</title>
+      <link>https://cyasts.github.io/p/hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</link>
+      <pubDate>Fri, 25 Jun 2021 19:41:36 +0800</pubDate>
+      
+      <guid>https://cyasts.github.io/p/hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</guid>
+      <description>基于Hadoop的电影流量分析 一、环境安装 主机规划 四台主机，系统CentOS7、内存：1G、硬盘：20G
 四台服务器分配的IP地址：10.0.0.10/21/22/23
 规划：20用作主节点用作hadoop-master，其它三台为数据节点21、22、23用作hadoop-salve1~3
 JDK使用1.8版本
@@ -9,7 +24,16 @@ hadoop使用2.8.5版本、hive使用2.3.6版本
 10.0.0.10 hadoop-master 10.0.0.21 hadoop-slave1 10.0.0.22 hadoop-slave2 10.0.0.23 hadoop-slave3 5、关闭防火墙和SELINUX 关闭防火墙 systemctl stop firewalld systemctl disable firewalld 关闭SELINUX vim /etc/selinux/config 修改其中的selinux为
 SELINUX=disabled 7、安装jdk 执行
 rz -y 上传文件，然后解压
-tar -zxvf jdk-8u291-linux-x64.tar.gz -C /usrl/local/ mv /usr/local/jdk-8u291-linux-x64 jdk 设置环境变量</description></item><item><title>图的广度优先遍历和Dijkstra算法</title><link>https://cyasts.github.io/p/%E5%9B%BE%E7%9A%84%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E9%81%8D%E5%8E%86%E5%92%8Cdijkstra%E7%AE%97%E6%B3%95/</link><pubDate>Mon, 26 Oct 2020 22:38:36 +0800</pubDate><guid>https://cyasts.github.io/p/%E5%9B%BE%E7%9A%84%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E9%81%8D%E5%8E%86%E5%92%8Cdijkstra%E7%AE%97%E6%B3%95/</guid><description>1.问题描述 构建成都地铁图，实现广度优先算法和 Dijkstra 算法
+tar -zxvf jdk-8u291-linux-x64.tar.gz -C /usrl/local/ mv /usr/local/jdk-8u291-linux-x64 jdk 设置环境变量</description>
+    </item>
+    
+    <item>
+      <title>图的广度优先遍历和Dijkstra算法</title>
+      <link>https://cyasts.github.io/p/%E5%9B%BE%E7%9A%84%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E9%81%8D%E5%8E%86%E5%92%8Cdijkstra%E7%AE%97%E6%B3%95/</link>
+      <pubDate>Mon, 26 Oct 2020 22:38:36 +0800</pubDate>
+      
+      <guid>https://cyasts.github.io/p/%E5%9B%BE%E7%9A%84%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E9%81%8D%E5%8E%86%E5%92%8Cdijkstra%E7%AE%97%E6%B3%95/</guid>
+      <description>1.问题描述 构建成都地铁图，实现广度优先算法和 Dijkstra 算法
 2.输入 1.地铁图的输入 以线路号数开头，后面是该号线以此的站点数。每行一个数据。
 由于地铁中存在着环线，所以图的构建可能会成一个环。因此在输入的时候需要特别处理，把线路数乘以 10 再加上一个是否为环线，这样得到数字后取最后一位就知道是否为环线，再除以 10 就知道是几号线。例如 1 号线不是环线就变成 10，7 号线为环线就变成 71。
 最后以-1 为单独的一行，表示输入结束。 输入举例：
@@ -37,15 +61,46 @@ tar -zxvf jdk-8u291-linux-x64.tar.gz -C /usrl/local/ mv /usr/local/jdk-8u291-lin
 3.输出 1.按照广度优先算法输出两个站的最短节点数路径。
 2.模拟两个站点之间的线路距离权重，输出两个站点之间的最短路径。
 4.数据结构 由于地铁图属于稀疏图，所以采用邻接链表来存储图。 graph.h 头文件：
-#ifndef GRAPH_H_INCLUDE #define GRAPH_H_INCLUDE #include &amp;lt;stdio.h&amp;gt;#include &amp;lt;stdlib.h&amp;gt;#include &amp;lt;string.h&amp;gt; typedef struct edge{ int weight; int info; //线路名称 struct edge * nextedge; struct vertex * adjtex; } edge; typedef struct vertex { char site[20]; struct edge * firstedge; struct vertex * prev; //用来存储结果路径上的上一个节点 int info; //用来存储多余的数据 int isdiscovered; } vertex; typedef struct { vertex ** vertices; int vexnum, edgnum; }graph; //function declare graph * buildgraph(); vertex * findvertexbyname(graph * g, const char * name); void cleartags(graph * g); vertex * findmininfo(graph * g); #endif graph.</description></item><item><title>鲁迅经典名言</title><link>https://cyasts.github.io/p/%E9%B2%81%E8%BF%85%E7%BB%8F%E5%85%B8%E5%90%8D%E8%A8%80/</link><pubDate>Mon, 12 Oct 2020 16:57:58 +0800</pubDate><guid>https://cyasts.github.io/p/%E9%B2%81%E8%BF%85%E7%BB%8F%E5%85%B8%E5%90%8D%E8%A8%80/</guid><description>鲁迅经典名言 希望是附丽于存在的，有存在，便有希望，有希望，便是光明。 哀其不幸，怒其不争。 悲剧将人生的有价值的东西毁灭给人看，喜剧将那无价值的撕破给人看。 伟大的心胸，应该表现出这样的气概——用笑脸来迎接悲惨的厄运，用百倍的勇气来应付一切的不幸。 不满足是向上的齿轮。 只看一个人的着作，结果是不大好的：你就得不到多方面的优点。必须如蜜蜂一样，采过许多花，这才能酿出蜜来。倘若叮在一处，所得就非常有限，枯燥了。 中国虽发明火药，却只会用来放烟花炮竹；发明罗盘，也是用来看风水。 渡尽劫波兄弟在，相逢一笑泯恩仇。 躲进小楼成一统，管它冬夏与春秋。 游戏是儿童最正当的行为，玩具是儿童的天使。 横眉冷对千夫指，俯首甘为孺子牛。 真正的勇士，敢于直面惨淡的人生，敢于正视淋漓的鲜血这是怎样的哀痛者和幸福者？ 改造自己，总比禁止别人来得难。 在行进时，也时时有人退伍，有人落荒，有人颓唐，有人叛变，然而只要无碍于进行，则越到后来，这队伍也就越成为纯粹. 精锐的队伍了。 单是说不行，要紧的是做。 巨大的建筑，总是由一木一石叠起来的，我们何妨做做这一木一石呢？我时常做些零碎事，就是为此。 空谈之类，是谈不久，也谈不出什麽来的，它始终被事实的镜子照出原形，拖出尾巴而去。 不满足是向上的车轮。 无情未必真豪杰，怜子如何不丈夫。 友谊是两颗心的真诚相待，而不是一颗心对另一颗心的敲打。 以人为鉴，明白非常，是使人能够反省的妙法。 父母对于子女，应该健全的产生，尽力的教育，完全的解放。 时间就像海绵里的水，只要愿挤，总还是有的。 倘只看书，便变成书橱。 我好像是一只牛，吃的是草，挤出的是奶。 其实地上本没有路，走的人多了，便成了路。 哪里有天才，我只是把别人喝咖啡的工夫都用在了工作上了。 唯有民魂是值得宝贵的，唯有它发扬起来，中国才有真进步。 沉着. 勇猛，有辨别，不自私。 愈艰难，就愈要做。改革，是向来没有一帆风顺的。 我们目下的当务之急是：一要生存，二要温饱，三要发展。 必须敢于正视，这才可望敢想. 敢说. 敢做. 敢当。 曾经阔气的要复古，正在阔气的要保持现状，未曾阔气的要革新，大抵如此，大抵！ 人类总不会寂寞，因为生命是进步的，是天生的。 只要从来如此，便是宝贝。 事实是毫无情面的东西，它能将空言打得粉碎。 墨写的谎说，决掩不住血写的事实。 其实先驱者本是容易变成绊脚石的。 贪安稳就没有自由，要自由就要历些危险。只有这两条路。 假使做事要面面顾到，那就什么事都不能做了。 时间就是性命。无端的空耗别人的时间，其实是无异于谋财害命的。 做一件事，无论大小，倘无恒心，是很不好的。 死者倘不埋在活人心中，那就真真死掉了。 改造自己，总比禁止别人来的难。 只要能培一朵花，就不妨做做会朽的腐草。 当我沉默的时候，我觉得充实；我将开口，同时感到空虚。 死亡的生命已经朽腐。我对于这朽腐有大欢喜，因为我借此知道它还非空虚。 但我坦然，欣然。我将大笑，我将歌唱。 我自爱我的野草，但我憎恶这以野草作装饰的地面。 待我成尘时，你将见我的微笑！</description></item><item><title>稳定匹配问题</title><link>https://cyasts.github.io/p/%E7%A8%B3%E5%AE%9A%E5%8C%B9%E9%85%8D%E9%97%AE%E9%A2%98/</link><pubDate>Wed, 16 Sep 2020 15:20:00 +0800</pubDate><guid>https://cyasts.github.io/p/%E7%A8%B3%E5%AE%9A%E5%8C%B9%E9%85%8D%E9%97%AE%E9%A2%98/</guid><description>1.问题描述 给定 N 个男性 $ m_{1} $ ,⋯,$m_{n}$ 和 N 个女性$w_{1}$,⋯,$w_{n}$
-每个男性对女性由最喜欢到最不喜欢进行排序 每个女性对男性由最喜欢到最不喜欢进行排序 目标：找到一个稳定的匹配使得不满意度最低。
+#ifndef GRAPH_H_INCLUDE #define GRAPH_H_INCLUDE  #include &amp;lt;stdio.h&amp;gt;#include &amp;lt;stdlib.h&amp;gt;#include &amp;lt;string.h&amp;gt; typedef struct edge{ int weight; int info; //线路名称 	struct edge * nextedge; struct vertex * adjtex; } edge; typedef struct vertex { char site[20]; struct edge * firstedge; struct vertex * prev; //用来存储结果路径上的上一个节点 	int info; //用来存储多余的数据 	int isdiscovered; } vertex; typedef struct { vertex ** vertices; int vexnum, edgnum; }graph; //function declare graph * buildgraph(); vertex * findvertexbyname(graph * g, const char * name); void cleartags(graph * g); vertex * findmininfo(graph * g); #endif graph.</description>
+    </item>
+    
+    <item>
+      <title>鲁迅经典名言</title>
+      <link>https://cyasts.github.io/p/%E9%B2%81%E8%BF%85%E7%BB%8F%E5%85%B8%E5%90%8D%E8%A8%80/</link>
+      <pubDate>Mon, 12 Oct 2020 16:57:58 +0800</pubDate>
+      
+      <guid>https://cyasts.github.io/p/%E9%B2%81%E8%BF%85%E7%BB%8F%E5%85%B8%E5%90%8D%E8%A8%80/</guid>
+      <description>鲁迅经典名言  希望是附丽于存在的，有存在，便有希望，有希望，便是光明。 哀其不幸，怒其不争。 悲剧将人生的有价值的东西毁灭给人看，喜剧将那无价值的撕破给人看。 伟大的心胸，应该表现出这样的气概——用笑脸来迎接悲惨的厄运，用百倍的勇气来应付一切的不幸。 不满足是向上的齿轮。 只看一个人的着作，结果是不大好的：你就得不到多方面的优点。必须如蜜蜂一样，采过许多花，这才能酿出蜜来。倘若叮在一处，所得就非常有限，枯燥了。 中国虽发明火药，却只会用来放烟花炮竹；发明罗盘，也是用来看风水。 渡尽劫波兄弟在，相逢一笑泯恩仇。 躲进小楼成一统，管它冬夏与春秋。 游戏是儿童最正当的行为，玩具是儿童的天使。 横眉冷对千夫指，俯首甘为孺子牛。 真正的勇士，敢于直面惨淡的人生，敢于正视淋漓的鲜血这是怎样的哀痛者和幸福者？ 改造自己，总比禁止别人来得难。 在行进时，也时时有人退伍，有人落荒，有人颓唐，有人叛变，然而只要无碍于进行，则越到后来，这队伍也就越成为纯粹. 精锐的队伍了。 单是说不行，要紧的是做。 巨大的建筑，总是由一木一石叠起来的，我们何妨做做这一木一石呢？我时常做些零碎事，就是为此。 空谈之类，是谈不久，也谈不出什麽来的，它始终被事实的镜子照出原形，拖出尾巴而去。 不满足是向上的车轮。 无情未必真豪杰，怜子如何不丈夫。 友谊是两颗心的真诚相待，而不是一颗心对另一颗心的敲打。 以人为鉴，明白非常，是使人能够反省的妙法。 父母对于子女，应该健全的产生，尽力的教育，完全的解放。 时间就像海绵里的水，只要愿挤，总还是有的。 倘只看书，便变成书橱。 我好像是一只牛，吃的是草，挤出的是奶。 其实地上本没有路，走的人多了，便成了路。 哪里有天才，我只是把别人喝咖啡的工夫都用在了工作上了。 唯有民魂是值得宝贵的，唯有它发扬起来，中国才有真进步。 沉着. 勇猛，有辨别，不自私。 愈艰难，就愈要做。改革，是向来没有一帆风顺的。 我们目下的当务之急是：一要生存，二要温饱，三要发展。 必须敢于正视，这才可望敢想. 敢说. 敢做. 敢当。 曾经阔气的要复古，正在阔气的要保持现状，未曾阔气的要革新，大抵如此，大抵！ 人类总不会寂寞，因为生命是进步的，是天生的。 只要从来如此，便是宝贝。 事实是毫无情面的东西，它能将空言打得粉碎。 墨写的谎说，决掩不住血写的事实。 其实先驱者本是容易变成绊脚石的。 贪安稳就没有自由，要自由就要历些危险。只有这两条路。 假使做事要面面顾到，那就什么事都不能做了。 时间就是性命。无端的空耗别人的时间，其实是无异于谋财害命的。 做一件事，无论大小，倘无恒心，是很不好的。 死者倘不埋在活人心中，那就真真死掉了。 改造自己，总比禁止别人来的难。 只要能培一朵花，就不妨做做会朽的腐草。 当我沉默的时候，我觉得充实；我将开口，同时感到空虚。 死亡的生命已经朽腐。我对于这朽腐有大欢喜，因为我借此知道它还非空虚。 但我坦然，欣然。我将大笑，我将歌唱。 我自爱我的野草，但我憎恶这以野草作装饰的地面。 待我成尘时，你将见我的微笑！  </description>
+    </item>
+    
+    <item>
+      <title>稳定匹配问题</title>
+      <link>https://cyasts.github.io/p/%E7%A8%B3%E5%AE%9A%E5%8C%B9%E9%85%8D%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Wed, 16 Sep 2020 15:20:00 +0800</pubDate>
+      
+      <guid>https://cyasts.github.io/p/%E7%A8%B3%E5%AE%9A%E5%8C%B9%E9%85%8D%E9%97%AE%E9%A2%98/</guid>
+      <description>1.问题描述 给定 N 个男性 $ m_{1} $ ,⋯,$m_{n}$ 和 N 个女性$w_{1}$,⋯,$w_{n}$
+ 每个男性对女性由最喜欢到最不喜欢进行排序 每个女性对男性由最喜欢到最不喜欢进行排序  目标：找到一个稳定的匹配使得不满意度最低。
 2.输入 第一行输入 N，表示需要处理的匹配的对数。男性按照 1，2, 3&amp;hellip;N 的编号表示，女性同样如此。
 接下来 N 行，每行 N 个数字，表示该行男性对所有女性的好感度排名。
 再接下来 N 行，每行 N 个数字，表示该行女性对所有男性的好感度排名。
 例如：
-3 1 2 3 2 1 3 1 2 3 2 1 3 1 2 3 1 2 3 3.输出 输入 N 行，每行输出一个匹配的结果，格式为：
-m：编号 w：编号 例如：
-This is a block. This is more of a block.</description></item><item><title>赤壁赋</title><link>https://cyasts.github.io/p/%E8%B5%A4%E5%A3%81%E8%B5%8B/</link><pubDate>Mon, 14 Sep 2020 21:23:00 +0800</pubDate><guid>https://cyasts.github.io/p/%E8%B5%A4%E5%A3%81%E8%B5%8B/</guid><description>原文 壬戌之秋，七月既望，蘇子與客泛舟遊於赤壁之下。清風徐來，水波不興。舉酒屬客，誦明月之詩，歌窈窕之章。少焉，月出於東山之上，徘徊於斗牛之間。白露橫江，水光接天。縱一葦之所如，凌萬頃之茫然。浩浩乎如馮虛御風，而不知其所止；飄飄乎如遺世獨立,羽化而登仙。
+3 1 2 3 2 1 3 1 2 3 2 1 3 1 2 3 1 2 3  3.输出 输入 N 行，每行输出一个匹配的结果，格式为：
+m：编号 w：编号  例如：
+This is a block. This is more of a block.</description>
+    </item>
+    
+    <item>
+      <title>赤壁赋</title>
+      <link>https://cyasts.github.io/p/%E8%B5%A4%E5%A3%81%E8%B5%8B/</link>
+      <pubDate>Mon, 14 Sep 2020 21:23:00 +0800</pubDate>
+      
+      <guid>https://cyasts.github.io/p/%E8%B5%A4%E5%A3%81%E8%B5%8B/</guid>
+      <description>原文  壬戌之秋，七月既望，蘇子與客泛舟遊於赤壁之下。清風徐來，水波不興。舉酒屬客，誦明月之詩，歌窈窕之章。少焉，月出於東山之上，徘徊於斗牛之間。白露橫江，水光接天。縱一葦之所如，凌萬頃之茫然。浩浩乎如馮虛御風，而不知其所止；飄飄乎如遺世獨立,羽化而登仙。
 於是飲酒樂甚，扣舷而歌之。歌曰：“桂棹兮蘭槳，擊空明兮溯流光。渺渺兮予懷，望美人兮天一方。”客有吹洞簫者，倚歌而和之。其聲嗚嗚然，如怨如慕，如泣如訴；餘音嫋嫋，不絕如縷。舞幽壑之潛蛟，泣孤舟之嫠婦。
 蘇子愀然，正襟危坐，而問客曰：“何爲其然也？”客曰：“‘月明星稀，烏鵲南飛。’此非曹孟德之詩乎？西望夏口，東望武昌，山川相繆，鬱乎蒼蒼，此非孟德之困於周郎者乎？方其破荊州，下江陵，順流而東也，舳艫千里，旌旗蔽空，釃酒臨江，橫槊賦詩，固一世之雄也，而今安在哉？況吾與子漁樵於江渚之上，侶魚蝦而友麋鹿，駕一葉之扁舟，舉匏樽以相屬。寄蜉蝣於天地，渺滄海之一粟。哀吾生之須臾，羨長 江之無窮。挾飛仙以遨遊，抱明月而長終。知不可乎驟得，託遺響於悲風。”
-蘇子曰：“客亦知夫水與月乎？逝者如斯，而未嘗往也；盈虛者如彼，而卒莫消長也。蓋將自其變者而觀之，則天地曾不能以一瞬；自其不變者而觀之，則物與我皆無盡也，而又何羨乎！且夫天地之間，物各有主，苟非吾之所有，雖一毫而莫取。惟江上之清風，與山間之明月，耳得之而爲聲，目遇之而成色，取之無禁，用之不竭。是造物者之無盡藏也，而吾與子之所共適。”(共適 一作：共食) 客喜而笑，洗盞更酌。餚核既盡，杯盤狼籍。相與枕藉乎舟中，不知東方之既白。</description></item></channel></rss>
+蘇子曰：“客亦知夫水與月乎？逝者如斯，而未嘗往也；盈虛者如彼，而卒莫消長也。蓋將自其變者而觀之，則天地曾不能以一瞬；自其不變者而觀之，則物與我皆無盡也，而又何羨乎！且夫天地之間，物各有主，苟非吾之所有，雖一毫而莫取。惟江上之清風，與山間之明月，耳得之而爲聲，目遇之而成色，取之無禁，用之不竭。是造物者之無盡藏也，而吾與子之所共適。”(共適 一作：共食) 客喜而笑，洗盞更酌。餚核既盡，杯盤狼籍。相與枕藉乎舟中，不知東方之既白。</description>
+    </item>
+    
+  </channel>
+</rss>

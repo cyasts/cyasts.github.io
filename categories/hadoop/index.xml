@@ -1,4 +1,19 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>hadoop on Cyan's Blog</title><link>https://cyasts.github.io/categories/hadoop/</link><description>Recent content in hadoop on Cyan's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Fri, 25 Jun 2021 19:41:36 +0800</lastBuildDate><atom:link href="https://cyasts.github.io/categories/hadoop/index.xml" rel="self" type="application/rss+xml"/><item><title>hadoop环境搭建</title><link>https://cyasts.github.io/p/hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</link><pubDate>Fri, 25 Jun 2021 19:41:36 +0800</pubDate><guid>https://cyasts.github.io/p/hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</guid><description>基于Hadoop的电影流量分析 一、环境安装 主机规划 四台主机，系统CentOS7、内存：1G、硬盘：20G
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>hadoop on Cyan&#39;s Blog</title>
+    <link>https://cyasts.github.io/categories/hadoop/</link>
+    <description>Recent content in hadoop on Cyan&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 25 Jun 2021 19:41:36 +0800</lastBuildDate><atom:link href="https://cyasts.github.io/categories/hadoop/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>hadoop环境搭建</title>
+      <link>https://cyasts.github.io/p/hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</link>
+      <pubDate>Fri, 25 Jun 2021 19:41:36 +0800</pubDate>
+      
+      <guid>https://cyasts.github.io/p/hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</guid>
+      <description>基于Hadoop的电影流量分析 一、环境安装 主机规划 四台主机，系统CentOS7、内存：1G、硬盘：20G
 四台服务器分配的IP地址：10.0.0.10/21/22/23
 规划：20用作主节点用作hadoop-master，其它三台为数据节点21、22、23用作hadoop-salve1~3
 JDK使用1.8版本
@@ -9,4 +24,8 @@ hadoop使用2.8.5版本、hive使用2.3.6版本
 10.0.0.10 hadoop-master 10.0.0.21 hadoop-slave1 10.0.0.22 hadoop-slave2 10.0.0.23 hadoop-slave3 5、关闭防火墙和SELINUX 关闭防火墙 systemctl stop firewalld systemctl disable firewalld 关闭SELINUX vim /etc/selinux/config 修改其中的selinux为
 SELINUX=disabled 7、安装jdk 执行
 rz -y 上传文件，然后解压
-tar -zxvf jdk-8u291-linux-x64.tar.gz -C /usrl/local/ mv /usr/local/jdk-8u291-linux-x64 jdk 设置环境变量</description></item></channel></rss>
+tar -zxvf jdk-8u291-linux-x64.tar.gz -C /usrl/local/ mv /usr/local/jdk-8u291-linux-x64 jdk 设置环境变量</description>
+    </item>
+    
+  </channel>
+</rss>
