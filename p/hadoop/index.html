@@ -135,8 +135,8 @@ tar -zxvf jdk-8u291-linux-x64.tar.gz -C /usrl/local/ mv /usr/local/jdk-8u291-lin
 <h3 id="安装配置master节点">安装配置master节点</h3>
 <p>CentOS7安装过程不叙述。</p>
 <h4 id="1配置网卡">1、配置网卡</h4>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">vi /etc/sysconfig/network-scripts/ifcfg-ens33
-</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nv">TYPE</span><span class="o">=</span>Ethernet
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">vi /etc/sysconfig/network-scripts/ifcfg-ens33
+</code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="nv">TYPE</span><span class="o">=</span>Ethernet
 <span class="nv">PROXY_METHOD</span><span class="o">=</span>none
 <span class="nv">BROWSER_ONLY</span><span class="o">=</span>no
 <span class="nv">BOOTPROTO</span><span class="o">=</span>static
@@ -150,8 +150,8 @@ tar -zxvf jdk-8u291-linux-x64.tar.gz -C /usrl/local/ mv /usr/local/jdk-8u291-lin
 <span class="nv">GATEWAY</span><span class="o">=</span>10.0.0.2
 <span class="nv">DNS1</span><span class="o">=</span>8.8.8.8
 </code></pre></div><h4 id="2修改主机名">2、修改主机名</h4>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">vi /etc/hostname
-</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nv">HOSTNAME</span><span class="o">=</span>hadoop-master
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">vi /etc/hostname
+</code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="nv">HOSTNAME</span><span class="o">=</span>hadoop-master
 </code></pre></div><h4 id="3安装软件">3、安装软件</h4>
 <pre><code>yum install -y lrzsz vim
 </code></pre><h4 id="4配置hosts">4、配置hosts</h4>

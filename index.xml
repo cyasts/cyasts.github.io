@@ -24,8 +24,8 @@
 &lt;h3 id=&#34;安装配置master节点&#34;&gt;安装配置master节点&lt;/h3&gt;
 &lt;p&gt;CentOS7安装过程不叙述。&lt;/p&gt;
 &lt;h4 id=&#34;1配置网卡&#34;&gt;1、配置网卡&lt;/h4&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;vi /etc/sysconfig/network-scripts/ifcfg-ens33
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;nv&#34;&gt;TYPE&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;Ethernet
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;vi /etc/sysconfig/network-scripts/ifcfg-ens33
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;nv&#34;&gt;TYPE&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;Ethernet
 &lt;span class=&#34;nv&#34;&gt;PROXY_METHOD&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;none
 &lt;span class=&#34;nv&#34;&gt;BROWSER_ONLY&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;no
 &lt;span class=&#34;nv&#34;&gt;BOOTPROTO&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;static
@@ -39,8 +39,8 @@
 &lt;span class=&#34;nv&#34;&gt;GATEWAY&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;10.0.0.2
 &lt;span class=&#34;nv&#34;&gt;DNS1&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;8.8.8.8
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;2修改主机名&#34;&gt;2、修改主机名&lt;/h4&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;vi /etc/hostname
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;nv&#34;&gt;HOSTNAME&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;hadoop-master
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;vi /etc/hostname
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;nv&#34;&gt;HOSTNAME&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;hadoop-master
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;3安装软件&#34;&gt;3、安装软件&lt;/h4&gt;
 &lt;pre&gt;&lt;code&gt;yum install -y lrzsz vim
 &lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;4配置hosts&#34;&gt;4、配置hosts&lt;/h4&gt;
@@ -651,7 +651,7 @@ name.dir的路径）中保存一个current/VERSION文件，记录clusterID，dat
 &lt;h2 id=&#34;4数据结构&#34;&gt;4.数据结构&lt;/h2&gt;
 &lt;p&gt;由于地铁图属于稀疏图，所以采用邻接链表来存储图。
 graph.h 头文件：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#ifndef GRAPH_H_INCLUDE
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#ifndef GRAPH_H_INCLUDE
 &lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#define GRAPH_H_INCLUDE
 &lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;
 &lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
@@ -686,7 +686,7 @@ graph.h 头文件：&lt;/p&gt;
 
 &lt;span class=&#34;cp&#34;&gt;#endif
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;graph.c 源文件：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
 &lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;stdlib.h&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
 &lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;string.h&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
 &lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;#34;graph.h&amp;#34;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
@@ -813,7 +813,7 @@ graph.h 头文件：&lt;/p&gt;
 &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;4bfs-函数&#34;&gt;4.BFS 函数&lt;/h2&gt;
 &lt;p&gt;要输出从源站点到目标站点的路径，可利用节点中的 prev 指针存储父节点。这样到目标站点的时候沿着 prev 指针一直往上直到空结点，就得到了一个反向的路径，再利用栈，把路径上的结点全部入一次栈，最后依次出栈就得到了从源站点到目标站点的路径。具体代码如下：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;BFS&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;graph&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;metro&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;vertex&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;src&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;vertex&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;des&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;BFS&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;graph&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;metro&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;vertex&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;src&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;vertex&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;des&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
 &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
 	&lt;span class=&#34;n&#34;&gt;vertex&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;que&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;300&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;];&lt;/span&gt;
 	&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;head&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;tail&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
@@ -840,7 +840,7 @@ graph.h 头文件：&lt;/p&gt;
 &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;5dijkstra-函数&#34;&gt;5.dijkstra 函数&lt;/h2&gt;
 &lt;p&gt;同样的可利用站点的 prev 存储上一个站点，利用站点的 info 才存储该站点到源站点的最短距离。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;dijkstra&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;graph&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;g&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;vertex&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;src&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;dijkstra&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;graph&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;g&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;vertex&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;src&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
 &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
 	&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;k&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;alt&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
 	&lt;span class=&#34;n&#34;&gt;vertex&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;u&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;v&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
@@ -869,7 +869,7 @@ graph.h 头文件：&lt;/p&gt;
 &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;5主函数&#34;&gt;5.主函数&lt;/h2&gt;
 &lt;p&gt;printpath 的时候，由于 BFS 和 Dijkstra 都要调用这个函数，在最后设置一个 order 来区分是那个函数调用。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
 &lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;stdlib.h&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
 &lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;string.h&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
 &lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;
@@ -933,11 +933,13 @@ graph.h 头文件：&lt;/p&gt;
 		&lt;span class=&#34;k&#34;&gt;else&lt;/span&gt;  &lt;span class=&#34;n&#34;&gt;printf&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;%s &lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\n&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;site&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
 	&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
 &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;整体可于 &lt;a href=&#34;https://github.com/cyasts/Algorithms/tree/master/2.BFS&#34;&gt;https://github.com/cyasts/Algorithms/tree/master/2.BFS&lt;/a&gt; 获取。&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;整体可于 &lt;a class=&#34;link&#34; href=&#34;https://github.com/cyasts/Algorithms/tree/master/2.BFS&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://github.com/cyasts/Algorithms/tree/master/2.BFS&lt;/a&gt; 获取。&lt;/p&gt;
 &lt;h2 id=&#34;6测试数据&#34;&gt;6.测试数据&lt;/h2&gt;
 &lt;p&gt;1.输入
 见：&lt;br&gt;
-&lt;a href=&#34;https://github.com/cyasts/Algorithms/blob/master/2.BFS/input.txt&#34;&gt;https://github.com/cyasts/Algorithms/blob/master/2.BFS/input.txt&lt;/a&gt;&lt;br&gt;
+&lt;a class=&#34;link&#34; href=&#34;https://github.com/cyasts/Algorithms/blob/master/2.BFS/input.txt&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://github.com/cyasts/Algorithms/blob/master/2.BFS/input.txt&lt;/a&gt;&lt;br&gt;
 2.输出&lt;br&gt;
 in BFS:
 石油大学&lt;br&gt;
@@ -1076,7 +1078,7 @@ This is more of a block.
 &lt;h1 id=&#34;4核心思想&#34;&gt;4.核心思想&lt;/h1&gt;
 &lt;p&gt;&lt;img src=&#34;https://cdn.jsdelivr.net/gh/cyasts/image@main/20201023150430.png&#34; alt=&#34;20201023150430&#34;  /&gt;&lt;/p&gt;
 &lt;h1 id=&#34;4算法实现&#34;&gt;4.算法实现&lt;/h1&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
 &lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;stdlib.h&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
 &lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;
 &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;input&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;

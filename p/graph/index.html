@@ -210,7 +210,7 @@
 <h2 id="4数据结构">4.数据结构</h2>
 <p>由于地铁图属于稀疏图，所以采用邻接链表来存储图。
 graph.h 头文件：</p>
-<div class="highlight"><pre class="chroma"><code class="language-c" data-lang="c"><span class="cp">#ifndef GRAPH_H_INCLUDE
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="cp">#ifndef GRAPH_H_INCLUDE
 </span><span class="cp">#define GRAPH_H_INCLUDE
 </span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
@@ -245,7 +245,7 @@ graph.h 头文件：</p>
 
 <span class="cp">#endif
 </span></code></pre></div><p>graph.c 源文件：</p>
-<div class="highlight"><pre class="chroma"><code class="language-c" data-lang="c"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
 </span><span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
 </span><span class="cp">#include</span> <span class="cpf">&lt;string.h&gt;</span><span class="cp">
 </span><span class="cp">#include</span> <span class="cpf">&#34;graph.h&#34;</span><span class="cp">
@@ -372,7 +372,7 @@ graph.h 头文件：</p>
 <span class="p">}</span>
 </code></pre></div><h2 id="4bfs-函数">4.BFS 函数</h2>
 <p>要输出从源站点到目标站点的路径，可利用节点中的 prev 指针存储父节点。这样到目标站点的时候沿着 prev 指针一直往上直到空结点，就得到了一个反向的路径，再利用栈，把路径上的结点全部入一次栈，最后依次出栈就得到了从源站点到目标站点的路径。具体代码如下：</p>
-<div class="highlight"><pre class="chroma"><code class="language-c" data-lang="c"><span class="kt">void</span> <span class="nf">BFS</span><span class="p">(</span><span class="n">graph</span> <span class="o">*</span> <span class="n">metro</span><span class="p">,</span> <span class="n">vertex</span> <span class="o">*</span> <span class="n">src</span><span class="p">,</span> <span class="n">vertex</span> <span class="o">*</span> <span class="n">des</span><span class="p">)</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="kt">void</span> <span class="nf">BFS</span><span class="p">(</span><span class="n">graph</span> <span class="o">*</span> <span class="n">metro</span><span class="p">,</span> <span class="n">vertex</span> <span class="o">*</span> <span class="n">src</span><span class="p">,</span> <span class="n">vertex</span> <span class="o">*</span> <span class="n">des</span><span class="p">)</span>
 <span class="p">{</span>
 	<span class="n">vertex</span> <span class="o">*</span> <span class="n">que</span><span class="p">[</span><span class="mi">300</span><span class="p">];</span>
 	<span class="kt">int</span> <span class="n">head</span><span class="p">,</span> <span class="n">tail</span><span class="p">;</span>
@@ -399,7 +399,7 @@ graph.h 头文件：</p>
 <span class="p">}</span>
 </code></pre></div><h2 id="5dijkstra-函数">5.dijkstra 函数</h2>
 <p>同样的可利用站点的 prev 存储上一个站点，利用站点的 info 才存储该站点到源站点的最短距离。</p>
-<div class="highlight"><pre class="chroma"><code class="language-c" data-lang="c"><span class="kt">void</span> <span class="nf">dijkstra</span><span class="p">(</span><span class="n">graph</span> <span class="o">*</span> <span class="n">g</span><span class="p">,</span> <span class="n">vertex</span> <span class="o">*</span> <span class="n">src</span><span class="p">)</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="kt">void</span> <span class="nf">dijkstra</span><span class="p">(</span><span class="n">graph</span> <span class="o">*</span> <span class="n">g</span><span class="p">,</span> <span class="n">vertex</span> <span class="o">*</span> <span class="n">src</span><span class="p">)</span>
 <span class="p">{</span>
 	<span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">alt</span><span class="p">;</span>
 	<span class="n">vertex</span> <span class="o">*</span> <span class="n">u</span><span class="p">,</span> <span class="o">*</span><span class="n">v</span><span class="p">;</span>
@@ -428,7 +428,7 @@ graph.h 头文件：</p>
 <span class="p">}</span>
 </code></pre></div><h2 id="5主函数">5.主函数</h2>
 <p>printpath 的时候，由于 BFS 和 Dijkstra 都要调用这个函数，在最后设置一个 order 来区分是那个函数调用。</p>
-<div class="highlight"><pre class="chroma"><code class="language-c" data-lang="c"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
 </span><span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
 </span><span class="cp">#include</span> <span class="cpf">&lt;string.h&gt;</span><span class="cp">
 </span><span class="cp"></span>
@@ -492,11 +492,13 @@ graph.h 头文件：</p>
 		<span class="k">else</span>  <span class="n">printf</span><span class="p">(</span><span class="s">&#34;%s </span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">sta</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">site</span><span class="p">);</span>
 	<span class="p">}</span>
 <span class="p">}</span>
-</code></pre></div><p>整体可于 <a href="https://github.com/cyasts/Algorithms/tree/master/2.BFS">https://github.com/cyasts/Algorithms/tree/master/2.BFS</a> 获取。</p>
+</code></pre></div><p>整体可于 <a class="link" href="https://github.com/cyasts/Algorithms/tree/master/2.BFS"  target="_blank" rel="noopener"
+    >https://github.com/cyasts/Algorithms/tree/master/2.BFS</a> 获取。</p>
 <h2 id="6测试数据">6.测试数据</h2>
 <p>1.输入
 见：<br>
-<a href="https://github.com/cyasts/Algorithms/blob/master/2.BFS/input.txt">https://github.com/cyasts/Algorithms/blob/master/2.BFS/input.txt</a><br>
+<a class="link" href="https://github.com/cyasts/Algorithms/blob/master/2.BFS/input.txt"  target="_blank" rel="noopener"
+    >https://github.com/cyasts/Algorithms/blob/master/2.BFS/input.txt</a><br>
 2.输出<br>
 in BFS:
 石油大学<br>
