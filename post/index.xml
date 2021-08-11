@@ -6,7 +6,16 @@
     <description>Recent content in Posts on Cyan&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 25 Jun 2021 19:41:36 +0800</lastBuildDate><atom:link href="https://cyasts.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 11 Aug 2021 14:57:58 +0800</lastBuildDate><atom:link href="https://cyasts.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>学习</title>
+      <link>https://cyasts.github.io/p/howtolearn/</link>
+      <pubDate>Wed, 11 Aug 2021 14:57:58 +0800</pubDate>
+      
+      <guid>https://cyasts.github.io/p/howtolearn/</guid>
+      <description>学习的必要性 必须要学习</description>
+    </item>
+    
     <item>
       <title>hadoop环境搭建</title>
       <link>https://cyasts.github.io/p/hadoop/</link>
