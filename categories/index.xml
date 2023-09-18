@@ -6,34 +6,7 @@
     <description>Recent content in Categories on Cyan&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 19 Sep 2023 05:13:58 +0800</lastBuildDate><atom:link href="https://cyasts.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>test</title>
-      <link>https://cyasts.github.io/categories/test/</link>
-      <pubDate>Tue, 19 Sep 2023 05:13:58 +0800</pubDate>
-      
-      <guid>https://cyasts.github.io/categories/test/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Unity</title>
-      <link>https://cyasts.github.io/categories/unity/</link>
-      <pubDate>Thu, 16 Sep 2021 15:20:00 +0800</pubDate>
-      
-      <guid>https://cyasts.github.io/categories/unity/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>life</title>
-      <link>https://cyasts.github.io/categories/life/</link>
-      <pubDate>Wed, 11 Aug 2021 14:57:58 +0800</pubDate>
-      
-      <guid>https://cyasts.github.io/categories/life/</guid>
-      <description></description>
-    </item>
-    
+    <lastBuildDate>Fri, 25 Jun 2021 19:41:36 +0800</lastBuildDate><atom:link href="https://cyasts.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>hadoop</title>
       <link>https://cyasts.github.io/categories/hadoop/</link>
@@ -49,6 +22,15 @@
       <pubDate>Mon, 26 Oct 2020 22:38:36 +0800</pubDate>
       
       <guid>https://cyasts.github.io/categories/algorithms/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>life</title>
+      <link>https://cyasts.github.io/categories/life/</link>
+      <pubDate>Mon, 12 Oct 2020 16:57:58 +0800</pubDate>
+      
+      <guid>https://cyasts.github.io/categories/life/</guid>
       <description></description>
     </item>
     
