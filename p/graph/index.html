@@ -29,7 +29,7 @@
 3.输出 1.按照广度优先算法输出两个站的最短节点数路径。
 2.模拟两个站点之间的线路距离权重，输出两个站点之间的最短路径。
 4.数据结构 由于地铁图属于稀疏图，所以采用邻接链表来存储图。 graph.h 头文件：
-#ifndef GRAPH_H_INCLUDE #define GRAPH_H_INCLUDE  #include &amp;lt;stdio.h&amp;gt;#include &amp;lt;stdlib.h&amp;gt;#include &amp;lt;string.h&amp;gt; typedef struct edge{ int weight; int info; //线路名称 	struct edge * nextedge; struct vertex * adjtex; } edge; typedef struct vertex { char site[20]; struct edge * firstedge; struct vertex * prev; //用来存储结果路径上的上一个节点 	int info; //用来存储多余的数据 	int isdiscovered; } vertex; typedef struct { vertex ** vertices; int vexnum, edgnum; }graph; //function declare graph * buildgraph(); vertex * findvertexbyname(graph * g, const char * name); void cleartags(graph * g); vertex * findmininfo(graph * g); #endif graph.'><title>图的广度优先遍历和Dijkstra算法</title>
+#ifndef GRAPH_H_INCLUDE #define GRAPH_H_INCLUDE #include &amp;lt;stdio.h&amp;gt; #include &amp;lt;stdlib.h&amp;gt; #include &amp;lt;string.h&amp;gt; typedef struct edge{ int weight; int info; //线路名称 struct edge * nextedge; struct vertex * adjtex; } edge; typedef struct vertex { char site[20]; struct edge * firstedge; struct vertex * prev; //用来存储结果路径上的上一个节点 int info; //用来存储多余的数据 int isdiscovered; } vertex; typedef struct { vertex ** vertices; int vexnum, edgnum; }graph; //function declare graph * buildgraph(); vertex * findvertexbyname(graph * g, const char * name); void cleartags(graph * g); vertex * findmininfo(graph * g); #endif graph.'><title>图的广度优先遍历和Dijkstra算法</title>
 
 <link rel='canonical' href='https://cyasts.github.io/p/graph/'>
 
@@ -62,7 +62,7 @@
 3.输出 1.按照广度优先算法输出两个站的最短节点数路径。
 2.模拟两个站点之间的线路距离权重，输出两个站点之间的最短路径。
 4.数据结构 由于地铁图属于稀疏图，所以采用邻接链表来存储图。 graph.h 头文件：
-#ifndef GRAPH_H_INCLUDE #define GRAPH_H_INCLUDE  #include &amp;lt;stdio.h&amp;gt;#include &amp;lt;stdlib.h&amp;gt;#include &amp;lt;string.h&amp;gt; typedef struct edge{ int weight; int info; //线路名称 	struct edge * nextedge; struct vertex * adjtex; } edge; typedef struct vertex { char site[20]; struct edge * firstedge; struct vertex * prev; //用来存储结果路径上的上一个节点 	int info; //用来存储多余的数据 	int isdiscovered; } vertex; typedef struct { vertex ** vertices; int vexnum, edgnum; }graph; //function declare graph * buildgraph(); vertex * findvertexbyname(graph * g, const char * name); void cleartags(graph * g); vertex * findmininfo(graph * g); #endif graph.'>
+#ifndef GRAPH_H_INCLUDE #define GRAPH_H_INCLUDE #include &amp;lt;stdio.h&amp;gt; #include &amp;lt;stdlib.h&amp;gt; #include &amp;lt;string.h&amp;gt; typedef struct edge{ int weight; int info; //线路名称 struct edge * nextedge; struct vertex * adjtex; } edge; typedef struct vertex { char site[20]; struct edge * firstedge; struct vertex * prev; //用来存储结果路径上的上一个节点 int info; //用来存储多余的数据 int isdiscovered; } vertex; typedef struct { vertex ** vertices; int vexnum, edgnum; }graph; //function declare graph * buildgraph(); vertex * findvertexbyname(graph * g, const char * name); void cleartags(graph * g); vertex * findmininfo(graph * g); #endif graph.'>
 <meta property='og:url' content='https://cyasts.github.io/p/graph/'>
 <meta property='og:site_name' content='Cyan&#39;s Blog'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2020-10-26T22:38:36&#43;08:00'/><meta property='article:modified_time' content='2020-10-26T22:38:36&#43;08:00'/>
@@ -95,7 +95,7 @@
 3.输出 1.按照广度优先算法输出两个站的最短节点数路径。
 2.模拟两个站点之间的线路距离权重，输出两个站点之间的最短路径。
 4.数据结构 由于地铁图属于稀疏图，所以采用邻接链表来存储图。 graph.h 头文件：
-#ifndef GRAPH_H_INCLUDE #define GRAPH_H_INCLUDE  #include &amp;lt;stdio.h&amp;gt;#include &amp;lt;stdlib.h&amp;gt;#include &amp;lt;string.h&amp;gt; typedef struct edge{ int weight; int info; //线路名称 	struct edge * nextedge; struct vertex * adjtex; } edge; typedef struct vertex { char site[20]; struct edge * firstedge; struct vertex * prev; //用来存储结果路径上的上一个节点 	int info; //用来存储多余的数据 	int isdiscovered; } vertex; typedef struct { vertex ** vertices; int vexnum, edgnum; }graph; //function declare graph * buildgraph(); vertex * findvertexbyname(graph * g, const char * name); void cleartags(graph * g); vertex * findmininfo(graph * g); #endif graph.">
+#ifndef GRAPH_H_INCLUDE #define GRAPH_H_INCLUDE #include &amp;lt;stdio.h&amp;gt; #include &amp;lt;stdlib.h&amp;gt; #include &amp;lt;string.h&amp;gt; typedef struct edge{ int weight; int info; //线路名称 struct edge * nextedge; struct vertex * adjtex; } edge; typedef struct vertex { char site[20]; struct edge * firstedge; struct vertex * prev; //用来存储结果路径上的上一个节点 int info; //用来存储多余的数据 int isdiscovered; } vertex; typedef struct { vertex ** vertices; int vexnum, edgnum; }graph; //function declare graph * buildgraph(); vertex * findvertexbyname(graph * g, const char * name); void cleartags(graph * g); vertex * findmininfo(graph * g); #endif graph.">
     </head>
     <body class="
     article-page has-toc
@@ -210,289 +210,289 @@
 <h2 id="4数据结构">4.数据结构</h2>
 <p>由于地铁图属于稀疏图，所以采用邻接链表来存储图。
 graph.h 头文件：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="cp">#ifndef GRAPH_H_INCLUDE
-</span><span class="cp">#define GRAPH_H_INCLUDE
-</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
-</span><span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
-</span><span class="cp">#include</span> <span class="cpf">&lt;string.h&gt;</span><span class="cp">
-</span><span class="cp"></span>
-<span class="k">typedef</span> <span class="k">struct</span> <span class="n">edge</span><span class="p">{</span>
-	<span class="kt">int</span> <span class="n">weight</span><span class="p">;</span>
-	<span class="kt">int</span> <span class="n">info</span><span class="p">;</span> <span class="c1">//线路名称
-</span><span class="c1"></span>	<span class="k">struct</span> <span class="n">edge</span> <span class="o">*</span> <span class="n">nextedge</span><span class="p">;</span>
-	<span class="k">struct</span> <span class="n">vertex</span> <span class="o">*</span> <span class="n">adjtex</span><span class="p">;</span>
-<span class="p">}</span> <span class="n">edge</span><span class="p">;</span>
-
-<span class="k">typedef</span> <span class="k">struct</span> <span class="n">vertex</span> <span class="p">{</span>
-	<span class="kt">char</span> <span class="n">site</span><span class="p">[</span><span class="mi">20</span><span class="p">];</span>
-	<span class="k">struct</span> <span class="n">edge</span> <span class="o">*</span> <span class="n">firstedge</span><span class="p">;</span>
-	<span class="k">struct</span> <span class="n">vertex</span> <span class="o">*</span> <span class="n">prev</span><span class="p">;</span> <span class="c1">//用来存储结果路径上的上一个节点
-</span><span class="c1"></span>	<span class="kt">int</span> <span class="n">info</span><span class="p">;</span> <span class="c1">//用来存储多余的数据
-</span><span class="c1"></span>	<span class="kt">int</span> <span class="n">isdiscovered</span><span class="p">;</span>
-<span class="p">}</span> <span class="n">vertex</span><span class="p">;</span>
-
-<span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
-	<span class="n">vertex</span> <span class="o">**</span> <span class="n">vertices</span><span class="p">;</span>
-	<span class="kt">int</span> <span class="n">vexnum</span><span class="p">,</span> <span class="n">edgnum</span><span class="p">;</span>
-<span class="p">}</span><span class="n">graph</span><span class="p">;</span>
-
-<span class="c1">//function declare
-</span><span class="c1"></span><span class="n">graph</span> <span class="o">*</span> <span class="nf">buildgraph</span><span class="p">();</span>
-<span class="n">vertex</span> <span class="o">*</span> <span class="nf">findvertexbyname</span><span class="p">(</span><span class="n">graph</span> <span class="o">*</span> <span class="n">g</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">name</span><span class="p">);</span>
-<span class="kt">void</span> <span class="nf">cleartags</span><span class="p">(</span><span class="n">graph</span> <span class="o">*</span> <span class="n">g</span><span class="p">);</span>
-<span class="n">vertex</span> <span class="o">*</span> <span class="nf">findmininfo</span><span class="p">(</span><span class="n">graph</span> <span class="o">*</span> <span class="n">g</span><span class="p">);</span>
-
-<span class="cp">#endif
-</span></code></pre></div><p>graph.c 源文件：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
-</span><span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
-</span><span class="cp">#include</span> <span class="cpf">&lt;string.h&gt;</span><span class="cp">
-</span><span class="cp">#include</span> <span class="cpf">&#34;graph.h&#34;</span><span class="cp">
-</span><span class="cp"></span>
-<span class="kt">int</span> <span class="nf">buildedge</span><span class="p">(</span><span class="n">vertex</span> <span class="o">*</span> <span class="n">from</span><span class="p">,</span> <span class="n">vertex</span> <span class="o">*</span> <span class="n">to</span><span class="p">,</span> <span class="kt">int</span> <span class="n">lineno</span><span class="p">,</span> <span class="kt">int</span> <span class="n">weight</span><span class="p">);</span>
-<span class="kt">int</span> <span class="nf">isexist</span><span class="p">(</span><span class="kt">char</span> <span class="n">line</span><span class="p">[</span><span class="mi">300</span><span class="p">][</span><span class="mi">20</span><span class="p">],</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">name</span><span class="p">,</span> <span class="kt">int</span> <span class="n">k</span><span class="p">);</span>
-
-<span class="c1">//---------------------------------public function implements below -----------------------
-</span><span class="c1"></span><span class="n">graph</span> <span class="o">*</span> <span class="nf">buildgraph</span><span class="p">()</span>
-<span class="p">{</span>
-	<span class="kt">char</span>  <span class="n">staname</span><span class="p">[</span><span class="mi">20</span><span class="p">],</span> <span class="n">line</span><span class="p">[</span><span class="mi">300</span><span class="p">][</span><span class="mi">20</span><span class="p">];</span>
-	<span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">weight</span><span class="p">;</span>
-	<span class="kt">int</span> <span class="n">lineno</span><span class="p">,</span> <span class="n">iscycle</span><span class="p">;</span>
-
-	<span class="n">vertex</span> <span class="o">*</span> <span class="n">station</span><span class="p">[</span><span class="mi">300</span><span class="p">],</span> <span class="o">*</span><span class="n">v</span><span class="p">;</span>
-	<span class="n">vertex</span> <span class="o">*</span> <span class="n">pretex</span><span class="p">,</span> <span class="o">*</span> <span class="n">headtex</span><span class="p">;</span>
-	<span class="n">graph</span> <span class="o">*</span> <span class="n">metro</span><span class="p">;</span>
-
-	<span class="n">k</span> <span class="o">=</span> <span class="n">l</span>  <span class="o">=</span> <span class="n">lineno</span> <span class="o">=</span> <span class="n">iscycle</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-
-	<span class="n">metro</span> <span class="o">=</span> <span class="p">(</span><span class="n">graph</span> <span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">graph</span><span class="p">));</span>
-	<span class="n">metro</span><span class="o">-&gt;</span><span class="n">vertices</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-	<span class="n">metro</span><span class="o">-&gt;</span><span class="n">vexnum</span> <span class="o">=</span> <span class="n">metro</span><span class="o">-&gt;</span><span class="n">edgnum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-
-	<span class="k">while</span><span class="p">(</span><span class="n">gets</span><span class="p">(</span><span class="n">staname</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
-	<span class="p">{</span>
-		<span class="k">if</span><span class="p">(</span><span class="n">atoi</span><span class="p">(</span><span class="n">staname</span><span class="p">))</span><span class="c1">//得到一条新的线路名称
-</span><span class="c1"></span>		<span class="p">{</span>
-			<span class="k">if</span> <span class="p">(</span><span class="n">iscycle</span><span class="p">)</span> <span class="p">{</span><span class="c1">//先处理上一条环线
-</span><span class="c1"></span>				<span class="n">weight</span> <span class="o">=</span> <span class="n">rand</span><span class="p">()</span><span class="o">%</span><span class="mi">10</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
-				<span class="n">buildedge</span><span class="p">(</span><span class="n">pretex</span><span class="p">,</span> <span class="n">headtex</span><span class="p">,</span> <span class="n">lineno</span><span class="p">,</span> <span class="n">weight</span><span class="p">);</span>
-				<span class="n">buildedge</span><span class="p">(</span><span class="n">headtex</span><span class="p">,</span> <span class="n">pretex</span><span class="p">,</span> <span class="n">lineno</span><span class="p">,</span> <span class="n">weight</span><span class="p">);</span>
-				<span class="n">l</span> <span class="o">+=</span> <span class="mi">2</span><span class="p">;</span>
-			<span class="p">}</span>
-
-			<span class="n">lineno</span> <span class="o">=</span> <span class="n">atoi</span><span class="p">(</span><span class="n">staname</span><span class="p">);</span>
-			<span class="k">if</span><span class="p">(</span><span class="n">lineno</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
-
-			<span class="n">pretex</span> <span class="o">=</span> <span class="n">headtex</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-			<span class="n">iscycle</span> <span class="o">=</span> <span class="n">lineno</span><span class="o">%</span><span class="mi">10</span><span class="p">;</span>
-			<span class="n">lineno</span> <span class="o">/=</span> <span class="mi">10</span><span class="p">;</span>
-		<span class="p">}</span>
-		<span class="k">else</span> <span class="p">{</span>
-			<span class="c1">//查找是否站已经存在
-</span><span class="c1"></span>			<span class="n">i</span> <span class="o">=</span> <span class="n">isexist</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">staname</span><span class="p">,</span> <span class="n">k</span><span class="p">);</span>
-
-			<span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="n">v</span> <span class="o">=</span> <span class="n">station</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-			<span class="k">else</span> <span class="p">{</span>
-				<span class="n">v</span> <span class="o">=</span> <span class="p">(</span><span class="n">vertex</span> <span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">vertex</span><span class="p">));</span>
-				<span class="n">v</span><span class="o">-&gt;</span><span class="n">firstedge</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-				<span class="n">v</span><span class="o">-&gt;</span><span class="n">isdiscovered</span> <span class="o">=</span> <span class="n">v</span><span class="o">-&gt;</span><span class="n">info</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-				<span class="n">v</span><span class="o">-&gt;</span><span class="n">prev</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-				<span class="n">station</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="p">;</span>
-				<span class="n">strcpy</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="n">k</span><span class="o">++</span><span class="p">],</span> <span class="n">staname</span><span class="p">);</span>
-				<span class="n">strcpy</span><span class="p">(</span><span class="n">v</span><span class="o">-&gt;</span><span class="n">site</span><span class="p">,</span> <span class="n">staname</span><span class="p">);</span>
-			<span class="p">}</span>
-
-			<span class="k">if</span> <span class="p">(</span><span class="n">pretex</span><span class="p">)</span> <span class="p">{</span>
-				<span class="n">weight</span> <span class="o">=</span> <span class="n">rand</span><span class="p">()</span><span class="o">%</span><span class="mi">10</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
-				<span class="n">buildedge</span><span class="p">(</span><span class="n">pretex</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">lineno</span><span class="p">,</span> <span class="n">weight</span><span class="p">);</span>
-				<span class="n">buildedge</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">pretex</span><span class="p">,</span> <span class="n">lineno</span><span class="p">,</span> <span class="n">weight</span><span class="p">);</span>
-				<span class="n">l</span> <span class="o">+=</span> <span class="mi">2</span><span class="p">;</span>
-			<span class="p">}</span>
-
-			<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">pretex</span> <span class="o">&amp;&amp;</span> <span class="n">iscycle</span><span class="p">)</span> <span class="n">headtex</span> <span class="o">=</span> <span class="n">v</span><span class="p">;</span>
-			<span class="n">pretex</span> <span class="o">=</span> <span class="n">v</span><span class="p">;</span>
-		<span class="p">}</span>
-	<span class="p">}</span>
-	<span class="n">metro</span><span class="o">-&gt;</span><span class="n">vexnum</span> <span class="o">=</span> <span class="n">k</span><span class="p">;</span>
-	<span class="n">metro</span><span class="o">-&gt;</span><span class="n">edgnum</span> <span class="o">=</span> <span class="n">l</span><span class="p">;</span>
-	<span class="n">metro</span><span class="o">-&gt;</span><span class="n">vertices</span> <span class="o">=</span> <span class="p">(</span><span class="n">vertex</span> <span class="o">**</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">vertex</span> <span class="o">*</span><span class="p">)</span> <span class="o">*</span> <span class="n">k</span><span class="p">);</span>
-	<span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">k</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="n">metro</span><span class="o">-&gt;</span><span class="n">vertices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">station</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-	<span class="k">return</span> <span class="n">metro</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="n">vertex</span> <span class="o">*</span> <span class="nf">findvertexbyname</span><span class="p">(</span><span class="n">graph</span> <span class="o">*</span> <span class="n">g</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">name</span><span class="p">)</span>
-<span class="p">{</span>
-	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
-	<span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">g</span><span class="o">-&gt;</span><span class="n">vexnum</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
-		<span class="k">if</span> <span class="p">(</span><span class="n">strcmp</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">g</span><span class="o">-&gt;</span><span class="n">vertices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">site</span><span class="p">)</span> <span class="o">==</span><span class="mi">0</span> <span class="p">)</span> <span class="k">return</span> <span class="n">g</span><span class="o">-&gt;</span><span class="n">vertices</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-	<span class="p">}</span>
-<span class="p">}</span>
-
-<span class="kt">void</span> <span class="nf">cleartags</span><span class="p">(</span><span class="n">graph</span> <span class="o">*</span> <span class="n">g</span><span class="p">)</span>
-<span class="p">{</span>
-	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
-	<span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">g</span><span class="o">-&gt;</span><span class="n">vexnum</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
-		<span class="n">g</span><span class="o">-&gt;</span><span class="n">vertices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">isdiscovered</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-		<span class="n">g</span><span class="o">-&gt;</span><span class="n">vertices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">prev</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-		<span class="n">g</span><span class="o">-&gt;</span><span class="n">vertices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">info</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-	<span class="p">}</span>
-<span class="p">}</span>
-
-<span class="n">vertex</span> <span class="o">*</span> <span class="nf">findmininfo</span><span class="p">(</span><span class="n">graph</span> <span class="o">*</span> <span class="n">g</span><span class="p">)</span>
-<span class="p">{</span>
-	<span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="n">mini</span><span class="p">,</span> <span class="n">min</span> <span class="o">=</span> <span class="mi">999999</span><span class="p">;</span>
-	<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">g</span><span class="o">-&gt;</span><span class="n">vexnum</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
-		<span class="k">if</span> <span class="p">(</span><span class="n">g</span><span class="o">-&gt;</span><span class="n">vertices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">isdiscovered</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-		<span class="k">if</span> <span class="p">(</span><span class="n">g</span><span class="o">-&gt;</span><span class="n">vertices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">info</span> <span class="o">&lt;</span> <span class="n">min</span><span class="p">)</span> <span class="p">{</span>
-				<span class="n">mini</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
-				<span class="n">min</span> <span class="o">=</span> <span class="n">g</span><span class="o">-&gt;</span><span class="n">vertices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">info</span><span class="p">;</span>
-			<span class="p">}</span>
-		<span class="p">}</span>
-	<span class="p">}</span>
-	<span class="k">return</span> <span class="n">g</span><span class="o">-&gt;</span><span class="n">vertices</span><span class="p">[</span><span class="n">mini</span><span class="p">];</span>
-<span class="p">}</span>
-
-<span class="c1">//------------------------private function below here------------------------------
-</span><span class="c1"></span><span class="kt">int</span> <span class="nf">isexist</span><span class="p">(</span><span class="kt">char</span> <span class="n">line</span><span class="p">[</span><span class="mi">300</span><span class="p">][</span><span class="mi">20</span><span class="p">],</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">name</span><span class="p">,</span> <span class="kt">int</span> <span class="n">k</span><span class="p">)</span>
-<span class="p">{</span>
-	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
-	<span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">k</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="k">if</span><span class="p">(</span><span class="n">strcmp</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">line</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>  <span class="k">return</span> <span class="n">i</span><span class="p">;</span>
-	<span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="kt">int</span> <span class="nf">buildedge</span><span class="p">(</span><span class="n">vertex</span> <span class="o">*</span> <span class="n">from</span><span class="p">,</span> <span class="n">vertex</span> <span class="o">*</span> <span class="n">to</span><span class="p">,</span> <span class="kt">int</span> <span class="n">lineno</span><span class="p">,</span> <span class="kt">int</span> <span class="n">weight</span><span class="p">)</span>
-<span class="p">{</span>
-	<span class="n">edge</span> <span class="o">*</span> <span class="n">arc</span> <span class="o">=</span> <span class="p">(</span><span class="n">edge</span> <span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">edge</span><span class="p">));</span>
-	<span class="n">arc</span><span class="o">-&gt;</span><span class="n">nextedge</span> <span class="o">=</span> <span class="n">from</span><span class="o">-&gt;</span><span class="n">firstedge</span><span class="p">;</span>
-	<span class="n">from</span><span class="o">-&gt;</span><span class="n">firstedge</span> <span class="o">=</span> <span class="n">arc</span><span class="p">;</span>
-	<span class="n">arc</span><span class="o">-&gt;</span><span class="n">adjtex</span> <span class="o">=</span> <span class="n">to</span><span class="p">;</span>
-	<span class="n">arc</span><span class="o">-&gt;</span><span class="n">info</span> <span class="o">=</span> <span class="n">lineno</span><span class="p">;</span>
-	<span class="n">arc</span><span class="o">-&gt;</span><span class="n">weight</span> <span class="o">=</span> <span class="n">weight</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div><h2 id="4bfs-函数">4.BFS 函数</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#ifndef GRAPH_H_INCLUDE
+</span></span></span><span class="line"><span class="cl"><span class="cp">#define GRAPH_H_INCLUDE
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;string.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="k">typedef</span> <span class="k">struct</span> <span class="n">edge</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">weight</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">info</span><span class="p">;</span> <span class="c1">//线路名称
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="k">struct</span> <span class="n">edge</span> <span class="o">*</span> <span class="n">nextedge</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">struct</span> <span class="n">vertex</span> <span class="o">*</span> <span class="n">adjtex</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="n">edge</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">typedef</span> <span class="k">struct</span> <span class="n">vertex</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">char</span> <span class="n">site</span><span class="p">[</span><span class="mi">20</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">	<span class="k">struct</span> <span class="n">edge</span> <span class="o">*</span> <span class="n">firstedge</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">struct</span> <span class="n">vertex</span> <span class="o">*</span> <span class="n">prev</span><span class="p">;</span> <span class="c1">//用来存储结果路径上的上一个节点
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="kt">int</span> <span class="n">info</span><span class="p">;</span> <span class="c1">//用来存储多余的数据
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="kt">int</span> <span class="n">isdiscovered</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="n">vertex</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">vertex</span> <span class="o">**</span> <span class="n">vertices</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">vexnum</span><span class="p">,</span> <span class="n">edgnum</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span><span class="n">graph</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//function declare
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">graph</span> <span class="o">*</span> <span class="nf">buildgraph</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="n">vertex</span> <span class="o">*</span> <span class="nf">findvertexbyname</span><span class="p">(</span><span class="n">graph</span> <span class="o">*</span> <span class="n">g</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">name</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">cleartags</span><span class="p">(</span><span class="n">graph</span> <span class="o">*</span> <span class="n">g</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">vertex</span> <span class="o">*</span> <span class="nf">findmininfo</span><span class="p">(</span><span class="n">graph</span> <span class="o">*</span> <span class="n">g</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cp">#endif
+</span></span></span></code></pre></div><p>graph.c 源文件：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;string.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&#34;graph.h&#34;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">buildedge</span><span class="p">(</span><span class="n">vertex</span> <span class="o">*</span> <span class="n">from</span><span class="p">,</span> <span class="n">vertex</span> <span class="o">*</span> <span class="n">to</span><span class="p">,</span> <span class="kt">int</span> <span class="n">lineno</span><span class="p">,</span> <span class="kt">int</span> <span class="n">weight</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">isexist</span><span class="p">(</span><span class="kt">char</span> <span class="n">line</span><span class="p">[</span><span class="mi">300</span><span class="p">][</span><span class="mi">20</span><span class="p">],</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">name</span><span class="p">,</span> <span class="kt">int</span> <span class="n">k</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//---------------------------------public function implements below -----------------------
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">graph</span> <span class="o">*</span> <span class="nf">buildgraph</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">char</span>  <span class="n">staname</span><span class="p">[</span><span class="mi">20</span><span class="p">],</span> <span class="n">line</span><span class="p">[</span><span class="mi">300</span><span class="p">][</span><span class="mi">20</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">weight</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">lineno</span><span class="p">,</span> <span class="n">iscycle</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="n">vertex</span> <span class="o">*</span> <span class="n">station</span><span class="p">[</span><span class="mi">300</span><span class="p">],</span> <span class="o">*</span><span class="n">v</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">vertex</span> <span class="o">*</span> <span class="n">pretex</span><span class="p">,</span> <span class="o">*</span> <span class="n">headtex</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">graph</span> <span class="o">*</span> <span class="n">metro</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="n">k</span> <span class="o">=</span> <span class="n">l</span>  <span class="o">=</span> <span class="n">lineno</span> <span class="o">=</span> <span class="n">iscycle</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="n">metro</span> <span class="o">=</span> <span class="p">(</span><span class="n">graph</span> <span class="o">*</span><span class="p">)</span><span class="nf">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">graph</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">	<span class="n">metro</span><span class="o">-&gt;</span><span class="n">vertices</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">metro</span><span class="o">-&gt;</span><span class="n">vexnum</span> <span class="o">=</span> <span class="n">metro</span><span class="o">-&gt;</span><span class="n">edgnum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">while</span><span class="p">(</span><span class="nf">gets</span><span class="p">(</span><span class="n">staname</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span><span class="p">(</span><span class="nf">atoi</span><span class="p">(</span><span class="n">staname</span><span class="p">))</span><span class="c1">//得到一条新的线路名称
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="p">(</span><span class="n">iscycle</span><span class="p">)</span> <span class="p">{</span><span class="c1">//先处理上一条环线
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>				<span class="n">weight</span> <span class="o">=</span> <span class="nf">rand</span><span class="p">()</span><span class="o">%</span><span class="mi">10</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">				<span class="nf">buildedge</span><span class="p">(</span><span class="n">pretex</span><span class="p">,</span> <span class="n">headtex</span><span class="p">,</span> <span class="n">lineno</span><span class="p">,</span> <span class="n">weight</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">				<span class="nf">buildedge</span><span class="p">(</span><span class="n">headtex</span><span class="p">,</span> <span class="n">pretex</span><span class="p">,</span> <span class="n">lineno</span><span class="p">,</span> <span class="n">weight</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">				<span class="n">l</span> <span class="o">+=</span> <span class="mi">2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">			<span class="n">lineno</span> <span class="o">=</span> <span class="nf">atoi</span><span class="p">(</span><span class="n">staname</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span><span class="p">(</span><span class="n">lineno</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">			<span class="n">pretex</span> <span class="o">=</span> <span class="n">headtex</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="n">iscycle</span> <span class="o">=</span> <span class="n">lineno</span><span class="o">%</span><span class="mi">10</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="n">lineno</span> <span class="o">/=</span> <span class="mi">10</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="c1">//查找是否站已经存在
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>			<span class="n">i</span> <span class="o">=</span> <span class="nf">isexist</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">staname</span><span class="p">,</span> <span class="n">k</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="n">v</span> <span class="o">=</span> <span class="n">station</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">			<span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="n">v</span> <span class="o">=</span> <span class="p">(</span><span class="n">vertex</span> <span class="o">*</span><span class="p">)</span><span class="nf">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">vertex</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">				<span class="n">v</span><span class="o">-&gt;</span><span class="n">firstedge</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">				<span class="n">v</span><span class="o">-&gt;</span><span class="n">isdiscovered</span> <span class="o">=</span> <span class="n">v</span><span class="o">-&gt;</span><span class="n">info</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">				<span class="n">v</span><span class="o">-&gt;</span><span class="n">prev</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">				<span class="n">station</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">				<span class="nf">strcpy</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="n">k</span><span class="o">++</span><span class="p">],</span> <span class="n">staname</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">				<span class="nf">strcpy</span><span class="p">(</span><span class="n">v</span><span class="o">-&gt;</span><span class="n">site</span><span class="p">,</span> <span class="n">staname</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="p">(</span><span class="n">pretex</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="n">weight</span> <span class="o">=</span> <span class="nf">rand</span><span class="p">()</span><span class="o">%</span><span class="mi">10</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">				<span class="nf">buildedge</span><span class="p">(</span><span class="n">pretex</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">lineno</span><span class="p">,</span> <span class="n">weight</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">				<span class="nf">buildedge</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">pretex</span><span class="p">,</span> <span class="n">lineno</span><span class="p">,</span> <span class="n">weight</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">				<span class="n">l</span> <span class="o">+=</span> <span class="mi">2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">pretex</span> <span class="o">&amp;&amp;</span> <span class="n">iscycle</span><span class="p">)</span> <span class="n">headtex</span> <span class="o">=</span> <span class="n">v</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="n">pretex</span> <span class="o">=</span> <span class="n">v</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="n">metro</span><span class="o">-&gt;</span><span class="n">vexnum</span> <span class="o">=</span> <span class="n">k</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">metro</span><span class="o">-&gt;</span><span class="n">edgnum</span> <span class="o">=</span> <span class="n">l</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">metro</span><span class="o">-&gt;</span><span class="n">vertices</span> <span class="o">=</span> <span class="p">(</span><span class="n">vertex</span> <span class="o">**</span><span class="p">)</span><span class="nf">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">vertex</span> <span class="o">*</span><span class="p">)</span> <span class="o">*</span> <span class="n">k</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">k</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="n">metro</span><span class="o">-&gt;</span><span class="n">vertices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">station</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">metro</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">vertex</span> <span class="o">*</span> <span class="nf">findvertexbyname</span><span class="p">(</span><span class="n">graph</span> <span class="o">*</span> <span class="n">g</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">name</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">g</span><span class="o">-&gt;</span><span class="n">vexnum</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="p">(</span><span class="nf">strcmp</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">g</span><span class="o">-&gt;</span><span class="n">vertices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">site</span><span class="p">)</span> <span class="o">==</span><span class="mi">0</span> <span class="p">)</span> <span class="k">return</span> <span class="n">g</span><span class="o">-&gt;</span><span class="n">vertices</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">cleartags</span><span class="p">(</span><span class="n">graph</span> <span class="o">*</span> <span class="n">g</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">g</span><span class="o">-&gt;</span><span class="n">vexnum</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">g</span><span class="o">-&gt;</span><span class="n">vertices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">isdiscovered</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="n">g</span><span class="o">-&gt;</span><span class="n">vertices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">prev</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="n">g</span><span class="o">-&gt;</span><span class="n">vertices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">info</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">vertex</span> <span class="o">*</span> <span class="nf">findmininfo</span><span class="p">(</span><span class="n">graph</span> <span class="o">*</span> <span class="n">g</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="n">mini</span><span class="p">,</span> <span class="n">min</span> <span class="o">=</span> <span class="mi">999999</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">g</span><span class="o">-&gt;</span><span class="n">vexnum</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="p">(</span><span class="n">g</span><span class="o">-&gt;</span><span class="n">vertices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">isdiscovered</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="p">(</span><span class="n">g</span><span class="o">-&gt;</span><span class="n">vertices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">info</span> <span class="o">&lt;</span> <span class="n">min</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="n">mini</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">				<span class="n">min</span> <span class="o">=</span> <span class="n">g</span><span class="o">-&gt;</span><span class="n">vertices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">info</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">g</span><span class="o">-&gt;</span><span class="n">vertices</span><span class="p">[</span><span class="n">mini</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//------------------------private function below here------------------------------
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="nf">isexist</span><span class="p">(</span><span class="kt">char</span> <span class="n">line</span><span class="p">[</span><span class="mi">300</span><span class="p">][</span><span class="mi">20</span><span class="p">],</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">name</span><span class="p">,</span> <span class="kt">int</span> <span class="n">k</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">k</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="k">if</span><span class="p">(</span><span class="nf">strcmp</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">line</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>  <span class="k">return</span> <span class="n">i</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">buildedge</span><span class="p">(</span><span class="n">vertex</span> <span class="o">*</span> <span class="n">from</span><span class="p">,</span> <span class="n">vertex</span> <span class="o">*</span> <span class="n">to</span><span class="p">,</span> <span class="kt">int</span> <span class="n">lineno</span><span class="p">,</span> <span class="kt">int</span> <span class="n">weight</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">edge</span> <span class="o">*</span> <span class="n">arc</span> <span class="o">=</span> <span class="p">(</span><span class="n">edge</span> <span class="o">*</span><span class="p">)</span><span class="nf">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">edge</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">	<span class="n">arc</span><span class="o">-&gt;</span><span class="n">nextedge</span> <span class="o">=</span> <span class="n">from</span><span class="o">-&gt;</span><span class="n">firstedge</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">from</span><span class="o">-&gt;</span><span class="n">firstedge</span> <span class="o">=</span> <span class="n">arc</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">arc</span><span class="o">-&gt;</span><span class="n">adjtex</span> <span class="o">=</span> <span class="n">to</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">arc</span><span class="o">-&gt;</span><span class="n">info</span> <span class="o">=</span> <span class="n">lineno</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">arc</span><span class="o">-&gt;</span><span class="n">weight</span> <span class="o">=</span> <span class="n">weight</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h2 id="4bfs-函数">4.BFS 函数</h2>
 <p>要输出从源站点到目标站点的路径，可利用节点中的 prev 指针存储父节点。这样到目标站点的时候沿着 prev 指针一直往上直到空结点，就得到了一个反向的路径，再利用栈，把路径上的结点全部入一次栈，最后依次出栈就得到了从源站点到目标站点的路径。具体代码如下：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="kt">void</span> <span class="nf">BFS</span><span class="p">(</span><span class="n">graph</span> <span class="o">*</span> <span class="n">metro</span><span class="p">,</span> <span class="n">vertex</span> <span class="o">*</span> <span class="n">src</span><span class="p">,</span> <span class="n">vertex</span> <span class="o">*</span> <span class="n">des</span><span class="p">)</span>
-<span class="p">{</span>
-	<span class="n">vertex</span> <span class="o">*</span> <span class="n">que</span><span class="p">[</span><span class="mi">300</span><span class="p">];</span>
-	<span class="kt">int</span> <span class="n">head</span><span class="p">,</span> <span class="n">tail</span><span class="p">;</span>
-	<span class="n">head</span> <span class="o">=</span> <span class="n">tail</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-	<span class="n">vertex</span> <span class="o">*</span> <span class="n">u</span><span class="p">;</span>
-	<span class="n">edge</span> <span class="o">*</span> <span class="n">arc</span><span class="p">;</span>
-	<span class="n">que</span><span class="p">[</span><span class="n">tail</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="n">src</span><span class="p">;</span>
-	<span class="n">src</span><span class="o">-&gt;</span><span class="n">isdiscovered</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-	<span class="k">while</span><span class="p">(</span><span class="n">tail</span> <span class="o">!=</span> <span class="n">head</span><span class="p">)</span> <span class="p">{</span>
-		<span class="n">u</span> <span class="o">=</span> <span class="n">que</span><span class="p">[</span><span class="n">head</span><span class="p">];</span>
-		<span class="n">head</span> <span class="o">=</span> <span class="p">(</span><span class="n">head</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">300</span><span class="p">;</span>
-		<span class="k">if</span><span class="p">(</span><span class="n">u</span> <span class="o">==</span> <span class="n">des</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
-		<span class="n">arc</span> <span class="o">=</span> <span class="n">u</span><span class="o">-&gt;</span><span class="n">firstedge</span><span class="p">;</span>
-		<span class="k">while</span> <span class="p">(</span><span class="n">arc</span><span class="p">)</span> <span class="p">{</span>
-			<span class="k">if</span> <span class="p">(</span><span class="n">arc</span><span class="o">-&gt;</span><span class="n">adjtex</span><span class="o">-&gt;</span><span class="n">isdiscovered</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-				<span class="n">arc</span><span class="o">-&gt;</span><span class="n">adjtex</span><span class="o">-&gt;</span><span class="n">prev</span> <span class="o">=</span> <span class="n">u</span><span class="p">;</span> <span class="c1">//构建一条下一层子节点到当前节点的边
-</span><span class="c1"></span>				<span class="n">que</span><span class="p">[</span><span class="n">tail</span><span class="p">]</span> <span class="o">=</span> <span class="n">arc</span><span class="o">-&gt;</span><span class="n">adjtex</span><span class="p">;</span>
-				<span class="n">tail</span> <span class="o">=</span> <span class="p">(</span><span class="n">tail</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">300</span><span class="p">;</span>
-				<span class="n">arc</span><span class="o">-&gt;</span><span class="n">adjtex</span><span class="o">-&gt;</span><span class="n">isdiscovered</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-			<span class="p">}</span>
-			<span class="n">arc</span> <span class="o">=</span> <span class="n">arc</span><span class="o">-&gt;</span><span class="n">nextedge</span><span class="p">;</span>
-		<span class="p">}</span>
-	<span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div><h2 id="5dijkstra-函数">5.dijkstra 函数</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">BFS</span><span class="p">(</span><span class="n">graph</span> <span class="o">*</span> <span class="n">metro</span><span class="p">,</span> <span class="n">vertex</span> <span class="o">*</span> <span class="n">src</span><span class="p">,</span> <span class="n">vertex</span> <span class="o">*</span> <span class="n">des</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">vertex</span> <span class="o">*</span> <span class="n">que</span><span class="p">[</span><span class="mi">300</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">head</span><span class="p">,</span> <span class="n">tail</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">head</span> <span class="o">=</span> <span class="n">tail</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">vertex</span> <span class="o">*</span> <span class="n">u</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">edge</span> <span class="o">*</span> <span class="n">arc</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">que</span><span class="p">[</span><span class="n">tail</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="n">src</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">src</span><span class="o">-&gt;</span><span class="n">isdiscovered</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">while</span><span class="p">(</span><span class="n">tail</span> <span class="o">!=</span> <span class="n">head</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">u</span> <span class="o">=</span> <span class="n">que</span><span class="p">[</span><span class="n">head</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">		<span class="n">head</span> <span class="o">=</span> <span class="p">(</span><span class="n">head</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">300</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span><span class="p">(</span><span class="n">u</span> <span class="o">==</span> <span class="n">des</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="n">arc</span> <span class="o">=</span> <span class="n">u</span><span class="o">-&gt;</span><span class="n">firstedge</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="k">while</span> <span class="p">(</span><span class="n">arc</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="p">(</span><span class="n">arc</span><span class="o">-&gt;</span><span class="n">adjtex</span><span class="o">-&gt;</span><span class="n">isdiscovered</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="n">arc</span><span class="o">-&gt;</span><span class="n">adjtex</span><span class="o">-&gt;</span><span class="n">prev</span> <span class="o">=</span> <span class="n">u</span><span class="p">;</span> <span class="c1">//构建一条下一层子节点到当前节点的边
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>				<span class="n">que</span><span class="p">[</span><span class="n">tail</span><span class="p">]</span> <span class="o">=</span> <span class="n">arc</span><span class="o">-&gt;</span><span class="n">adjtex</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">				<span class="n">tail</span> <span class="o">=</span> <span class="p">(</span><span class="n">tail</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">300</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">				<span class="n">arc</span><span class="o">-&gt;</span><span class="n">adjtex</span><span class="o">-&gt;</span><span class="n">isdiscovered</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">			<span class="n">arc</span> <span class="o">=</span> <span class="n">arc</span><span class="o">-&gt;</span><span class="n">nextedge</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h2 id="5dijkstra-函数">5.dijkstra 函数</h2>
 <p>同样的可利用站点的 prev 存储上一个站点，利用站点的 info 才存储该站点到源站点的最短距离。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="kt">void</span> <span class="nf">dijkstra</span><span class="p">(</span><span class="n">graph</span> <span class="o">*</span> <span class="n">g</span><span class="p">,</span> <span class="n">vertex</span> <span class="o">*</span> <span class="n">src</span><span class="p">)</span>
-<span class="p">{</span>
-	<span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">alt</span><span class="p">;</span>
-	<span class="n">vertex</span> <span class="o">*</span> <span class="n">u</span><span class="p">,</span> <span class="o">*</span><span class="n">v</span><span class="p">;</span>
-	<span class="n">edge</span> <span class="o">*</span> <span class="n">arc</span><span class="p">;</span>
-	<span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">g</span><span class="o">-&gt;</span><span class="n">vexnum</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
-		<span class="n">g</span><span class="o">-&gt;</span><span class="n">vertices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">info</span> <span class="o">=</span> <span class="mi">99999</span><span class="p">;</span>
-		<span class="n">g</span><span class="o">-&gt;</span><span class="n">vertices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">prev</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-	<span class="p">}</span>
-	<span class="n">src</span><span class="o">-&gt;</span><span class="n">info</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-	<span class="n">k</span> <span class="o">=</span> <span class="n">g</span><span class="o">-&gt;</span><span class="n">vexnum</span><span class="p">;</span>
-	<span class="k">while</span><span class="p">(</span><span class="n">k</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-		<span class="n">u</span> <span class="o">=</span> <span class="n">findmininfo</span><span class="p">(</span><span class="n">g</span><span class="p">);</span>
-		<span class="n">u</span><span class="o">-&gt;</span><span class="n">isdiscovered</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-		<span class="n">k</span><span class="o">--</span><span class="p">;</span>
-		<span class="n">arc</span> <span class="o">=</span> <span class="n">u</span><span class="o">-&gt;</span><span class="n">firstedge</span><span class="p">;</span>
-		<span class="k">while</span> <span class="p">(</span><span class="n">arc</span><span class="p">)</span> <span class="p">{</span>
-			<span class="n">v</span> <span class="o">=</span> <span class="n">arc</span><span class="o">-&gt;</span><span class="n">adjtex</span><span class="p">;</span>
-			<span class="n">alt</span> <span class="o">=</span> <span class="n">u</span><span class="o">-&gt;</span><span class="n">info</span> <span class="o">+</span> <span class="n">arc</span><span class="o">-&gt;</span><span class="n">weight</span><span class="p">;</span>
-			<span class="k">if</span> <span class="p">(</span><span class="n">alt</span> <span class="o">&lt;</span> <span class="n">v</span><span class="o">-&gt;</span><span class="n">info</span><span class="p">)</span> <span class="p">{</span>
-				<span class="n">v</span><span class="o">-&gt;</span><span class="n">info</span> <span class="o">=</span> <span class="n">alt</span><span class="p">;</span>
-				<span class="n">v</span><span class="o">-&gt;</span><span class="n">prev</span> <span class="o">=</span> <span class="n">u</span><span class="p">;</span>
-			<span class="p">}</span>
-			<span class="n">arc</span> <span class="o">=</span> <span class="n">arc</span><span class="o">-&gt;</span><span class="n">nextedge</span><span class="p">;</span>
-		<span class="p">}</span>
-	<span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div><h2 id="5主函数">5.主函数</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">dijkstra</span><span class="p">(</span><span class="n">graph</span> <span class="o">*</span> <span class="n">g</span><span class="p">,</span> <span class="n">vertex</span> <span class="o">*</span> <span class="n">src</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">alt</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">vertex</span> <span class="o">*</span> <span class="n">u</span><span class="p">,</span> <span class="o">*</span><span class="n">v</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">edge</span> <span class="o">*</span> <span class="n">arc</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">g</span><span class="o">-&gt;</span><span class="n">vexnum</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">g</span><span class="o">-&gt;</span><span class="n">vertices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">info</span> <span class="o">=</span> <span class="mi">99999</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="n">g</span><span class="o">-&gt;</span><span class="n">vertices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">prev</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="n">src</span><span class="o">-&gt;</span><span class="n">info</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">k</span> <span class="o">=</span> <span class="n">g</span><span class="o">-&gt;</span><span class="n">vexnum</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">while</span><span class="p">(</span><span class="n">k</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">u</span> <span class="o">=</span> <span class="nf">findmininfo</span><span class="p">(</span><span class="n">g</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="n">u</span><span class="o">-&gt;</span><span class="n">isdiscovered</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="n">k</span><span class="o">--</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="n">arc</span> <span class="o">=</span> <span class="n">u</span><span class="o">-&gt;</span><span class="n">firstedge</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="k">while</span> <span class="p">(</span><span class="n">arc</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="n">v</span> <span class="o">=</span> <span class="n">arc</span><span class="o">-&gt;</span><span class="n">adjtex</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="n">alt</span> <span class="o">=</span> <span class="n">u</span><span class="o">-&gt;</span><span class="n">info</span> <span class="o">+</span> <span class="n">arc</span><span class="o">-&gt;</span><span class="n">weight</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="p">(</span><span class="n">alt</span> <span class="o">&lt;</span> <span class="n">v</span><span class="o">-&gt;</span><span class="n">info</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="n">v</span><span class="o">-&gt;</span><span class="n">info</span> <span class="o">=</span> <span class="n">alt</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">				<span class="n">v</span><span class="o">-&gt;</span><span class="n">prev</span> <span class="o">=</span> <span class="n">u</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">			<span class="n">arc</span> <span class="o">=</span> <span class="n">arc</span><span class="o">-&gt;</span><span class="n">nextedge</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h2 id="5主函数">5.主函数</h2>
 <p>printpath 的时候，由于 BFS 和 Dijkstra 都要调用这个函数，在最后设置一个 order 来区分是那个函数调用。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
-</span><span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
-</span><span class="cp">#include</span> <span class="cpf">&lt;string.h&gt;</span><span class="cp">
-</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&#34;graph.h&#34;</span><span class="cp">
-</span><span class="cp"></span>
-
-<span class="c1">//function declare
-</span><span class="c1"></span><span class="kt">void</span> <span class="nf">dijkstra</span><span class="p">(</span><span class="n">graph</span> <span class="o">*</span> <span class="n">g</span><span class="p">,</span> <span class="n">vertex</span> <span class="o">*</span> <span class="n">src</span><span class="p">);</span>
-<span class="kt">void</span> <span class="nf">BFS</span><span class="p">(</span><span class="n">graph</span> <span class="o">*</span> <span class="n">metro</span><span class="p">,</span> <span class="n">vertex</span> <span class="o">*</span> <span class="n">src</span><span class="p">,</span> <span class="n">vertex</span> <span class="o">*</span> <span class="n">des</span><span class="p">);</span>
-<span class="kt">void</span> <span class="nf">printpath</span><span class="p">(</span><span class="n">graph</span> <span class="o">*</span> <span class="n">metro</span><span class="p">,</span> <span class="n">vertex</span> <span class="o">*</span> <span class="n">desc</span><span class="p">,</span> <span class="kt">int</span> <span class="n">order</span><span class="p">);</span>
-
-<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span>
-<span class="p">{</span>
-
-<span class="n">freopen</span><span class="p">(</span><span class="s">&#34;input.txt&#34;</span><span class="p">,</span> <span class="s">&#34;r&#34;</span><span class="p">,</span> <span class="n">stdin</span><span class="p">);</span>
-<span class="n">freopen</span><span class="p">(</span><span class="s">&#34;output.txt&#34;</span><span class="p">,</span> <span class="s">&#34;w&#34;</span><span class="p">,</span> <span class="n">stdout</span><span class="p">);</span>
-
-	<span class="n">graph</span> <span class="o">*</span> <span class="n">metro</span><span class="p">;</span>
-
-	<span class="n">vertex</span> <span class="o">*</span> <span class="n">src</span><span class="p">;</span>
-	<span class="n">vertex</span> <span class="o">*</span> <span class="n">des</span><span class="p">;</span>
-
-	<span class="n">metro</span> <span class="o">=</span> <span class="n">buildgraph</span><span class="p">();</span>
-
-	<span class="kt">char</span> <span class="n">s1</span><span class="p">[</span><span class="mi">20</span><span class="p">];</span>
-	<span class="kt">char</span> <span class="n">s2</span><span class="p">[</span><span class="mi">20</span><span class="p">];</span>
-	<span class="n">scanf</span><span class="p">(</span><span class="s">&#34;%s&#34;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">s1</span><span class="p">);</span>
-	<span class="n">scanf</span><span class="p">(</span><span class="s">&#34;%s&#34;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">s2</span><span class="p">);</span>
-
-	<span class="n">src</span> <span class="o">=</span> <span class="n">findvertexbyname</span><span class="p">(</span><span class="n">metro</span><span class="p">,</span> <span class="n">s1</span><span class="p">);</span>
-	<span class="n">des</span> <span class="o">=</span> <span class="n">findvertexbyname</span><span class="p">(</span><span class="n">metro</span><span class="p">,</span> <span class="n">s2</span><span class="p">);</span>
-
-	<span class="n">printf</span><span class="p">(</span><span class="s">&#34;in BFS:</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
-	<span class="n">BFS</span><span class="p">(</span><span class="n">metro</span><span class="p">,</span> <span class="n">src</span><span class="p">,</span> <span class="n">des</span><span class="p">);</span>
-	<span class="n">printpath</span><span class="p">(</span><span class="n">metro</span><span class="p">,</span> <span class="n">des</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-
-	<span class="n">cleartags</span><span class="p">(</span><span class="n">metro</span><span class="p">);</span>
-
-	<span class="n">printf</span><span class="p">(</span><span class="s">&#34;indjstl:</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
-	<span class="n">dijkstra</span><span class="p">(</span><span class="n">metro</span><span class="p">,</span> <span class="n">src</span><span class="p">);</span>
-	<span class="n">printpath</span><span class="p">(</span><span class="n">metro</span><span class="p">,</span> <span class="n">des</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
-
-<span class="n">fclose</span><span class="p">(</span><span class="n">stdin</span><span class="p">);</span>
-<span class="n">fclose</span><span class="p">(</span><span class="n">stdout</span><span class="p">);</span>
-
-	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="kt">void</span> <span class="nf">printpath</span><span class="p">(</span><span class="n">graph</span> <span class="o">*</span> <span class="n">metro</span><span class="p">,</span> <span class="n">vertex</span> <span class="o">*</span> <span class="n">desc</span><span class="p">,</span> <span class="kt">int</span> <span class="n">order</span><span class="p">)</span>
-<span class="p">{</span>
-	<span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-	<span class="n">vertex</span> <span class="o">*</span> <span class="n">sta</span><span class="p">[</span><span class="mi">300</span><span class="p">];</span>
-	<span class="n">vertex</span> <span class="o">*</span> <span class="n">v</span> <span class="o">=</span> <span class="n">desc</span><span class="p">;</span>
-	<span class="k">while</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="p">{</span>
-		<span class="n">sta</span><span class="p">[</span><span class="n">i</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="p">;</span>
-		<span class="n">v</span> <span class="o">=</span> <span class="n">v</span><span class="o">-&gt;</span><span class="n">prev</span><span class="p">;</span>
-	<span class="p">}</span>
-
-	<span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">--</span><span class="p">;</span> <span class="n">i</span><span class="o">&gt;=</span><span class="mi">0</span><span class="p">;</span> <span class="o">--</span><span class="n">i</span><span class="p">){</span>
-		<span class="k">if</span><span class="p">(</span><span class="n">order</span><span class="p">)</span> <span class="n">printf</span><span class="p">(</span><span class="s">&#34;%s %d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">sta</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">site</span><span class="p">,</span> <span class="n">sta</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">info</span><span class="p">);</span>
-		<span class="k">else</span>  <span class="n">printf</span><span class="p">(</span><span class="s">&#34;%s </span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">sta</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">site</span><span class="p">);</span>
-	<span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div><p>整体可于 <a class="link" href="https://github.com/cyasts/Algorithms/tree/master/2.BFS"  target="_blank" rel="noopener"
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;string.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&#34;graph.h&#34;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//function declare
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span> <span class="nf">dijkstra</span><span class="p">(</span><span class="n">graph</span> <span class="o">*</span> <span class="n">g</span><span class="p">,</span> <span class="n">vertex</span> <span class="o">*</span> <span class="n">src</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">BFS</span><span class="p">(</span><span class="n">graph</span> <span class="o">*</span> <span class="n">metro</span><span class="p">,</span> <span class="n">vertex</span> <span class="o">*</span> <span class="n">src</span><span class="p">,</span> <span class="n">vertex</span> <span class="o">*</span> <span class="n">des</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">printpath</span><span class="p">(</span><span class="n">graph</span> <span class="o">*</span> <span class="n">metro</span><span class="p">,</span> <span class="n">vertex</span> <span class="o">*</span> <span class="n">desc</span><span class="p">,</span> <span class="kt">int</span> <span class="n">order</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">freopen</span><span class="p">(</span><span class="s">&#34;input.txt&#34;</span><span class="p">,</span> <span class="s">&#34;r&#34;</span><span class="p">,</span> <span class="n">stdin</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nf">freopen</span><span class="p">(</span><span class="s">&#34;output.txt&#34;</span><span class="p">,</span> <span class="s">&#34;w&#34;</span><span class="p">,</span> <span class="n">stdout</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="n">graph</span> <span class="o">*</span> <span class="n">metro</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="n">vertex</span> <span class="o">*</span> <span class="n">src</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">vertex</span> <span class="o">*</span> <span class="n">des</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="n">metro</span> <span class="o">=</span> <span class="nf">buildgraph</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="kt">char</span> <span class="n">s1</span><span class="p">[</span><span class="mi">20</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">char</span> <span class="n">s2</span><span class="p">[</span><span class="mi">20</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">	<span class="nf">scanf</span><span class="p">(</span><span class="s">&#34;%s&#34;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">s1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="nf">scanf</span><span class="p">(</span><span class="s">&#34;%s&#34;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">s2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="n">src</span> <span class="o">=</span> <span class="nf">findvertexbyname</span><span class="p">(</span><span class="n">metro</span><span class="p">,</span> <span class="n">s1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="n">des</span> <span class="o">=</span> <span class="nf">findvertexbyname</span><span class="p">(</span><span class="n">metro</span><span class="p">,</span> <span class="n">s2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nf">printf</span><span class="p">(</span><span class="s">&#34;in BFS:</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="nf">BFS</span><span class="p">(</span><span class="n">metro</span><span class="p">,</span> <span class="n">src</span><span class="p">,</span> <span class="n">des</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="nf">printpath</span><span class="p">(</span><span class="n">metro</span><span class="p">,</span> <span class="n">des</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nf">cleartags</span><span class="p">(</span><span class="n">metro</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nf">printf</span><span class="p">(</span><span class="s">&#34;indjstl:</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="nf">dijkstra</span><span class="p">(</span><span class="n">metro</span><span class="p">,</span> <span class="n">src</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="nf">printpath</span><span class="p">(</span><span class="n">metro</span><span class="p">,</span> <span class="n">des</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">fclose</span><span class="p">(</span><span class="n">stdin</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nf">fclose</span><span class="p">(</span><span class="n">stdout</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">printpath</span><span class="p">(</span><span class="n">graph</span> <span class="o">*</span> <span class="n">metro</span><span class="p">,</span> <span class="n">vertex</span> <span class="o">*</span> <span class="n">desc</span><span class="p">,</span> <span class="kt">int</span> <span class="n">order</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">vertex</span> <span class="o">*</span> <span class="n">sta</span><span class="p">[</span><span class="mi">300</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">	<span class="n">vertex</span> <span class="o">*</span> <span class="n">v</span> <span class="o">=</span> <span class="n">desc</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">while</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">sta</span><span class="p">[</span><span class="n">i</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="n">v</span> <span class="o">=</span> <span class="n">v</span><span class="o">-&gt;</span><span class="n">prev</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">--</span><span class="p">;</span> <span class="n">i</span><span class="o">&gt;=</span><span class="mi">0</span><span class="p">;</span> <span class="o">--</span><span class="n">i</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span><span class="p">(</span><span class="n">order</span><span class="p">)</span> <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;%s %d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">sta</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">site</span><span class="p">,</span> <span class="n">sta</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">info</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="k">else</span>  <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;%s </span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">sta</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">site</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>整体可于 <a class="link" href="https://github.com/cyasts/Algorithms/tree/master/2.BFS"  target="_blank" rel="noopener"
     >https://github.com/cyasts/Algorithms/tree/master/2.BFS</a> 获取。</p>
 <h2 id="6测试数据">6.测试数据</h2>
 <p>1.输入
@@ -583,12 +583,12 @@ in Dijkstra:<br>
         
             2020 - 
         
-        2021 Cyan&#39;s Blog
+        2023 Cyan&#39;s Blog
     </section>
     
     <section class="powerby">
-        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
-        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="2.4.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+         <br />
+        
     </section>
 </footer>
 

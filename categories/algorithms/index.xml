@@ -41,7 +41,7 @@
 3.输出 1.按照广度优先算法输出两个站的最短节点数路径。
 2.模拟两个站点之间的线路距离权重，输出两个站点之间的最短路径。
 4.数据结构 由于地铁图属于稀疏图，所以采用邻接链表来存储图。 graph.h 头文件：
-#ifndef GRAPH_H_INCLUDE #define GRAPH_H_INCLUDE  #include &amp;lt;stdio.h&amp;gt;#include &amp;lt;stdlib.h&amp;gt;#include &amp;lt;string.h&amp;gt; typedef struct edge{ int weight; int info; //线路名称 	struct edge * nextedge; struct vertex * adjtex; } edge; typedef struct vertex { char site[20]; struct edge * firstedge; struct vertex * prev; //用来存储结果路径上的上一个节点 	int info; //用来存储多余的数据 	int isdiscovered; } vertex; typedef struct { vertex ** vertices; int vexnum, edgnum; }graph; //function declare graph * buildgraph(); vertex * findvertexbyname(graph * g, const char * name); void cleartags(graph * g); vertex * findmininfo(graph * g); #endif graph.</description>
+#ifndef GRAPH_H_INCLUDE #define GRAPH_H_INCLUDE #include &amp;lt;stdio.h&amp;gt; #include &amp;lt;stdlib.h&amp;gt; #include &amp;lt;string.h&amp;gt; typedef struct edge{ int weight; int info; //线路名称 struct edge * nextedge; struct vertex * adjtex; } edge; typedef struct vertex { char site[20]; struct edge * firstedge; struct vertex * prev; //用来存储结果路径上的上一个节点 int info; //用来存储多余的数据 int isdiscovered; } vertex; typedef struct { vertex ** vertices; int vexnum, edgnum; }graph; //function declare graph * buildgraph(); vertex * findvertexbyname(graph * g, const char * name); void cleartags(graph * g); vertex * findmininfo(graph * g); #endif graph.</description>
     </item>
     
     <item>
@@ -51,14 +51,14 @@
       
       <guid>https://cyasts.github.io/p/stablematche/</guid>
       <description>1.问题描述 给定 N 个男性 $ m_{1} $ ,⋯,$m_{n}$ 和 N 个女性$w_{1}$,⋯,$w_{n}$
- 每个男性对女性由最喜欢到最不喜欢进行排序 每个女性对男性由最喜欢到最不喜欢进行排序  目标：找到一个稳定的匹配使得不满意度最低。
+每个男性对女性由最喜欢到最不喜欢进行排序 每个女性对男性由最喜欢到最不喜欢进行排序 目标：找到一个稳定的匹配使得不满意度最低。
 2.输入 第一行输入 N，表示需要处理的匹配的对数。男性按照 1，2, 3&amp;hellip;N 的编号表示，女性同样如此。
 接下来 N 行，每行 N 个数字，表示该行男性对所有女性的好感度排名。
 再接下来 N 行，每行 N 个数字，表示该行女性对所有男性的好感度排名。
 例如：
-3 1 2 3 2 1 3 1 2 3 2 1 3 1 2 3 1 2 3  3.输出 输入 N 行，每行输出一个匹配的结果，格式为：
-m：编号 w：编号  例如：
-This is a block. This is more of a block.</description>
+3 1 2 3 2 1 3 1 2 3 2 1 3 1 2 3 1 2 3 3.输出 输入 N 行，每行输出一个匹配的结果，格式为：
+m：编号 w：编号 例如：
+This is a block. This is more of a block. 4.核心思想 4.算法实现 #include &amp;lt;stdio.</description>
     </item>
     
   </channel>
